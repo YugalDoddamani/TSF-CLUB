@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>TSF Fitness Studio — Live Strong | Goa</title>
+    
+    <meta name="description" content="TSF Fitness Studio in Caranzalem, Goa. Premium combat sports, MMA, Taekwondo, CrossFit, and personal fitness coaching led by Master Suresh." />
+    <meta name="keywords" content="TSF, fitness, MMA, Taekwondo, CrossFit, Goa, gym, combat sports, personal training" />
+    
+    <link rel="icon" href="TSF STAMP R.png" type="image/png" />
+    <link rel="apple-touch-icon" href="TSF STAMP R.png" />
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800;900&family=Bebas+Neue&display=swap" rel="stylesheet" />
+    
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+        <!-- ============================================================
+    PRELOADER - TSF LIVE STRONG
+    ============================================================ -->
+    <div class="preloader" id="tsfPreloader" aria-hidden="true">
+        <div class="preloader-content">
+            <img src="Banner noBG.png" alt="TSF Fitness Studio" class="preloader-logo" />
+            <div class="preloader-bar-wrapper">
+                <div class="preloader-bar" id="preloaderBar"></div>
+            </div>
+            <p class="preloader-status" id="preloaderStatus">LOADING...</p>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    TOP BAR - Fixed Navigation
+    ============================================================ -->
+    <header class="top-bar" id="topBar">
+        <div class="container">
+            <div class="nav-wrapper">
+                <a href="#hero" class="logo" aria-label="TSF Fitness Studio Home">
+                    <img src="TSF®.png" alt="TSF Fitness Studio" class="logo-img" />
+                    <div class="logo-text-block">
+                        
+                    </div>
+                </a>
+                
+                <nav class="nav-links" id="navLinks" aria-label="Main Navigation">
+                    <a href="#services">Services</a>
+                    <a href="#about">Founder</a>
+                    <a href="#schedule">Schedule</a>
+                    <a href="#gallery">Gallery</a>
+                    <a href="#plans">Plans</a>
+                    <a href="#location">Contact</a>
+                </nav>
+                
+                                <div class="nav-actions">
+                    <a href="https://wa.me/919545937344?text=Hi%20TSF%20Team,%20I%20want%20to%20inquire%20about%20membership." target="_blank" rel="noopener" class="btn btn-primary">Join Now</a>
+                    <div class="theme-toggle-wrapper">
+                        <label class="theme-switch" id="themeToggle" aria-label="Toggle theme">
+                            <input type="checkbox" id="themeCheckbox" />
+                            <span class="theme-slider round"></span>
+                        </label>
+                    </div>
+                </div>
+                
+                <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- ============================================================
+    MOBILE NAV DRAWER
+    ============================================================ -->
+    <div class="mobile-nav" id="mobileNav" aria-hidden="true">
+        <div class="mobile-nav-inner">
+            <a href="#services">Services</a>
+            <a href="#about">Founder</a>
+            <a href="#schedule">Schedule</a>
+            <a href="#gallery">Gallery</a>
+            <a href="#plans">Plans</a>
+            <a href="#location">Contact</a>
+            <div class="mobile-contact-snippet">
+                <p>📍 Caranzalem, Goa</p>
+                <p>📞 +91 95459 37344</p>
+                <a href="https://wa.me/919545937344?text=Hi%20TSF%20Team,%20I%20want%20to%20inquire%20about%20membership." target="_blank" rel="noopener" class="btn btn-primary btn-full">Get In Touch</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================================
+    HERO SECTION
+    ============================================================ -->
+    <section class="hero" id="hero">
+        <div class="hero-bg" id="heroBg" style="background-image: url('Studio 1.jpeg');"></div>
+        <div class="hero-overlay"></div>
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">#1 FITNESS STUDIO IN GOA</div>
+                <h1 class="hero-title">
+                    Be stronger.<br />
+                    <span class="highlight">Be confident.</span>
+                </h1>
+                <p class="hero-subtitle">
+                    They arrive with different goals, yet they all find the 
+                    support and motivation they need. Their success is the 
+                    ultimate validation of our method.
+                </p>
+                <div class="hero-actions">
+                    <a href="https://wa.me/919545937344?text=Hi%20TSF%20Team,%20I%20want%20to%20book%20a%20free%20trial%20session." target="_blank" rel="noopener" class="btn btn-primary">Join Now</a>
+                    <a href="#about" class="btn btn-outline">More About TSF</a>
+                </div>
+               
+            </div>
+        </div>
+    </section>
+
+      <!-- ============================================================
+    SERVICES SECTION - Text Symbols Only
+    ============================================================ -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">WHAT WE OFFER</span>
+                <h2 class="section-title">Our Programs</h2>
+                <p class="section-desc">
+                    From striking to strength, from discipline to flexibility — 
+                    every program at TSF is designed to forge champions.
+                </p>
+                <a href="#plans" class="btn btn-outline-small">View All</a>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">✦</div>
+                    <h3>MMA</h3>
+                    <p>Mixed martial arts — striking, grappling, and cage control</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">✦</div>
+                    <h3>Taekwondo</h3>
+                    <p>Traditional Korean martial arts — discipline, kicks, and sparring</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">✦</div>
+                    <h3>CrossFit</h3>
+                    <p>High-intensity functional fitness — strength, endurance, and grit</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">✦</div>
+                    <h3>Calisthenics</h3>
+                    <p>Bodyweight mastery — control, strength, and mobility</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">✦</div>
+                    <h3>Yoga</h3>
+                    <p>Flexibility, breathwork, and mental clarity for fighters</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">✦</div>
+                    <h3>Kids Taekwondo</h3>
+                    <p>Building confidence, discipline, and focus for young champions</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    FEATURES / AMENITIES
+    ============================================================ -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-item">
+                    <span class="feature-icon">✦</span>
+                    <p>Professional coaches each with at least 5 years of experience</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✦</span>
+                    <p>Tanning bed</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✦</span>
+                    <p>The medical professional's office</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✦</span>
+                    <p>Fitness trackers and smart analysis</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✦</span>
+                    <p>4 sports zones</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✦</span>
+                    <p>A bar serving wholesome drinks</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✦</span>
+                    <p>Various kinds of massage</p>
+                </div>
+                <div class="feature-item">
+                    <span class="feature-icon">✦</span>
+                    <p>500 M² of premium space</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ============================================================
+    ABOUT / FOUNDER SECTION
+    ============================================================ -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="about-grid">
+                <div class="about-image">
+                    <img src="Owner img 1.png" alt="Master Suresh - Founder TSF" class="owner-img" />
+                </div>
+                <div class="about-content">
+                    <span class="section-tag">THE FOUNDER</span>
+                    <h2 class="section-title">Master Suresh</h2>
+                    <p class="about-bio">
+                        Certified Martial Arts Trainer, Certified Fitness Trainer &amp; Founder of TSF.
+                        With a 1st Degree Black Belt in Taekwondo and 8+ years of experience
+                        in MMA, Kickboxing, and fitness training.
+                    </p>
+                    <p class="about-bio">
+                        He serves as the President of STAG (SaJa Taekwondo Association of Goa)
+                        and Head Coach of Goa (IITF), bringing competitive excellence to
+                        every session.
+                    </p>
+                    <div class="about-stats">
+                        <div class="about-stat">
+                            <span class="about-stat-number">8+</span>
+                            <span class="about-stat-label">Years Experience</span>
+                        </div>
+                        <div class="about-stat">
+                            <span class="about-stat-number">1st</span>
+                            <span class="about-stat-label">Degree Black Belt</span>
+                        </div>
+                        <div class="about-stat">
+                            <span class="about-stat-number">STAG</span>
+                            <span class="about-stat-label">Association President</span>
+                        </div>
+                    </div>
+                    <a href="https://wa.me/919545937344?text=Hi%20TSF%20Team,%20I%20want%20to%20know%20more%20about%20training%20with%20Master%20Suresh." target="_blank" rel="noopener" class="btn btn-primary">Meet the Team</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- ============================================================
+    SCHEDULE SECTION - Placeholder
+    ============================================================ -->
+    <section class="schedule" id="schedule">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">CLASS TIMINGS</span>
+                <h2 class="section-title">Schedule</h2>
+                <p class="section-desc">
+                    Coming soon — our complete weekly class schedule.
+                    Stay tuned for updates.
+                </p>
+            </div>
+            
+            <div class="schedule-grid">
+                <!-- Monday -->
+                <div class="schedule-card">
+                    <div class="schedule-day">Monday</div>
+                    <div class="schedule-classes">
+                        <div class="class-item">
+                            <span class="class-time">--:--</span>
+                            <span class="class-name">Class Name</span>
+                            <span class="class-coach">Coach Name</span>
+                        </div>
+                        <div class="class-item">
+                            <span class="class-time">--:--</span>
+                            <span class="class-name">Class Name</span>
+                            <span class="class-coach">Coach Name</span>
+                        </div>
+                        <div class="class-item">
+                            <span class="class-time">--:--</span>
+                            <span class="class-name">Class Name</span>
+                            <span class="class-coach">Coach Name</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Tuesday -->
+                <div class="schedule-card">
+                    <div class="schedule-day">Tuesday</div>
+                    <div class="schedule-classes">
+                        <div class="class-item">
+                            <span class="class-time">--:--</span>
+                            <span class="class-name">Class Name</span>
+                            <span class="class-coach">Coach Name</span>
+                        </div>
+                        <div class="class-item">
+                            <span class="class-time">--:--</span>
+                            <span class="class-name">Class Name</span>
+                            <span class="class-coach">Coach Name</span>
+                        </div>
+                        <div class="class-item">
+                            <span class="class-time">--:--</span>
+                            <span class="class-name">Class Name</span>
+                            <span class="class-coach">Coach Name</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Wednesday -->
+                <div class="schedule-card">
+                    <div class="schedule-day">Wednesday</div>
+                    <div class="schedule-classes">
+                        <div class="class-item">
+                            <span class="class-time">--:--</span>
+                            <span class="class-name">Class Name</span>
+                            <span class="class-coach">Coach Name</span>
+                        </div>
+                        <div class="class-item">
+                            <span class="class-time">--:--</span>
+                            <span class="class-name">Class Name</span>
+                            <span class="class-coach">Coach Name</span>
+                        </div>
+                        <div class="class-item">
+                            <span class="class-time">--:--</span>
+                            <span class="class-name">Class Name</span>
+                            <span class="class-coach">Coach Name</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Thursday -->
+                <div class="schedule-card">
+                    <div class="schedule-day">Thursday</div>
+                    <div class="schedule-classes">
+                        <div class="class-item">
+                            <span class="class-time">--:--</span>
+                            <span class="class-name">Class Name</span>
+                            <span class="class-coach">Coach Name</span>
+                        </div>
+                        <div class="class-item">
+                            <span class="class-time">--:--</span>
+                            <span class="class-name">Class Name</span>
+                            <span class="class-coach">Coach Name</span>
+                        </div>
+                        <div class="class-item">
+                            <span class="class-time">--:--</span>
+                            <span class="class-name">Class Name</span>
+                            <span class="class-coach">Coach Name</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Friday -->
+                <div class="schedule-card">
+                    <div class="schedule-day">Friday</div>
+                    <div class="schedule-classes">
+                        <div class="class-item">
+                            <span class="class-time">--:--</span>
+                            <span class="class-name">Class Name</span>
+                            <span class="class-coach">Coach Name</span>
+                        </div>
+                        <div class="class-item">
+                            <span class="class-time">--:--</span>
+                            <span class="class-name">Class Name</span>
+                            <span class="class-coach">Coach Name</span>
+                        </div>
+                        <div class="class-item">
+                            <span class="class-time">--:--</span>
+                            <span class="class-name">Class Name</span>
+                            <span class="class-coach">Coach Name</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Saturday -->
+                <div class="schedule-card">
+                    <div class="schedule-day">Saturday</div>
+                    <div class="schedule-classes">
+                        <div class="class-item">
+                            <span class="class-time">--:--</span>
+                            <span class="class-name">Class Name</span>
+                            <span class="class-coach">Coach Name</span>
+                        </div>
+                        <div class="class-item">
+                            <span class="class-time">--:--</span>
+                            <span class="class-name">Class Name</span>
+                            <span class="class-coach">Coach Name</span>
+                        </div>
+                        <div class="class-item">
+                            <span class="class-time">--:--</span>
+                            <span class="class-name">Class Name</span>
+                            <span class="class-coach">Coach Name</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Optional: Coming Soon Message -->
+            <div class="schedule-notice">
+                <p>📋 Schedule details coming soon. Check back for updates.</p>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- ============================================================
+    GALLERY SECTION
+    ============================================================ -->
+    <section class="gallery" id="gallery">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-tag">THE SPACE</span>
+                <h2 class="section-title">Gallery</h2>
+            </div>
+            
+            <div class="gallery-grid">
+                <div class="gallery-item large">
+                    <div class="gallery-overlay">
+                        <span>Studio Floor</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-overlay">
+                        <span>Power Zone</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-overlay">
+                        <span>MMA Arena</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-overlay">
+                        <span>Dojo</span>
+                    </div>
+                </div>
+                <div class="gallery-item">
+                    <div class="gallery-overlay">
+                        <span>Cardio Zone</span>
+                    </div>
+                </div>
+                <div class="gallery-item large">
+                    <div class="gallery-overlay">
+                        <span>Champions Wall</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+
+        <!-- ============================================================
+    LOCATION / CONTACT + FOOTER
+    ============================================================ -->
+    <footer class="footer" id="location">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand Column -->
+                <div class="footer-brand">
+                    <a href="#hero" class="logo" aria-label="TSF Fitness Studio Home">
+                        <img src="TSF®.png" alt="TSF Fitness Studio" class="logo-img" />
+                        
+                    </a>
+                    <p>
+                        Caranzalem, Goa 403002
+                    </p>
+                    <div class="footer-contact-info">
+                        <a href="tel:+919545937344" class="footer-contact-item">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/>
+                            </svg>
+                            <span>+91 95459 37344</span>
+                        </a>
+                        <a href="mailto:TSFLIVESTRONG@GMAIL.COM" class="footer-contact-item">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="4" width="20" height="16" rx="2"/>
+                                <path d="M22 7L12 13 2 7"/>
+                            </svg>
+                            <span>TSFLIVESTRONG@GMAIL.COM</span>
+                        </a>
+                        <a href="https://maps.google.com/?q=Caranzalem+Goa" target="_blank" rel="noopener" class="footer-contact-item">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/>
+                                <circle cx="12" cy="10" r="3"/>
+                            </svg>
+                            <span>Caranzalem, Goa 403002</span>
+                        </a>
+                    </div>
+                    <div class="footer-socials">
+                        <a href="#" aria-label="Instagram" class="social-icon-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <rect x="2" y="2" width="20" height="20" rx="5" ry="5"/>
+                                <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                                <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="YouTube" class="social-icon-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M22.54 6.42a2.78 2.78 0 0 0-1.94-2C18.88 4 12 4 12 4s-6.88 0-8.6.46a2.78 2.78 0 0 0-1.94 2A29 29 0 0 0 1 11.75a29 29 0 0 0 .46 5.33A2.78 2.78 0 0 0 3.4 19c1.72.46 8.6.46 8.6.46s6.88 0 8.6-.46a2.78 2.78 0 0 0 1.94-2 29 29 0 0 0 .46-5.25 29 29 0 0 0-.46-5.33z"/>
+                                <polygon points="9.75 15.02 15.5 11.75 9.75 8.48 9.75 15.02"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="Facebook" class="social-icon-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/>
+                            </svg>
+                        </a>
+                        <a href="#" aria-label="WhatsApp" class="social-icon-btn">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>
+                            </svg>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Quick Links -->
+                <div class="footer-links">
+                    <h4 class="footer-col-title">Quick Links</h4>
+                    <a href="#services">Services</a>
+                    <a href="#about">Founder</a>
+                    <a href="#schedule">Schedule</a>
+                    <a href="#gallery">Gallery</a>
+                    <a href="#plans">Plans</a>
+                    <a href="#location">Contact</a>
+                </div>
+                
+                <!-- Programs -->
+                <div class="footer-links">
+                    <h4 class="footer-col-title">Programs</h4>
+                    <a href="#">MMA</a>
+                    <a href="#">Taekwondo</a>
+                    <a href="#">CrossFit</a>
+                    <a href="#">Calisthenics</a>
+                    <a href="#">Yoga</a>
+                    <a href="#">Kids Taekwondo</a>
+                </div>
+                
+                <!-- Contact / Hours -->
+                <div class="footer-hours">
+                    <h4 class="footer-col-title">Visit Us</h4>
+                    <p>
+                        <strong>Monday – Saturday</strong><br />
+                        8:00 AM – 9:00 PM
+                    </p>
+                    <p style="margin-top: 12px;">
+                        <strong>Sunday</strong><br />
+                        Closed
+                    </p>
+                    <div style="margin-top: 16px; padding-top: 16px; border-top: 1px solid var(--border-color);">
+                        <a href="https://maps.google.com/?q=Caranzalem+Goa" target="_blank" rel="noopener" style="color: var(--color-red); font-weight: 600; font-size: 0.85rem; letter-spacing: 1px;">
+                            View on Google Maps
+                        </a>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Footer Bottom -->
+            <div class="footer-bottom">
+                <span>&copy; 2026 Team Suresh Fitness. All rights reserved.</span>
+                <span>DESIGNED &amp; DEVELOPED BY <a href="#" style="color: var(--color-red);">AURQUIM</a></span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -18,7 +18,7 @@
     const bodyEl = document.body;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-        /* ============================================================
+           /* ============================================================
        1. PRELOADER — Numeric counter
        ============================================================ */
     function initPreloader() {
@@ -41,10 +41,7 @@
             progress += Math.floor(Math.random() * 8) + 4;
             if (progress > 100) progress = 100;
 
-            // Update the counter number
             counterEl.textContent = progress;
-
-            // Update the progress bar
             progressBar.style.width = progress + '%';
 
             if (progress >= 100) {
@@ -63,7 +60,6 @@
             }, 700);
         }
 
-        // Safety net
         window.addEventListener('load', () => {
             if (progress < 100) {
                 progress = 100;

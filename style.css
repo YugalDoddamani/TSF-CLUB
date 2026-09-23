@@ -308,9 +308,8 @@ section:first-of-type {
     outline: 2px solid var(--red-core);
     outline-offset: 3px;
 }
-
 /* ============================================================
-   6. PRELOADER — Numeric counter
+   6. PRELOADER — Tall Bodoni counter
    ============================================================ */
 .preloader {
     position: fixed;
@@ -338,25 +337,27 @@ section:first-of-type {
     align-items: center;
     gap: var(--space-6);
     width: 100%;
-    max-width: 320px;
+    max-width: 420px;
     padding: 0 var(--container-pad);
 }
 
-/* The tall counter number */
 .preloader-counter {
-    font-family: var(--font-sans);
-    font-size: clamp(6rem, 20vw, 12rem);
-    font-weight: 600;
-    line-height: 0.85;
-    letter-spacing: -0.06em;
+    font-family: 'Bodoni Moda', 'Times New Roman', serif;
+    font-optical-sizing: auto;
+    font-variation-settings: 'opsz' 96;
+    font-size: clamp(8rem, 30vw, 20rem);
+    font-weight: 700;
+    line-height: 0.78;
+    letter-spacing: -0.05em;
     color: var(--text-primary);
     font-variant-numeric: tabular-nums;
     font-feature-settings: 'tnum' 1;
     text-align: center;
-    transition: color var(--dur-base) var(--ease-out);
+    user-select: none;
+    /* Optical vertical trim so the number sits centered */
+    padding: 0.08em 0 0;
 }
 
-/* Progress bar below the counter */
 .preloader-bar-wrapper {
     width: 100%;
     height: 2px;
@@ -369,9 +370,15 @@ section:first-of-type {
     width: 0;
     height: 100%;
     background: var(--red-core);
-    transition: width 120ms linear;
+    transition: width 100ms linear;
 }
 
+@media (prefers-reduced-motion: reduce) {
+    .preloader,
+    .preloader-bar {
+        transition: none;
+    }
+}
 /* ============================================================
    7. HEADER — Floating pill
    ============================================================ */
@@ -1072,31 +1079,37 @@ section:first-of-type {
     max-width: 540px;
 }
 
-/* --- Pull quote: mark aligned to first line --- */
+/* --- Pull quote: absolute em-dash, no grid, word-split compatible --- */
 .pull-quote {
-    display: flex;
-    align-items: flex-start;
-    gap: var(--space-3);
+    position: relative;
+    padding-left: 2.25rem;
     font-family: var(--font-display);
-    font-size: clamp(1.375rem, 4.5vw, 1.75rem);
-    line-height: 1.3;
+    font-size: clamp(1.5rem, 4.5vw, 1.875rem);
+    line-height: 1.35;
     font-weight: 400;
     font-style: italic;
     letter-spacing: -0.015em;
     color: var(--text-primary);
-    margin: 0 0 var(--space-6);
+    margin: 0 0 var(--space-7);
     max-width: 520px;
 }
 
-.pull-quote-mark {
-    flex-shrink: 0;
+.pull-quote::before {
+    content: '—';
+    position: absolute;
+    left: 0;
+    top: 0;
     color: var(--red-core);
     font-style: normal;
     font-weight: 400;
     line-height: inherit;
-    padding-top: 0.08em;
 }
 
+/* Italic serif has deeper descenders — increase mask padding */
+.pull-quote .word {
+    padding-bottom: 0.24em;
+    margin-bottom: -0.24em;
+}
 .founder-note {
     font-size: 0.9375rem;
     line-height: 1.65;

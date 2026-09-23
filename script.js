@@ -387,7 +387,7 @@
         fadeTargets.forEach(el => el.classList.add('fade-up'));
 
         // ---- HERO: plays immediately after preloader finishes ----
-        const hero = document.querySelector('.hero');
+        const hero = document.querySelector('.hero, .profile-hero');
         if (hero) {
             document.addEventListener('tsf:ready', () => {
                 const heroHeaders = hero.querySelectorAll('.split-text');

@@ -2100,3 +2100,24 @@ section:first-of-type {
 blockquote.pull-quote {
     display: block !important;
 }
+
+
+/* --- Footer credit --- */
+.footer-credit {
+    font-size: 0.7rem;
+    color: var(--text-muted);
+    letter-spacing: 0.02em;
+}
+
+.footer-credit a {
+    color: var(--text-muted);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: color var(--dur-fast) var(--ease-out),
+                border-color var(--dur-fast) var(--ease-out);
+}
+
+.footer-credit a:hover {
+    color: var(--text-secondary);
+    border-bottom-color: var(--line-strong);
+}

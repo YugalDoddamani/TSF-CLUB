@@ -1616,7 +1616,7 @@ section:first-of-type {
         height: 100%;
         min-height: 480px;
     }
-}
+
 
 @media (min-width: 1024px) {
     .programs-grid {

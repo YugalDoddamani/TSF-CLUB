@@ -1191,11 +1191,12 @@ section:first-of-type {
 
 .studio-strip {
     display: flex;
-    gap: var(--space-3);
+    gap: var(--space-4);
     overflow-x: auto;
     scroll-snap-type: x mandatory;
+    scroll-padding-left: var(--container-pad);
     scrollbar-width: none;
-    padding: 0 var(--container-pad);
+    padding: var(--space-2) var(--container-pad) var(--space-4);
     -webkit-overflow-scrolling: touch;
 }
 
@@ -1203,28 +1204,26 @@ section:first-of-type {
     display: none;
 }
 
-.strip-item {
+/* Every tile — uniform size, both wide + normal */
+.strip-item,
+.strip-item-wide {
     position: relative;
     flex: 0 0 auto;
-    width: 78vw;
-    max-width: 420px;
-    aspect-ratio: 4 / 5;
+    width: 260px;
+    height: 340px;
+    aspect-ratio: auto;
     overflow: hidden;
     border-radius: var(--radius-md);
     background: var(--bg-surface);
     scroll-snap-align: start;
-}
-
-.strip-item-wide {
-    width: 88vw;
-    max-width: 620px;
-    aspect-ratio: 5 / 4;
+    border: 1px solid var(--line-subtle);
 }
 
 .strip-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    object-position: center;
     transition: transform var(--dur-slow) var(--ease-out);
 }
 
@@ -1234,14 +1233,18 @@ section:first-of-type {
 
 .strip-item figcaption {
     position: absolute;
-    left: var(--space-4);
-    bottom: var(--space-4);
-    padding: 6px 10px;
-    background: rgba(14, 14, 16, 0.7);
+    left: var(--space-3);
+    bottom: var(--space-3);
+    padding: 5px 10px;
+    background: rgba(14, 14, 16, 0.75);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
     border-radius: var(--radius-sm);
     color: #F5F4F1;
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    font-weight: 500;
 }
 
 /* ============================================================
@@ -1635,14 +1638,24 @@ section:first-of-type {
         grid-template-columns: 2fr 1fr 1fr 1.2fr;
     }
 
-    .strip-item {
-        width: 360px;
-    }
-
+   
+    @media (min-width: 640px) {
+    .strip-item,
     .strip-item-wide {
-        width: 520px;
+        width: 300px;
+        height: 400px;
     }
 }
+
+@media (min-width: 1024px) {
+    .strip-item,
+    .strip-item-wide {
+        width: 320px;
+        height: 420px;
+    }
+}
+}
+
 
 /* ============================================================
    19. REDUCED MOTION

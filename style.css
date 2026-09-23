@@ -2343,3 +2343,17 @@ html {
     scrollbar-width: thin;
     scrollbar-color: var(--line-strong) transparent;
 }
+
+/* ============================================================
+   LOGO — light theme inversion
+   ============================================================ */
+[data-theme="light"] .brand-mark,
+[data-theme="light"] .footer-mark {
+    filter: brightness(0);
+}
+
+/* Smooth the swap during theme transition */
+.brand-mark,
+.footer-mark {
+    transition: filter var(--dur-base) var(--ease-out);
+}

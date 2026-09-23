@@ -18,8 +18,8 @@
     const bodyEl = document.body;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-           /* ============================================================
-       1. PRELOADER — Numeric counter
+             /* ============================================================
+       1. PRELOADER — Numeric counter (fixed 2s duration)
        ============================================================ */
     function initPreloader() {
         const preloader = document.getElementById('tsfPreloader');
@@ -35,22 +35,35 @@
 
         bodyEl.classList.add('preloader-locked');
 
-        let progress = 0;
+        // Total counter duration in milliseconds
+        const DURATION = 2000;
 
-        const interval = setInterval(() => {
-            progress += Math.floor(Math.random() * 8) + 4;
-            if (progress > 100) progress = 100;
+        let startTime = null;
+        let frameId = null;
+        let dismissed = false;
 
-            counterEl.textContent = progress;
+        function tick(now) {
+            if (startTime === null) startTime = now;
+
+            const elapsed = now - startTime;
+            const progress = Math.min(100, (elapsed / DURATION) * 100);
+
+            counterEl.textContent = Math.floor(progress);
             progressBar.style.width = progress + '%';
 
-            if (progress >= 100) {
-                clearInterval(interval);
+            if (progress < 100) {
+                frameId = requestAnimationFrame(tick);
+            } else {
+                counterEl.textContent = '100';
+                progressBar.style.width = '100%';
                 setTimeout(dismissPreloader, 350);
             }
-        }, 80);
+        }
 
         function dismissPreloader() {
+            if (dismissed) return;
+            dismissed = true;
+
             preloader.classList.add('is-hidden');
             bodyEl.classList.remove('preloader-locked');
 
@@ -60,13 +73,7 @@
             }, 700);
         }
 
-        window.addEventListener('load', () => {
-            if (progress < 100) {
-                progress = 100;
-                counterEl.textContent = '100';
-                progressBar.style.width = '100%';
-            }
-        });
+        frameId = requestAnimationFrame(tick);
     }
 
         /* ============================================================

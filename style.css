@@ -1081,6 +1081,7 @@ section:first-of-type {
 
 /* --- Pull quote: absolute em-dash, no grid, word-split compatible --- */
 .pull-quote {
+    display: block;
     position: relative;
     padding-left: 2.25rem;
     font-family: var(--font-display);
@@ -1901,8 +1902,7 @@ section:first-of-type {
 
 /* Pull quote: mark pinned to first line */
 .pull-quote {
-    display: grid;
-    grid-template-columns: auto 1fr;
+    
     column-gap: var(--space-3);
     align-items: start;
     font-family: var(--font-display);
@@ -2019,4 +2019,9 @@ section:first-of-type {
     .founder-credentials dd {
         font-size: 1.375rem;
     }
+}
+
+
+blockquote.pull-quote {
+    display: block !important;
 }

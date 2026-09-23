@@ -2276,3 +2276,70 @@ blockquote.pull-quote {
     color: var(--text-secondary);
     border-bottom-color: var(--line-strong);
 }
+
+
+
+/* ============================================================
+   CUSTOM SCROLLBAR
+   ============================================================ */
+
+/* --- Firefox --- */
+html {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+}
+
+/* --- Webkit (Chrome, Safari, Edge, Opera) --- */
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: var(--line-strong);
+    border-radius: var(--radius-full);
+    border: 2px solid var(--bg-page);
+    background-clip: padding-box;
+    transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--red-core);
+    border-color: var(--bg-page);
+}
+
+::-webkit-scrollbar-corner {
+    background: transparent;
+}
+
+/* --- The studio strip: keep it visible but subtle --- */
+.studio-strip::-webkit-scrollbar {
+    display: block;
+    height: 4px;
+}
+
+.studio-strip::-webkit-scrollbar-track {
+    background: var(--line-subtle);
+    border-radius: var(--radius-full);
+    margin: 0 var(--container-pad);
+}
+
+.studio-strip::-webkit-scrollbar-thumb {
+    background: var(--line-strong);
+    border-radius: var(--radius-full);
+    border: none;
+}
+
+.studio-strip::-webkit-scrollbar-thumb:hover {
+    background: var(--red-core);
+}
+
+/* Firefox — studio strip */
+.studio-strip {
+    scrollbar-width: thin;
+    scrollbar-color: var(--line-strong) transparent;
+}

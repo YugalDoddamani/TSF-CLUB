@@ -237,6 +237,7 @@
     // Headers that will split into words and slide up
     const WORD_SPLIT_SELECTORS = [
         '.hero-headline',
+        '.profile-hero-name',
         '.section-title',
         '.pull-quote',
         '.program-body h3',

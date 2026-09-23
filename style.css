@@ -2380,7 +2380,7 @@ html {
    FOUNDER PAGE
    ============================================================ */
 
-/* --- Profile hero --- */
+/* ---------- Profile Hero ---------- */
 .profile-hero {
     padding-top: calc(var(--header-h) + var(--space-8));
     padding-bottom: var(--space-9);
@@ -2388,17 +2388,17 @@ html {
 }
 
 .profile-hero-head {
-    margin-bottom: var(--space-8);
+    margin-bottom: var(--space-7);
 }
 
 .profile-hero-name {
     font-family: var(--font-display);
-    font-size: clamp(2.75rem, 8vw, 6rem);
+    font-size: clamp(3rem, 8vw, 6.5rem);
     font-weight: 400;
-    line-height: 0.98;
-    letter-spacing: -0.025em;
+    line-height: 0.94;
+    letter-spacing: -0.028em;
     color: var(--text-primary);
-    margin: var(--space-4) 0 var(--space-3);
+    margin: var(--space-4) 0 var(--space-4);
     text-wrap: balance;
 }
 
@@ -2414,8 +2414,8 @@ html {
 .profile-hero-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-8);
-    align-items: center;
+    gap: var(--space-7);
+    align-items: start;
 }
 
 .profile-hero-portrait {
@@ -2439,54 +2439,63 @@ html {
 .profile-hero-copy {
     display: flex;
     flex-direction: column;
+    align-items: flex-start;
     gap: var(--space-6);
+    padding-top: var(--space-2);
 }
 
 .profile-hero-lede {
-    font-size: 1.0625rem;
+    font-size: 1.125rem;
     line-height: 1.7;
     color: var(--text-secondary);
-    max-width: 540px;
-}
-
-/* Stats bar at the bottom of the hero, same as homepage */
-.profile-hero-stats-bar {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: var(--space-5) var(--space-6);
-    margin-top: var(--space-9);
-    padding-top: var(--space-6);
-    border-top: 1px solid var(--line-subtle);
-}
-
-@media (min-width: 640px) {
-    .profile-hero-stats-bar {
-        grid-template-columns: repeat(4, 1fr);
-    }
+    max-width: 560px;
 }
 
 @media (min-width: 900px) {
+    .profile-hero {
+        padding-top: calc(var(--header-h) + var(--space-9));
+        padding-bottom: var(--space-10);
+    }
+
     .profile-hero-grid {
         grid-template-columns: 0.85fr 1fr;
         gap: var(--space-10);
+        align-items: start;
     }
 
+    /* Portrait held to a shorter ratio on desktop — doesn't overshoot the copy */
     .profile-hero-portrait {
-        aspect-ratio: 3 / 4;
+        aspect-ratio: 4 / 5;
+        max-height: 620px;
+    }
+
+    .profile-hero-copy {
+        padding-top: var(--space-4);
     }
 }
 
-/* --- Story: tighten spacing, unify body type --- */
+/* ---------- Story ---------- */
 .profile-story {
     padding: var(--space-9) 0;
     border-top: 1px solid var(--line-subtle);
 }
 
+.profile-story-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    align-items: start;
+}
+
+.profile-story-head .section-title {
+    margin-bottom: 0;
+}
+
 .profile-story-prose {
-    max-width: 680px;
     display: flex;
     flex-direction: column;
     gap: var(--space-5);
+    max-width: 640px;
 }
 
 .profile-story-prose p {
@@ -2496,11 +2505,25 @@ html {
 }
 
 .profile-story-prose .pull-quote {
-    margin: var(--space-4) 0;
-    font-size: clamp(1.5rem, 4vw, 1.875rem);
+    margin: var(--space-5) 0;
+    font-size: clamp(1.375rem, 3vw, 1.75rem);
+    line-height: 1.3;
 }
 
-/* --- Principles --- */
+@media (min-width: 900px) {
+    .profile-story-layout {
+        grid-template-columns: 260px 1fr;
+        gap: var(--space-10);
+    }
+
+    /* Sticky section header so it stays with the reading column */
+    .profile-story-head {
+        position: sticky;
+        top: calc(var(--header-h) + var(--space-6));
+    }
+}
+
+/* ---------- Principles ---------- */
 .profile-principles {
     padding: var(--space-9) 0;
     background: var(--bg-secondary);
@@ -2555,7 +2578,7 @@ html {
     line-height: 1.2;
     letter-spacing: -0.015em;
     color: var(--text-primary);
-    margin-top: var(--space-2);
+    margin-top: var(--space-1);
 }
 
 .principle-desc {
@@ -2564,7 +2587,7 @@ html {
     color: var(--text-secondary);
 }
 
-/* --- Credentials: cleaner grid with dividers --- */
+/* ---------- Credentials ---------- */
 .profile-credentials {
     padding: var(--space-9) 0;
     border-top: 1px solid var(--line-subtle);
@@ -2593,7 +2616,7 @@ html {
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
-    padding: var(--space-5) 0;
+    padding: var(--space-5) 0 var(--space-5);
     border-bottom: 1px solid var(--line-subtle);
 }
 
@@ -2609,13 +2632,20 @@ html {
 
 .credential-value {
     font-family: var(--font-display);
-    font-size: 1.25rem;
-    line-height: 1.25;
-    letter-spacing: -0.01em;
+    font-size: 1.375rem;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
     color: var(--text-primary);
+    margin-top: var(--space-2);
 }
 
-/* --- Beyond the studio --- */
+.credential-note {
+    font-size: 0.8125rem;
+    line-height: 1.5;
+    color: var(--text-secondary);
+}
+
+/* ---------- Beyond the studio ---------- */
 .profile-beyond {
     padding: var(--space-9) 0;
     background: var(--bg-secondary);
@@ -2667,12 +2697,7 @@ html {
     max-width: 520px;
 }
 
-.beyond-actions {
-    display: flex;
-    gap: var(--space-4);
-}
-
-/* --- CTA --- */
+/* ---------- CTA ---------- */
 .profile-cta {
     padding: var(--space-9) 0;
 }
@@ -2699,48 +2724,6 @@ html {
 
 .cta-title {
     font-family: var(--font-display);
-    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
-    color: var(--text-primary);
-    max-width: 520px;
-}
-
-.cta-actions {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-4);
-    align-items: center;
-}
-
-
-/* --- CTA --- */
-.profile-cta {
-    padding: var(--space-10) 0;
-}
-
-.cta-inner {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-6);
-    padding: var(--space-7);
-    background: var(--bg-surface);
-    border: 1px solid var(--line-subtle);
-    border-radius: var(--radius-lg);
-}
-
-@media (min-width: 900px) {
-    .cta-inner {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: var(--space-9) var(--space-8);
-    }
-}
-
-.cta-title {
-    font-family: var(--font-display);
     font-size: clamp(1.75rem, 3.5vw, 2.5rem);
     line-height: 1.1;
     letter-spacing: -0.02em;
@@ -2754,7 +2737,6 @@ html {
     gap: var(--space-4);
     align-items: center;
 }
-
 /* ============================================================
    PAGE TRANSITION
    ============================================================ */

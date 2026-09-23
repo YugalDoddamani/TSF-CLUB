@@ -1267,6 +1267,54 @@ section:first-of-type {
     text-align: right;
 }
 
+/* --- Founder meta: certifications + ventures --- */
+.founder-meta {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+    padding: var(--space-6) 0;
+    border-top: 1px solid var(--line-subtle);
+    border-bottom: 1px solid var(--line-subtle);
+    margin: 0 0 var(--space-7);
+}
+
+.founder-meta-item {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.founder-meta-item .mono {
+    font-size: 0.625rem;
+    color: var(--text-muted);
+}
+
+.founder-meta-item p {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+@media (min-width: 640px) {
+    .founder-meta {
+        grid-template-columns: 1fr 1fr;
+        gap: var(--space-6);
+    }
+}
+
+.founder-meta-item p a {
+    color: var(--text-primary);
+    border-bottom: 1px solid var(--line-default);
+    transition: color var(--dur-fast) var(--ease-out),
+                border-color var(--dur-fast) var(--ease-out);
+}
+
+.founder-meta-item p a:hover {
+    color: var(--red-core);
+    border-bottom-color: var(--red-core);
+}
+
 /* ============================================================
    13. SCHEDULE
    ============================================================ */

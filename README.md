@@ -1,38 +1,39 @@
-# TSF Fitness Studio — Website
+# TSF Fitness Studio
 
-> Combat sports and fitness studio in Caranzalem, Goa.  
-> Official website — programs, founder, schedule, studio gallery, and membership.
+> Combat sports and fitness studio in Caranzalem, Goa.
+> Official website covering programs, founder, studio space, and contact.
 
 ---
 
 ## About
 
-TSF (Team Suresh Fitness) is a combat sports and fitness studio founded in 2018 in Caranzalem, Goa. This repository contains the source for the studio's public website — a lightweight, editorial, mobile-first site built without frameworks or build tooling.
+TSF (Team Suresh Fitness) is a combat sports and fitness studio founded in 2018 in Caranzalem, Goa. This repository contains the source for the studio's public website, a lightweight, editorial, mobile-first site built without frameworks or build tooling.
 
-The site is primarily a **showcase** — it tells the story of the studio, the founder, the disciplines taught, and the space itself. It's designed to look and feel like a martial arts institution, not a marketing landing page.
+The site is primarily a showcase. It tells the story of the studio, the founder, the disciplines taught, and the space itself. It is designed to feel like a martial arts institution, not a marketing landing page.
 
 ---
 
 ## Live Site
 
-- **Production:** _[tsfitnessstudio.com](https://tsfitnessstudio.com)_ *(update when deployed)*
-- **Preview:** _[Netlify preview URL]*
+- Production: https://yugaldoddamani.github.io/TSF-CLUB/
+- Repository: https://github.com/YugalDoddamani/TSF-CLUB
 
 ---
 
 ## Features
 
-- **Editorial design system** — Instrument Serif display, Inter Tight body, JetBrains Mono labels
-- **Dark / light theme** — persistent via `localStorage`, no flash on load
-- **Full-bleed hero** — cinematic backdrop with subtle desktop-only parallax
-- **Word-by-word reveal** — headers animate in word-by-word on scroll
-- **Fade-up reveals** — supporting content fades in beneath headers
-- **Floating pill navigation** — glass-blurred, centered, collapses to a hamburger on mobile
-- **Mobile theme toggle inside the drawer** — no header clutter on small screens
-- **Studio gallery** — horizontal scroll strip with snap points
-- **Smooth anchor navigation** — no scroll-jacking, no libraries
-- **Accessible** — focus states, ARIA labels, reduced-motion respected
-- **Zero dependencies** — no jQuery, no React, no build step. Vanilla HTML, CSS, JS.
+- Editorial design system with Instrument Serif display, Inter Tight body, and JetBrains Mono labels
+- Dark and light theme, persisted via `localStorage` with no flash on load
+- Full-bleed hero with a subtle desktop-only parallax backdrop
+- Word-by-word reveal animation for headers on scroll
+- Fade-up reveals for supporting content
+- Floating pill navigation with glass blur, centered, collapsing to a hamburger on mobile
+- Mobile theme toggle inside the drawer, keeping the header clean on small screens
+- Horizontal studio gallery strip with snap points
+- Wipe-up page transition between all pages
+- Smooth anchor navigation with no libraries and no scroll-jacking
+- Accessible focus states, ARIA labels, and reduced-motion support
+- Zero dependencies. No jQuery, no React, no build step. Just HTML, CSS, and vanilla JS.
 
 ---
 
@@ -42,51 +43,43 @@ The site is primarily a **showcase** — it tells the story of the studio, the f
 |-------|--------|-----|
 | Markup | Semantic HTML5 | Readable, accessible, crawlable |
 | Styling | Vanilla CSS with custom properties | Theme switching without JS overhead |
-| Behaviour | Vanilla ES6 modules-in-IIFE | No framework, no build, no bundle |
-| Fonts | Google Fonts (3 families) | Preconnected, `display: swap` |
+| Behaviour | Vanilla ES6 in an IIFE | No framework, no build, no bundle |
+| Fonts | Google Fonts (3 families) | Preconnected with `display: swap` |
 | Images | WebP | Smaller payloads, better quality |
 
-**No build tools. No npm. No dependencies.** Edit, save, refresh.
+No build tools. No npm. No dependencies. Edit, save, refresh.
 
 ---
 
 ## Project Structure
-tsf-studio/
-├── index.html — Homepage
-├── style.css — All styles (tokens, components, responsive)
-├── script.js — Preloader, theme, nav, reveals, parallax
-├── assets/
-│ ├── TSF®.png — Brand mark (header + footer)
-│ ├── TSF STAMP R.png — Favicon
-│ ├── Banner noBG.png — Preloader logo
-│ ├── Owner img 1.png — Founder portrait
-│ ├── Studio 1.webp — Hero image
-│ ├── Studio 2.webp — Gallery
-│ ├── Studio 3.webp — Gallery
-│ ├── Studio 4.webp — Gallery
-│ ├── Studio 5.webp — Gallery
-│ └── Studio 6.webp — Gallery
-└── README.md
+TSF-CLUB/
+├── index.html Homepage
+├── programs.html Programs page
+├── founder.html Founder page
+├── contact.html Contact page
+├── style.css All styles (tokens, components, responsive)
+├── script.js Preloader, theme, nav, reveals, parallax, transitions
+├── README.md This file
+├── MEMORY.md Internal working notes
+└── assets/
+├── TSF®.png Brand mark (header and footer)
+├── TSF STAMP R.png Favicon
+├── Owner img 1.webp Founder portrait
+├── Studio 1.webp Hero backdrop
+├── Studio 2.webp Gallery
+├── Studio 3.webp Gallery
+├── Studio 4.webp Gallery
+├── Studio 5.webp Gallery
+├── Studio 6.webp Gallery
+└── programs/
+└── (11 program images to be dropped in)
 
 text
 
-Future pages (planned):
-├── programs/
-│ ├── index.html
-│ ├── mma.html
-│ ├── taekwondo.html
-│ ├── crossfit.html
-│ ├── calisthenics.html
-│ ├── yoga.html
-│ └── kids-taekwondo.html
-├── about.html
-├── schedule.html
-├── contact.html
+Planned additions:
 ├── events.html
-├── events/
-│ └── [slug].html
-└── data/
-└── events.json
+└── events/
+└── [slug].html
 
 text
 
@@ -98,11 +91,12 @@ text
 
 No installation required.
 
-1. **Clone the repository**
+1. Clone the repository:
+
    ```bash
-   git clone https://github.com/[org]/tsf-studio.git
-   cd tsf-studio
-Serve it locally — pick one:
+   git clone https://github.com/YugalDoddamani/TSF-CLUB.git
+   cd TSF-CLUB
+Serve it locally. Pick any one:
 
 bash
 # Python 3
@@ -113,51 +107,54 @@ npx serve .
 
 # PHP
 php -S localhost:8000
+Or just open index.html directly in your browser.
 
-# Or just open index.html directly in your browser
-Open http://localhost:8000
+Open http://localhost:8000.
 
 Editing
 File	Purpose
-index.html	Page markup
-style.css	All styles — tokens live at the top in :root
+index.html	Homepage markup
+programs.html	Programs page markup
+founder.html	Founder page markup
+contact.html	Contact page markup
+style.css	All styles. Design tokens live at the top in :root
 script.js	All interactions
 assets/	Images and brand assets
-Changes to any file just require a browser refresh. No compilation.
+Changes to any file just require a browser refresh. No compilation step.
 
 Design System
-All design tokens live at the top of style.css in the :root selector. If you want to tweak the site's look, that's the only place you need to touch.
+All design tokens live at the top of style.css inside the :root selector. To change the site's look, that is the only place you need to touch.
 
 Color
 Token	Dark	Light	Use
 --bg-page	#0E0E10	#F7F6F3	Page background
---bg-surface	#17171A	#FFFFFF	Cards, panels
+--bg-surface	#17171A	#FFFFFF	Cards and panels
 --text-primary	#F5F4F1	#151515	Body text
 --text-secondary	#A6A5A1	#5C5B58	Supporting text
---text-muted	#6B6A67	#9A9995	Labels, meta
+--text-muted	#6B6A67	#9A9995	Labels and metadata
 --red-core	#C81E1E	#B01818	Signature accent
 --red-hover	#A31515	#8C1010	Accent hover
-Red is used sparingly — CTA buttons, active nav, one accent per section. Everything else is neutral.
+Red is used sparingly: CTA buttons, active nav state, and one accent per section. Everything else stays neutral.
 
 Typography
 Role	Font	Use
 Display	Instrument Serif	Hero, section titles, pull quotes
 Body	Inter Tight	All UI copy, paragraphs, labels
-Mono	JetBrains Mono	Technical labels, timestamps
-Uppercase is reserved for mono labels only (e.g., FOUNDER · HEAD COACH). Everything else is sentence case.
+Mono	JetBrains Mono	Technical labels and metadata
+Uppercase is reserved for mono labels only, for example FOUNDER · HEAD COACH. Everything else is sentence case.
 
 Motion
 Every animation is intentional. Durations:
 
-200ms — hover, focus
+200ms for hover and focus
 
-320ms — theme switch, nav toggle
+320ms for theme switch and nav toggle
 
-500ms — image scale on hover
+500ms for image scale and page transition
 
-700–750ms — text reveal
+700 to 750ms for text reveal
 
-All animation respects prefers-reduced-motion. Users with that setting on see no animation at all.
+All animation respects prefers-reduced-motion. Users with that setting enabled see no animation at all.
 
 Browser Support
 Browser	Support
@@ -166,15 +163,18 @@ Firefox	Latest 2 versions
 Safari (macOS)	15+
 Safari (iOS)	15+
 Chrome Android	Latest
-Uses color-mix() and backdrop-filter — both widely supported. Degrades gracefully where they aren't.
+The site uses color-mix() and backdrop-filter, both widely supported. Where they are not, the design degrades gracefully.
 
 Deployment
-The site is static — any static host works.
+The site is static, so any static host works.
 
-Netlify (recommended)
+GitHub Pages (current)
+The repository is configured for GitHub Pages. Push to main and it deploys automatically.
+
+Netlify
 Connect the GitHub repo to Netlify
 
-Build command: (none)
+Build command: leave empty
 
 Publish directory: . (root)
 
@@ -183,59 +183,59 @@ Deploy
 Netlify handles HTTPS, CDN, and deploys on every push to main.
 
 Vercel
-Same flow — import the repo, no build settings needed.
+Same flow as Netlify. Import the repo, no build settings needed.
 
 Manual
 Upload the entire folder to any web host via FTP. Works out of the box.
 
 Custom domain
-Point the DNS A record (or CNAME) to your host. HTTPS is auto-provisioned on Netlify and Vercel.
+Point the DNS A record or CNAME to your host. HTTPS is auto-provisioned on Netlify and Vercel.
 
 Performance
 Targets:
 
 Metric	Goal
-First Contentful Paint	< 1.2s
-Largest Contentful Paint	< 2.0s
-Total page weight	< 800KB
-JS bundle	< 15KB (unminified)
+First Contentful Paint	Under 1.2s
+Largest Contentful Paint	Under 2.0s
+Total page weight	Under 800KB
+JS bundle	Under 15KB unminified
 Images should always be:
 
 Served as WebP
 
-Sized appropriately (max 1920px wide for hero)
+Sized appropriately, with the hero capped at 1920px wide
 
 Lazy-loaded below the fold
 
-Given loading="eager" only for the hero
+Marked loading="eager" only for the hero
 
 Accessibility
 All interactive elements are keyboard reachable
 
-Focus rings visible on all focusable elements
+Focus rings are visible on all focusable elements
 
-ARIA labels on icon-only buttons
+Icon-only buttons have ARIA labels
 
-Semantic landmarks (header, nav, main, footer)
+Semantic landmarks are used throughout: header, nav, main, footer
 
-prefers-reduced-motion fully respected
+prefers-reduced-motion is fully respected
 
 Color contrast meets WCAG AA on all text
 
 If you spot an issue, please open an issue.
 
 Roadmap
-☑ Homepage rebuild with editorial design system
-☑ Dark / light theme with persistent toggle
+☑ Homepage with editorial design system
+☑ Dark and light theme with persistent toggle
 ☑ Word-by-word reveal animations
 ☑ Floating pill navigation
-□ Programs hub page
-□ Individual program detail pages (MMA, Taekwondo, CrossFit, Calisthenics, Yoga, Kids)
-□ About / Founder full page
-□ Schedule page (all six days)
-□ Contact page
-□ Events module (listing + detail + countdown)
-□ Event registration with payment (Razorpay / Stripe)
+☑ Programs page with image placeholders
+☑ Founder page with sticky portrait layout
+☑ Contact page with map and FAQ
+☑ Wipe-up page transition between pages
+□ Program detail pages (MMA, Taekwondo, CrossFit, Calisthenics, Yoga, Kids)
+□ Events module with listing and detail pages
+□ Event registration with payment via Razorpay or Stripe
 □ CMS integration when event volume grows
 Contributing
 This is a private business site. External contributions are not currently accepted.
@@ -248,18 +248,18 @@ Make changes
 
 Test locally on both dark and light themes
 
-Test on mobile (real device if possible)
+Test on mobile if possible
 
 Open a pull request against main
 
 Credits
-Studio & content — Team Suresh Fitness, Caranzalem, Goa
+Studio and content: Team Suresh Fitness, Caranzalem, Goa
 
-Founder — Master Suresh
+Founder: Master Suresh
 
-Design & development — Aurquim
+Design and development: Yugal Doddamani
 
-Photography — Studio TSF (internal)
+Photography: Studio TSF
 
 License
 All rights reserved.
@@ -270,21 +270,9 @@ This repository is public for transparency and archival purposes. No part of the
 Contact
 TSF Fitness Studio
 Caranzalem, Goa 403002, India
-📞 +91 95459 37344
-✉️ tsflivestrong@gmail.com
 
-For business inquiries: Aurquim — [contact method]
+Phone: +91 95459 37344
 
-text
+Email: tsflivestrong@gmail.com
 
----
-
-## Notes on the README
-
-- **No badges** — adding "build: passing" badges for a static site with no CI looks silly. Skipped intentionally.
-- **No screenshots placeholder** — if you want, add a `## Screenshots` section after `## About` with a hero image once it's deployed. I left it out so the file stays clean.
-- **Roadmap checkboxes** — the `[x]` and `[ ]` items render as a real GitHub task list, so you can tick them off as you build.
-- **Deployment section** covers the three most likely paths (Netlify / Vercel / FTP), so whoever inherits this repo knows where to start.
-- **License is intentionally strict** — it's a real business site, not an open-source project. The wording makes that clear without being hostile.
-
-Drop this at the root of the repo as `README.md`, and push. The GitHub landing page will now read as a professional, self-documenting project.
+For business inquiries, reach out to Yugal Doddamani via https://yugaldoddamani.pages.dev/.

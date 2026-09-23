@@ -82,8 +82,8 @@
         });
     }
 
-    /* ============================================================
-       2. HERO PARALLAX (disabled below 768px)
+        /* ============================================================
+       2. HERO PARALLAX (backdrop)
        ============================================================ */
     function initHeroParallax() {
         const heroBg = document.getElementById('heroBg');
@@ -95,14 +95,25 @@
         let ticking = false;
 
         function update() {
-            // Skip on mobile to prevent dynamic-viewport glitching
+            // Disable on mobile — prevents iOS/Android dynamic viewport glitches
             if (window.innerWidth < 768) {
                 heroImg.style.transform = 'translate3d(0,0,0)';
                 ticking = false;
                 return;
             }
 
-            const translateY = window.pageYOffset * 0.22;
+            // Only run while hero is roughly in view
+            const hero = heroImg.closest('.hero');
+            const heroBottom = hero ? hero.offsetTop + hero.offsetHeight : 0;
+            const scrollY = window.pageYOffset;
+
+            if (scrollY > heroBottom) {
+                ticking = false;
+                return;
+            }
+
+            // 0.28 gives a strong, cinematic backdrop shift
+            const translateY = scrollY * 0.28;
             heroImg.style.transform = 'translate3d(0,' + translateY + 'px,0)';
             ticking = false;
         }

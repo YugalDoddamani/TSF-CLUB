@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <title>Programs — TSF Fitness Studio | Caranzalem, Goa</title>
+
+    <meta name="description" content="Eleven programs across adults and kids at TSF Fitness Studio in Caranzalem, Goa. MMA, Taekwondo, CrossFit, Calisthenics, Yoga, Gymnastics, and Dance." />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="TSF Fitness Studio" />
+    <meta property="og:title" content="Programs — TSF Fitness Studio" />
+    <meta property="og:description" content="Eleven disciplines across adults and kids. Coached, structured, open to all levels." />
+    <meta property="og:url" content="https://tsf-club.pages.dev/programs.html" />
+    <meta property="og:image" content="https://tsf-club.pages.dev/assets/Studio%201.webp" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:locale" content="en_IN" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Programs — TSF Fitness Studio" />
+    <meta name="twitter:description" content="Eleven disciplines across adults and kids." />
+    <meta name="twitter:image" content="https://tsf-club.pages.dev/assets/Studio%201.webp" />
+
+    <link rel="icon" href="assets/TSF STAMP R.png" type="image/png" />
+    <link rel="apple-touch-icon" href="assets/TSF STAMP R.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+    <!-- ============================================================
+    PAGE TRANSITION
+    ============================================================ -->
+    <div class="page-transition" id="pageTransition" aria-hidden="true"></div>
+    <script>
+        (function () {
+            var panel = document.getElementById('pageTransition');
+            if (!panel) return;
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    panel.style.transition = 'transform 500ms cubic-bezier(0.76, 0, 0.24, 1)';
+                    panel.style.transform = 'translateY(-100%)';
+                });
+            });
+        })();
+    </script>
+
+    <!-- ============================================================
+    HEADER — Floating pill
+    ============================================================ -->
+    <header class="site-header" id="siteHeader">
+        <div class="header-pill">
+
+            <a href="index.html" class="brand" aria-label="TSF Fitness Studio Home">
+                <img src="assets/TSF®.png" alt="TSF Fitness Studio" class="brand-mark" />
+            </a>
+
+            <nav class="primary-nav" aria-label="Primary">
+                <a href="index.html">Home</a>
+                <a href="programs.html" class="is-active">Programs</a>
+                <a href="founder.html">Founder</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+            <div class="header-actions">
+                <label class="theme-switch header-theme" aria-label="Toggle theme">
+                    <input type="checkbox" id="themeCheckbox" />
+                    <span class="theme-track">
+                        <span class="theme-thumb"></span>
+                    </span>
+                </label>
+
+                <a href="https://wa.me/919545937344?text=Hi%20TSF%20Team%2C%20I%27d%20like%20to%20book%20a%20trial%20session."
+                   target="_blank" rel="noopener"
+                   class="btn btn-primary btn-sm header-cta">Book a trial</a>
+            </div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+            </button>
+
+        </div>
+    </header>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <div class="mobile-menu-inner">
+            <nav class="mobile-nav" aria-label="Mobile">
+                <a href="index.html">Home</a>
+                <a href="programs.html">Programs</a>
+                <a href="founder.html">Founder</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+            <div class="mobile-menu-meta">
+                <div class="mobile-theme-row">
+                    <span>Appearance</span>
+                    <label class="theme-switch" aria-label="Toggle theme">
+                        <input type="checkbox" id="mobileThemeCheckbox" />
+                        <span class="theme-track">
+                            <span class="theme-thumb"></span>
+                        </span>
+                    </label>
+                </div>
+                <p>Caranzalem, Goa 403002</p>
+                <a href="tel:+919545937344">+91 95459 37344</a>
+                <a href="https://wa.me/919545937344?text=Hi%20TSF%20Team%2C%20I%27d%20like%20to%20book%20a%20trial%20session."
+                   target="_blank" rel="noopener"
+                   class="btn btn-primary btn-block">Book a trial</a>
+            </div>
+        </div>
+    </div>
+
+    <main id="top">
+
+        <!-- ============================================================
+        PAGE HERO
+        ============================================================ -->
+        <section class="page-hero">
+            <div class="container">
+                <p class="eyebrow">
+                    <span class="eyebrow-dot"></span>
+                    Programs
+                </p>
+                <h1 class="page-hero-title">Eleven disciplines. One roof.</h1>
+                <p class="page-hero-lede">
+                    From combat sports to conditioning, every program is
+                    coached, structured, and open to all levels — whether
+                    you're a beginner finding your footing or a fighter
+                    sharpening your edge.
+                </p>
+            </div>
+        </section>
+
+        <!-- ============================================================
+        ADULTS
+        ============================================================ -->
+        <section class="programs-section" id="adults">
+            <div class="container">
+
+                <header class="programs-section-head">
+                    <span class="mono">01 — For adults</span>
+                    <h2 class="section-title">Adults</h2>
+                    <p class="section-lede">
+                        Five programs built for adults. Morning conditioning,
+                        evening technique, or one-on-one coaching — pick what
+                        fits your schedule.
+                    </p>
+                </header>
+
+                <div class="program-cards">
+
+                    <!-- 01 · Kickboxing & MMA -->
+                    <article class="program-card">
+                        <div class="program-card-media">
+                            <img src="assets/programs/kickboxing-mma.webp"
+                                 alt="Kickboxing and MMA training at TSF"
+                                 loading="lazy"
+                                 data-label="Kickboxing & MMA" />
+                        </div>
+                        <div class="program-card-body">
+                            <span class="program-card-index mono">01 · Combat</span>
+                            <h3 class="program-card-title">Kickboxing &amp; MMA</h3>
+                            <p class="program-card-desc">
+                                Striking, grappling, and cage control — the full
+                                discipline, from first principles.
+                            </p>
+                            <dl class="program-card-meta">
+                                <div>
+                                    <dt>Days</dt>
+                                    <dd>Monday – Saturday</dd>
+                                </div>
+                                <div>
+                                    <dt>Timing</dt>
+                                    <dd>7:00 – 8:00 AM · 7:00 – 8:30 PM</dd>
+                                </div>
+                                <div>
+                                    <dt>Fee</dt>
+                                    <dd>₹3,000 / month</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </article>
+
+                    <!-- 02 · CrossFit -->
+                    <article class="program-card">
+                        <div class="program-card-media">
+                            <img src="assets/programs/crossfit.webp"
+                                 alt="CrossFit training at TSF"
+                                 loading="lazy"
+                                 data-label="CrossFit" />
+                        </div>
+                        <div class="program-card-body">
+                            <span class="program-card-index mono">02 · Conditioning</span>
+                            <h3 class="program-card-title">CrossFit</h3>
+                            <p class="program-card-desc">
+                                High-intensity functional work. Strength,
+                                endurance, and the grit to keep going.
+                            </p>
+                            <dl class="program-card-meta">
+                                <div>
+                                    <dt>Days</dt>
+                                    <dd>Tue · Thu · Sat</dd>
+                                </div>
+                                <div>
+                                    <dt>Timing</dt>
+                                    <dd>8:00 – 9:00 AM · 9:00 – 10:00 AM</dd>
+                                </div>
+                                <div>
+                                    <dt>Fee</dt>
+                                    <dd>₹3,000 / month</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </article>
+
+                    <!-- 03 · Calisthenics -->
+                    <article class="program-card">
+                        <div class="program-card-media">
+                            <img src="assets/programs/calisthenics.webp"
+                                 alt="Calisthenics training at TSF"
+                                 loading="lazy"
+                                 data-label="Calisthenics" />
+                        </div>
+                        <div class="program-card-body">
+                            <span class="program-card-index mono">03 · Bodyweight</span>
+                            <h3 class="program-card-title">Calisthenics</h3>
+                            <p class="program-card-desc">
+                                Bodyweight mastery — control, strength, and
+                                mobility built without equipment.
+                            </p>
+                            <dl class="program-card-meta">
+                                <div>
+                                    <dt>Days</dt>
+                                    <dd>Tue · Thu · Sat</dd>
+                                </div>
+                                <div>
+                                    <dt>Timing</dt>
+                                    <dd>6:00 – 7:00 PM</dd>
+                                </div>
+                                <div>
+                                    <dt>Fee</dt>
+                                    <dd>₹3,000 / month</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </article>
+
+                    <!-- 04 · Yoga -->
+                    <article class="program-card">
+                        <div class="program-card-media">
+                            <img src="assets/programs/yoga-adults.webp"
+                                 alt="Yoga for adults at TSF"
+                                 loading="lazy"
+                                 data-label="Yoga" />
+                        </div>
+                        <div class="program-card-body">
+                            <span class="program-card-index mono">04 · Mobility</span>
+                            <h3 class="program-card-title">Yoga</h3>
+                            <p class="program-card-desc">
+                                Flexibility, breathwork, and mental clarity —
+                                built for people who train hard.
+                            </p>
+                            <dl class="program-card-meta">
+                                <div>
+                                    <dt>Days</dt>
+                                    <dd>Mon · Wed · Fri</dd>
+                                </div>
+                                <div>
+                                    <dt>Timing</dt>
+                                    <dd>8:00 – 9:00 AM · 9:00 – 10:00 AM</dd>
+                                </div>
+                                <div>
+                                    <dt>Fee</dt>
+                                    <dd>₹3,000 / month</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </article>
+
+                    <!-- 05 · Personal Training -->
+                    <article class="program-card">
+                        <div class="program-card-media">
+                            <img src="assets/programs/personal-training.webp"
+                                 alt="One-on-one personal training at TSF"
+                                 loading="lazy"
+                                 data-label="Personal Training" />
+                        </div>
+                        <div class="program-card-body">
+                            <span class="program-card-index mono">05 · One-on-one</span>
+                            <h3 class="program-card-title">Personal Training</h3>
+                            <p class="program-card-desc">
+                                One-on-one sessions built entirely around your
+                                goals, schedule, and pace.
+                            </p>
+                            <dl class="program-card-meta">
+                                <div>
+                                    <dt>Format</dt>
+                                    <dd>By appointment</dd>
+                                </div>
+                                <div>
+                                    <dt>Timing</dt>
+                                    <dd>Scheduled to fit you</dd>
+                                </div>
+                                <div>
+                                    <dt>Fee</dt>
+                                    <dd>On request</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================================================
+        KIDS
+        ============================================================ -->
+        <section class="programs-section" id="kids">
+            <div class="container">
+
+                <header class="programs-section-head">
+                    <span class="mono">02 — For kids</span>
+                    <h2 class="section-title">Kids</h2>
+                    <p class="section-lede">
+                        Six programs built for young athletes. Discipline,
+                        focus, and fun — taught by coaches who've trained
+                        every age group.
+                    </p>
+                </header>
+
+                <div class="program-cards">
+
+                    <!-- 06 · Kickboxing -->
+                    <article class="program-card">
+                        <div class="program-card-media">
+                            <img src="assets/programs/kids-kickboxing.webp"
+                                 alt="Kids kickboxing training at TSF"
+                                 loading="lazy"
+                                 data-label="Kids Kickboxing" />
+                        </div>
+                        <div class="program-card-body">
+                            <span class="program-card-index mono">06 · Combat</span>
+                            <h3 class="program-card-title">Kickboxing</h3>
+                            <p class="program-card-desc">
+                                Striking fundamentals, coordination, and
+                                confidence — taught safely for kids.
+                            </p>
+                            <dl class="program-card-meta">
+                                <div>
+                                    <dt>Days</dt>
+                                    <dd>Mon · Wed · Fri</dd>
+                                </div>
+                                <div>
+                                    <dt>Timing</dt>
+                                    <dd>5:00 – 6:00 PM</dd>
+                                </div>
+                                <div>
+                                    <dt>Fee</dt>
+                                    <dd>₹3,000 / month</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </article>
+
+                    <!-- 07 · Taekwondo -->
+                    <article class="program-card">
+                        <div class="program-card-media">
+                            <img src="assets/programs/kids-taekwondo.webp"
+                                 alt="Kids Taekwondo training at TSF"
+                                 loading="lazy"
+                                 data-label="Kids Taekwondo" />
+                        </div>
+                        <div class="program-card-body">
+                            <span class="program-card-index mono">07 · Traditional</span>
+                            <h3 class="program-card-title">Taekwondo</h3>
+                            <p class="program-card-desc">
+                                Korean martial art focused on kicks, forms, and
+                                sparring. STAG-certified instruction.
+                            </p>
+                            <dl class="program-card-meta">
+                                <div>
+                                    <dt>Days</dt>
+                                    <dd>Mon · Wed · Fri</dd>
+                                </div>
+                                <div>
+                                    <dt>Timing</dt>
+                                    <dd>6:00 – 7:00 PM</dd>
+                                </div>
+                                <div>
+                                    <dt>Fee</dt>
+                                    <dd>₹2,500 / month</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </article>
+
+                    <!-- 08 · Yoga -->
+                    <article class="program-card">
+                        <div class="program-card-media">
+                            <img src="assets/programs/kids-yoga.webp"
+                                 alt="Kids yoga at TSF"
+                                 loading="lazy"
+                                 data-label="Kids Yoga" />
+                        </div>
+                        <div class="program-card-body">
+                            <span class="program-card-index mono">08 · Mobility</span>
+                            <h3 class="program-card-title">Yoga</h3>
+                            <p class="program-card-desc">
+                                Breathwork, flexibility, and focus — a
+                                foundational practice for young bodies.
+                            </p>
+                            <dl class="program-card-meta">
+                                <div>
+                                    <dt>Days</dt>
+                                    <dd>Mon · Wed · Fri</dd>
+                                </div>
+                                <div>
+                                    <dt>Timing</dt>
+                                    <dd>5:00 – 6:00 PM</dd>
+                                </div>
+                                <div>
+                                    <dt>Fee</dt>
+                                    <dd>₹3,000 / month</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </article>
+
+                    <!-- 09 · Gymnastics -->
+                    <article class="program-card">
+                        <div class="program-card-media">
+                            <img src="assets/programs/kids-gymnastics.webp"
+                                 alt="Kids gymnastics at TSF"
+                                 loading="lazy"
+                                 data-label="Kids Gymnastics" />
+                        </div>
+                        <div class="program-card-body">
+                            <span class="program-card-index mono">09 · Movement</span>
+                            <h3 class="program-card-title">Gymnastics</h3>
+                            <p class="program-card-desc">
+                                Balance, tumbling, and body control — a
+                                foundation for every other sport.
+                            </p>
+                            <dl class="program-card-meta">
+                                <div>
+                                    <dt>Days</dt>
+                                    <dd>Tue · Thu · Sat</dd>
+                                </div>
+                                <div>
+                                    <dt>Timing</dt>
+                                    <dd>6:00 – 7:00 PM</dd>
+                                </div>
+                                <div>
+                                    <dt>Fee</dt>
+                                    <dd>₹3,000 / month</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </article>
+
+                    <!-- 10 · Calisthenics -->
+                    <article class="program-card">
+                        <div class="program-card-media">
+                            <img src="assets/programs/kids-calisthenics.webp"
+                                 alt="Kids calisthenics at TSF"
+                                 loading="lazy"
+                                 data-label="Kids Calisthenics" />
+                        </div>
+                        <div class="program-card-body">
+                            <span class="program-card-index mono">10 · Bodyweight</span>
+                            <h3 class="program-card-title">Calisthenics</h3>
+                            <p class="program-card-desc">
+                                Bodyweight strength and control — the basics
+                                of movement, taught early.
+                            </p>
+                            <dl class="program-card-meta">
+                                <div>
+                                    <dt>Days</dt>
+                                    <dd>Tue · Thu · Sat</dd>
+                                </div>
+                                <div>
+                                    <dt>Timing</dt>
+                                    <dd>5:00 – 6:00 PM</dd>
+                                </div>
+                                <div>
+                                    <dt>Fee</dt>
+                                    <dd>₹3,000 / month</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </article>
+
+                    <!-- 11 · Dance -->
+                    <article class="program-card">
+                        <div class="program-card-media">
+                            <img src="assets/programs/kids-dance.webp"
+                                 alt="Kids dance classes at TSF"
+                                 loading="lazy"
+                                 data-label="Kids Dance" />
+                        </div>
+                        <div class="program-card-body">
+                            <span class="program-card-index mono">11 · Movement</span>
+                            <h3 class="program-card-title">Dance</h3>
+                            <p class="program-card-desc">
+                                Rhythm, coordination, and expression — a
+                                joyful way for kids to stay active.
+                            </p>
+                            <dl class="program-card-meta">
+                                <div>
+                                    <dt>Days</dt>
+                                    <dd>Tue · Thu</dd>
+                                </div>
+                                <div>
+                                    <dt>Timing</dt>
+                                    <dd>4:00 – 5:00 PM</dd>
+                                </div>
+                                <div>
+                                    <dt>Fee</dt>
+                                    <dd>On request</dd>
+                                </div>
+                            </dl>
+                        </div>
+                    </article>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ============================================================
+        CTA
+        ============================================================ -->
+        <section class="page-cta" id="cta">
+            <div class="container">
+                <div class="page-cta-inner">
+
+                    <p class="eyebrow cta-eyebrow">Not sure where to start?</p>
+
+                    <h2 class="page-cta-title">
+                        Try a class. <em>On us.</em>
+                    </h2>
+
+                    <p class="page-cta-desc">
+                        Walk in during opening hours, meet the coaches, watch
+                        a session. First class is free — no card, no
+                        commitment.
+                    </p>
+
+                    <div class="page-cta-actions">
+                        <a href="https://wa.me/919545937344?text=Hi%20TSF%20Team%2C%20I%27d%20like%20to%20book%20a%20trial%20session."
+                           target="_blank" rel="noopener"
+                           class="btn btn-primary">Book a free trial</a>
+                        <a href="contact.html" class="btn btn-outline">
+                            Visit the studio
+                            <span class="arrow">→</span>
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ============================================================
+    FOOTER
+    ============================================================ -->
+    <footer class="site-footer">
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <div class="footer-col footer-col-brand">
+                    <img src="assets/TSF®.png" alt="TSF Fitness Studio" class="footer-mark" />
+                    <p class="footer-tagline">
+                        Combat sports and fitness studio in Caranzalem, Goa.
+                        Training fighters and everyday athletes since 2018.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Pages</h4>
+                    <ul class="footer-list">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="programs.html">Programs</a></li>
+                        <li><a href="founder.html">Founder</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Disciplines</h4>
+                    <ul class="footer-list">
+                        <li><a href="programs.html">MMA</a></li>
+                        <li><a href="programs.html">Taekwondo</a></li>
+                        <li><a href="programs.html">CrossFit</a></li>
+                        <li><a href="programs.html">Calisthenics</a></li>
+                        <li><a href="programs.html">Yoga</a></li>
+                        <li><a href="programs.html">Kids Programs</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Reach us</h4>
+                    <ul class="footer-list">
+                        <li><a href="tel:+919545937344">+91 95459 37344</a></li>
+                        <li><a href="mailto:TSFLIVESTRONG@GMAIL.COM">tsflivestrong@gmail.com</a></li>
+                        <li><a href="https://maps.google.com/?q=Caranzalem+Goa" target="_blank" rel="noopener">Caranzalem, Goa</a></li>
+                    </ul>
+                    <div class="footer-social">
+                        <a href="#" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+                        </a>
+                        <a href="#" aria-label="YouTube">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="2" y="6" width="20" height="12" rx="3"/><path d="M10 9l5 3-5 3z" fill="currentColor" stroke="none"/></svg>
+                        </a>
+                        <a href="#" aria-label="Facebook">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 8h2.5V5H14a4 4 0 0 0-4 4v2H8v3h2v6h3v-6h2.5l.5-3H13V9a1 1 0 0 1 1-1z"/></svg>
+                        </a>
+                        <a href="https://wa.me/919545937344" target="_blank" rel="noopener" aria-label="WhatsApp">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5A8.5 8.5 0 1 1 11.5 3a8.4 8.4 0 0 1 8.4 8.5z"/><path d="M4 20l1.3-4"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <span>© 2026 Team Suresh Fitness. All rights reserved.</span>
+                <span class="footer-credit">
+                    Designed &amp; developed by
+                    <a href="https://yugaldoddamani.pages.dev/" target="_blank" rel="noopener">Yugal Doddamani</a>
+                </span>
+            </div>
+
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

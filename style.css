@@ -2823,3 +2823,275 @@ html {
         display: none !important;
     }
 }
+
+/* ============================================================
+   PAGE HERO — shared by programs.html and contact.html
+   ============================================================ */
+.page-hero {
+    padding-top: calc(var(--header-h) + var(--space-9));
+    padding-bottom: var(--space-8);
+    border-top: 0;
+}
+
+.page-hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: -0.028em;
+    color: var(--text-primary);
+    margin: var(--space-4) 0 var(--space-5);
+    text-wrap: balance;
+    max-width: 800px;
+}
+
+.page-hero-lede {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 620px;
+}
+
+/* ============================================================
+   PROGRAMS PAGE — sections, cards, media placeholders
+   ============================================================ */
+
+/* --- Section wrapper --- */
+.programs-section {
+    padding: var(--space-9) 0;
+    border-top: 1px solid var(--line-subtle);
+}
+
+.programs-section:first-of-type {
+    border-top: 0;
+}
+
+.programs-section-head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    margin-bottom: var(--space-8);
+    max-width: 640px;
+}
+
+.programs-section-head .section-title {
+    margin: 0;
+}
+
+.programs-section-head .section-lede {
+    margin-top: var(--space-2);
+}
+
+/* --- Card grid --- */
+.program-cards {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-5);
+}
+
+@media (min-width: 640px) {
+    .program-cards {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-6);
+    }
+}
+
+@media (min-width: 1024px) {
+    .program-cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* --- Individual card --- */
+.program-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-surface);
+    border: 1px solid var(--line-subtle);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    transition: border-color var(--dur-base) var(--ease-out),
+                transform var(--dur-base) var(--ease-out);
+}
+
+.program-card:hover {
+    border-color: var(--line-strong);
+    transform: translateY(-2px);
+}
+
+/* --- Media / image placeholder --- */
+.program-card-media {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    background: var(--bg-surface-2);
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.program-card-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform var(--dur-slow) var(--ease-out);
+}
+
+.program-card:hover .program-card-media img {
+    transform: scale(1.03);
+}
+
+/* Placeholder state — diagonal stripe pattern + mono label */
+.program-card-media.is-placeholder {
+    background:
+        repeating-linear-gradient(
+            45deg,
+            var(--bg-surface-2) 0px,
+            var(--bg-surface-2) 8px,
+            var(--bg-surface) 8px,
+            var(--bg-surface) 16px
+        );
+    border-bottom: 1px solid var(--line-subtle);
+}
+
+.program-card-media-label {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 6px 12px;
+    border: 1px solid var(--line-default);
+    border-radius: var(--radius-full);
+    background: var(--bg-page);
+    text-align: center;
+}
+
+/* --- Card body --- */
+.program-card-body {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+    padding: var(--space-5) var(--space-5) var(--space-6);
+    flex: 1;
+}
+
+.program-card-index {
+    color: var(--red-core);
+    font-size: 0.625rem;
+}
+
+.program-card-title {
+    font-family: var(--font-display);
+    font-size: 1.625rem;
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.program-card-desc {
+    font-size: 0.9375rem;
+    line-height: 1.55;
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* --- Card meta table --- */
+.program-card-meta {
+    display: flex;
+    flex-direction: column;
+    margin-top: var(--space-3);
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line-subtle);
+}
+
+.program-card-meta > div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-2) 0;
+}
+
+.program-card-meta dt {
+    font-family: var(--font-mono);
+    font-size: 0.5625rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    flex-shrink: 0;
+}
+
+.program-card-meta dd {
+    font-size: 0.875rem;
+    line-height: 1.45;
+    color: var(--text-primary);
+    text-align: right;
+    margin: 0;
+}
+
+/* ============================================================
+   PAGE CTA — shared by programs.html and contact.html
+   ============================================================ */
+.page-cta {
+    padding: var(--space-10) 0;
+    border-top: 1px solid var(--line-subtle);
+}
+
+.page-cta-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: var(--space-5);
+    max-width: 680px;
+    margin: 0 auto;
+}
+
+.page-cta-title {
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: -0.028em;
+    color: var(--text-primary);
+    margin: 0;
+    text-wrap: balance;
+}
+
+.page-cta-title em {
+    font-style: italic;
+    color: var(--red-core);
+}
+
+.page-cta-desc {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    max-width: 480px;
+    margin: 0;
+}
+
+.page-cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: var(--space-4);
+    margin-top: var(--space-4);
+}
+
+@media (max-width: 640px) {
+    .page-cta-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .page-cta-actions .btn {
+        width: 100%;
+    }
+}

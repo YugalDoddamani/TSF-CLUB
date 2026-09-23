@@ -388,7 +388,7 @@
         fadeTargets.forEach(el => el.classList.add('fade-up'));
 
         // ---- HERO: plays immediately after preloader finishes ----
-        const hero = document.querySelector('.hero, .profile-hero');
+        const hero = document.querySelector('.hero, .profile');
         if (hero) {
             document.addEventListener('tsf:ready', () => {
                 const heroHeaders = hero.querySelectorAll('.split-text');
@@ -464,42 +464,52 @@
         });
     }
 
-        /* ============================================================
-       9. PAGE TRANSITION
+           /* ============================================================
+       9. PAGE TRANSITION — exit animation
+       (Enter animation is handled by inline script in each page)
        ============================================================ */
     function initPageTransition() {
-        const transition = document.getElementById('pageTransition');
-        if (!transition) return;
+        const panel = document.getElementById('pageTransition');
+        if (!panel) return;
 
-        // Fade the overlay OUT on page load (feels like an arrival)
-        transition.classList.add('is-active');
-        requestAnimationFrame(() => {
-            requestAnimationFrame(() => {
-                transition.classList.remove('is-active');
-            });
-        });
+        const DURATION = 500;
 
-        // Intercept internal link clicks and fade IN before navigating
-        document.querySelectorAll('a[href]').forEach(link => {
+        const links = document.querySelectorAll('a[href]');
+
+        links.forEach(link => {
             const href = link.getAttribute('href');
             if (!href) return;
             if (link.target === '_blank') return;
-            if (href.startsWith('http')) return;
+            if (href.startsWith('http://')) return;
+            if (href.startsWith('https://')) return;
             if (href.startsWith('mailto:')) return;
             if (href.startsWith('tel:')) return;
             if (href.startsWith('#')) return;
             if (href.endsWith('.pdf')) return;
 
             link.addEventListener('click', function (e) {
-                // Don't intercept modifier keys (Cmd/Ctrl/middle-click)
+                // Don't hijack Cmd/Ctrl/middle-click — let the browser handle it
                 if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
 
                 e.preventDefault();
-                transition.classList.add('is-active');
 
-                setTimeout(() => {
+                // Kill the entry transition still queued on the panel
+                panel.style.transition = 'none';
+
+                // Snap the panel below the viewport
+                panel.style.transform = 'translateY(100%)';
+
+                // Force reflow so the browser commits the "below" position
+                void panel.offsetWidth;
+
+                // Now animate it up to cover the screen
+                panel.style.transition = 'transform ' + DURATION + 'ms cubic-bezier(0.76, 0, 0.24, 1)';
+                panel.style.transform = 'translateY(0)';
+
+                // Navigate once the panel is covering everything
+                setTimeout(function () {
                     window.location.href = href;
-                }, 320);
+                }, DURATION);
             });
         });
     }

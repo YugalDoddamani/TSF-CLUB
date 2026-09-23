@@ -2380,45 +2380,28 @@ html {
    FOUNDER PAGE
    ============================================================ */
 
-/* ---------- Profile Hero ---------- */
-.profile-hero {
+/* ---------- Profile: sticky portrait + scrolling content ---------- */
+.profile {
     padding-top: calc(var(--header-h) + var(--space-8));
     padding-bottom: var(--space-9);
     border-top: 0;
 }
 
-.profile-hero-head {
-    margin-bottom: var(--space-7);
-}
-
-.profile-hero-name {
-    font-family: var(--font-display);
-    font-size: clamp(3rem, 8vw, 6.5rem);
-    font-weight: 400;
-    line-height: 0.94;
-    letter-spacing: -0.028em;
-    color: var(--text-primary);
-    margin: var(--space-4) 0 var(--space-4);
-    text-wrap: balance;
-}
-
-.profile-hero-role {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-}
-
-.profile-hero-grid {
+.profile-layout {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-7);
     align-items: start;
 }
 
-.profile-hero-portrait {
+/* --- Media column --- */
+.profile-media {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+}
+
+.profile-portrait {
     width: 100%;
     aspect-ratio: 4 / 5;
     overflow: hidden;
@@ -2428,7 +2411,7 @@ html {
     margin: 0;
 }
 
-.profile-hero-portrait img {
+.profile-portrait img {
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -2436,59 +2419,87 @@ html {
     display: block;
 }
 
-.profile-hero-copy {
+.profile-media-meta {
     display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-6);
-    padding-top: var(--space-2);
-}
-
-.profile-hero-lede {
-    font-size: 1.125rem;
-    line-height: 1.7;
-    color: var(--text-secondary);
-    max-width: 560px;
-}
-
-@media (min-width: 900px) {
-    .profile-hero {
-        padding-top: calc(var(--header-h) + var(--space-9));
-        padding-bottom: var(--space-10);
-    }
-
-    .profile-hero-grid {
-        grid-template-columns: 0.85fr 1fr;
-        gap: var(--space-10);
-        align-items: start;
-    }
-
-    /* Portrait held to a shorter ratio on desktop — doesn't overshoot the copy */
-    .profile-hero-portrait {
-        aspect-ratio: 4 / 5;
-        max-height: 620px;
-    }
-
-    .profile-hero-copy {
-        padding-top: var(--space-4);
-    }
-}
-
-/* ---------- Story ---------- */
-.profile-story {
-    padding: var(--space-9) 0;
+    justify-content: space-between;
+    align-items: center;
+    gap: var(--space-3);
+    padding-top: var(--space-3);
     border-top: 1px solid var(--line-subtle);
 }
 
-.profile-story-layout {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-8);
-    align-items: start;
+/* --- Content column --- */
+.profile-content {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+    min-width: 0;
+}
+
+.profile-head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
+}
+
+.profile-head .eyebrow {
+    margin-bottom: 0;
+}
+
+.profile-name {
+    font-family: var(--font-display);
+    font-size: clamp(2.75rem, 7vw, 5rem);
+    font-weight: 400;
+    line-height: 0.95;
+    letter-spacing: -0.028em;
+    color: var(--text-primary);
+    margin: 0;
+    text-wrap: balance;
+}
+
+.profile-role {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.profile-lede {
+    font-size: 1.125rem;
+    line-height: 1.7;
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin: 0;
+}
+
+.profile-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    align-items: center;
+}
+
+/* --- Story inside the same column --- */
+.profile-story {
+    padding-top: var(--space-8);
+    margin-top: var(--space-4);
+    border-top: 1px solid var(--line-subtle);
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-7);
+}
+
+.profile-story-head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-3);
 }
 
 .profile-story-head .section-title {
-    margin-bottom: 0;
+    margin: 0;
+    font-size: clamp(1.875rem, 3.5vw, 2.75rem);
 }
 
 .profile-story-prose {
@@ -2502,24 +2513,37 @@ html {
     font-size: 1.0625rem;
     line-height: 1.75;
     color: var(--text-secondary);
+    margin: 0;
 }
 
 .profile-story-prose .pull-quote {
-    margin: var(--space-5) 0;
+    margin: var(--space-3) 0;
     font-size: clamp(1.375rem, 3vw, 1.75rem);
     line-height: 1.3;
 }
 
+/* --- Desktop: two-column split with sticky media --- */
 @media (min-width: 900px) {
-    .profile-story-layout {
-        grid-template-columns: 260px 1fr;
+    .profile {
+        padding-top: calc(var(--header-h) + var(--space-9));
+        padding-bottom: var(--space-10);
+    }
+
+    .profile-layout {
+        grid-template-columns: 0.85fr 1fr;
         gap: var(--space-10);
     }
 
-    /* Sticky section header so it stays with the reading column */
-    .profile-story-head {
+    /* The photo sticks to the viewport while the right column scrolls */
+    .profile-media {
         position: sticky;
         top: calc(var(--header-h) + var(--space-6));
+        align-self: start;
+    }
+
+    .profile-portrait {
+        aspect-ratio: 3 / 4;
+        max-height: calc(100vh - var(--header-h) - var(--space-8));
     }
 }
 
@@ -2585,6 +2609,7 @@ html {
     font-size: 0.9375rem;
     line-height: 1.6;
     color: var(--text-secondary);
+    margin: 0;
 }
 
 /* ---------- Credentials ---------- */
@@ -2616,7 +2641,7 @@ html {
     display: flex;
     flex-direction: column;
     gap: var(--space-2);
-    padding: var(--space-5) 0 var(--space-5);
+    padding: var(--space-5) 0;
     border-bottom: 1px solid var(--line-subtle);
 }
 
@@ -2636,7 +2661,7 @@ html {
     line-height: 1.2;
     letter-spacing: -0.015em;
     color: var(--text-primary);
-    margin-top: var(--space-2);
+    margin-top: var(--space-1);
 }
 
 .credential-note {
@@ -2688,6 +2713,7 @@ html {
     line-height: 1.15;
     letter-spacing: -0.015em;
     color: var(--text-primary);
+    margin: 0;
 }
 
 .beyond-desc {
@@ -2695,63 +2721,105 @@ html {
     line-height: 1.6;
     color: var(--text-secondary);
     max-width: 520px;
+    margin: 0;
 }
 
 /* ---------- CTA ---------- */
 .profile-cta {
-    padding: var(--space-9) 0;
+    padding: var(--space-10) 0;
+    border-top: 1px solid var(--line-subtle);
 }
 
 .cta-inner {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    gap: var(--space-6);
-    padding: var(--space-7);
-    background: var(--bg-surface);
-    border: 1px solid var(--line-subtle);
-    border-radius: var(--radius-lg);
+    align-items: center;
+    text-align: center;
+    gap: var(--space-5);
+    max-width: 680px;
+    margin: 0 auto;
 }
 
-@media (min-width: 900px) {
-    .cta-inner {
-        flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        padding: var(--space-8);
-    }
+.cta-eyebrow {
+    margin-bottom: 0;
 }
 
 .cta-title {
     font-family: var(--font-display);
-    font-size: clamp(1.75rem, 3.5vw, 2.5rem);
-    line-height: 1.1;
-    letter-spacing: -0.02em;
+    font-size: clamp(2.75rem, 7vw, 5rem);
+    font-weight: 400;
+    line-height: 0.98;
+    letter-spacing: -0.028em;
     color: var(--text-primary);
-    max-width: 520px;
+    margin: 0;
+    text-wrap: balance;
+}
+
+.cta-title em {
+    font-style: italic;
+    color: var(--red-core);
+}
+
+.cta-desc {
+    font-size: 1.0625rem;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    max-width: 480px;
+    margin: 0;
 }
 
 .cta-actions {
     display: flex;
     flex-wrap: wrap;
+    justify-content: center;
     gap: var(--space-4);
-    align-items: center;
+    margin-top: var(--space-4);
 }
+
+@media (max-width: 640px) {
+    .cta-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .cta-actions .btn {
+        width: 100%;
+    }
+}
+
 /* ============================================================
-   PAGE TRANSITION
+   PAGE TRANSITION — wipe-up curtain
    ============================================================ */
 .page-transition {
     position: fixed;
     inset: 0;
     z-index: 9990;
-    background: var(--bg-page);
-    opacity: 0;
+    background: #050505;
+    transform: translateY(0);
     pointer-events: none;
-    transition: opacity 320ms cubic-bezier(0.16, 1, 0.3, 1);
-    will-change: opacity;
+    will-change: transform;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
 }
 
-.page-transition.is-active {
-    opacity: 1;
-    pointer-events: all;
+/* Red leading edge */
+.page-transition::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: var(--red-core);
+}
+
+[data-theme="light"] .page-transition {
+    background: #0A0A0A;
+}
+
+/* Reduced motion: skip the wipe entirely */
+@media (prefers-reduced-motion: reduce) {
+    .page-transition {
+        display: none !important;
+    }
 }

@@ -32,10 +32,24 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+    
         <!-- ============================================================
     PAGE TRANSITION
     ============================================================ -->
     <div class="page-transition" id="pageTransition" aria-hidden="true"></div>
+    <script>
+        (function () {
+            var panel = document.getElementById('pageTransition');
+            if (!panel) return;
+            requestAnimationFrame(function () {
+                requestAnimationFrame(function () {
+                    panel.style.transition = 'transform 500ms cubic-bezier(0.76, 0, 0.24, 1)';
+                    panel.style.transform = 'translateY(-100%)';
+                });
+            });
+        })();
+    </script>
+
 
         <!-- ============================================================
     HEADER — Floating pill
@@ -104,33 +118,42 @@
         </div>
     </div>
     
-          <main id="top">
+    <main id="top">
 
         <!-- ============================================================
-        PROFILE HERO
+        PROFILE — Sticky portrait, scrolling content
         ============================================================ -->
-        <section class="profile-hero" id="profile-hero">
+        <section class="profile" id="profile">
             <div class="container">
+                <div class="profile-layout">
 
-                <header class="profile-hero-head">
-                    <p class="eyebrow">
-                        <span class="eyebrow-dot"></span>
-                        The founder
-                    </p>
-                    <h1 class="profile-hero-name">Master Suresh</h1>
-                    <p class="profile-hero-role">Founder · Head Coach · Caranzalem, Goa</p>
-                </header>
+                    <!-- Left: sticky portrait -->
+                    <aside class="profile-media">
+                        <figure class="profile-portrait">
+                            <img src="assets/Owner img 1.webp"
+                                 alt="Master Suresh, founder of TSF Fitness Studio"
+                                 loading="eager" />
+                        </figure>
+                        <div class="profile-media-meta">
+                            <span class="mono">Founder · Head Coach</span>
+                            <span class="mono">TSF · Est. 2018</span>
+                        </div>
+                    </aside>
 
-                <div class="profile-hero-grid">
+                    <!-- Right: scrolling content -->
+                    <div class="profile-content">
 
-                    <figure class="profile-hero-portrait">
-                        <img src="assets/Owner img 1.webp"
-                             alt="Master Suresh, founder of TSF Fitness Studio"
-                             loading="eager" />
-                    </figure>
+                        <!-- Founder intro -->
+                        <header class="profile-head">
+                            <p class="eyebrow">
+                                <span class="eyebrow-dot"></span>
+                                The founder
+                            </p>
+                            <h1 class="profile-name">Master Suresh</h1>
+                            <p class="profile-role">Founder · Head Coach · Caranzalem, Goa</p>
+                        </header>
 
-                    <div class="profile-hero-copy">
-                        <p class="profile-hero-lede">
+                        <p class="profile-lede">
                             Master Suresh has spent over a decade teaching
                             martial arts and fitness in Goa. A second-degree
                             black belt in Taekwondo, he founded TSF Fitness
@@ -139,76 +162,67 @@
                             not shortcuts.
                         </p>
 
-                        <a href="https://wa.me/919545937344?text=Hi%20TSF%20Team%2C%20I%27d%20like%20to%20train%20with%20Master%20Suresh."
-                           target="_blank" rel="noopener"
-                           class="btn btn-primary">Train with Suresh</a>
-                    </div>
+                        <div class="profile-actions">
+                            <a href="https://wa.me/919545937344?text=Hi%20TSF%20Team%2C%20I%27d%20like%20to%20train%20with%20Master%20Suresh."
+                               target="_blank" rel="noopener"
+                               class="btn btn-primary">Train with Suresh</a>
+                        </div>
 
-                </div>
+                        <!-- Story -->
+                        <div class="profile-story">
+                            <header class="profile-story-head">
+                                <p class="eyebrow">The story</p>
+                                <h2 class="section-title">Ten years on the mat</h2>
+                            </header>
 
-            </div>
-        </section>
+                            <div class="profile-story-prose">
+                                <p>
+                                    Suresh began training in Taekwondo as a young
+                                    man and never really stopped. What started as a
+                                    discipline became a practice, then a career.
+                                    Over the years he's competed, officiated, and
+                                    coached — building the kind of experience that
+                                    only comes from time on the floor.
+                                </p>
 
-        <!-- ============================================================
-        THE STORY
-        ============================================================ -->
-        <section class="profile-story" id="story">
-            <div class="container">
+                                <p>
+                                    His approach has stayed consistent through all
+                                    of it. Technique comes before intensity. A
+                                    student learns the movement, drills it until it
+                                    becomes second nature, and only then adds
+                                    speed, power, and pressure. It's a slower path
+                                    at the beginning — and it's the reason his
+                                    students stay.
+                                </p>
 
-                <div class="profile-story-layout">
+                                <blockquote class="pull-quote">
+                                    You don't build fighters with shortcuts. You build them with years.
+                                </blockquote>
 
-                    <header class="profile-story-head">
-                        <p class="eyebrow">The story</p>
-                        <h2 class="section-title">Ten years on the mat</h2>
-                    </header>
+                                <p>
+                                    Beyond the studio, Suresh serves as President
+                                    of STAG — the SaJa Taekwondo Association of
+                                    Goa — and as Head Coach of Goa under the IITF.
+                                    He has worked with athletes across age groups,
+                                    from young beginners finding their footing to
+                                    fighters preparing for state-level competition.
+                                </p>
 
-                    <div class="profile-story-prose">
-
-                        <p>
-                            Suresh began training in Taekwondo as a young man
-                            and never really stopped. What started as a
-                            discipline became a practice, then a career. Over
-                            the years he's competed, officiated, and coached —
-                            building the kind of experience that only comes
-                            from time on the floor.
-                        </p>
-
-                        <p>
-                            His approach has stayed consistent through all of
-                            it. Technique comes before intensity. A student
-                            learns the movement, drills it until it becomes
-                            second nature, and only then adds speed, power,
-                            and pressure. It's a slower path at the beginning
-                            — and it's the reason his students stay.
-                        </p>
-
-                        <blockquote class="pull-quote">
-                            You don't build fighters with shortcuts. You build them with years.
-                        </blockquote>
-
-                        <p>
-                            Beyond the studio, Suresh serves as President of
-                            STAG — the SaJa Taekwondo Association of Goa — and
-                            as Head Coach of Goa under the IITF. He has worked
-                            with athletes across age groups, from young
-                            beginners finding their footing to fighters
-                            preparing for state-level competition.
-                        </p>
-
-                        <p>
-                            In 2018, he opened TSF as a place where combat
-                            sports, strength, and conditioning could live
-                            under one roof. Today the studio trains adults
-                            and kids across six disciplines — MMA, Taekwondo,
-                            CrossFit, Calisthenics, Yoga, and Dance — with a
-                            coaching philosophy that hasn't changed since the
-                            first class.
-                        </p>
+                                <p>
+                                    In 2018, he opened TSF as a place where combat
+                                    sports, strength, and conditioning could live
+                                    under one roof. Today the studio trains adults
+                                    and kids across six disciplines — MMA,
+                                    Taekwondo, CrossFit, Calisthenics, Yoga, and
+                                    Dance — with a coaching philosophy that hasn't
+                                    changed since the first class.
+                                </p>
+                            </div>
+                        </div>
 
                     </div>
 
                 </div>
-
             </div>
         </section>
 
@@ -348,26 +362,38 @@
         <!-- ============================================================
         CTA
         ============================================================ -->
-        <section class="profile-cta">
+        <section class="profile-cta" id="cta">
             <div class="container">
-
                 <div class="cta-inner">
-                    <h2 class="cta-title">Train with Suresh.</h2>
+
+                    <p class="eyebrow cta-eyebrow">Ready to start?</p>
+
+                    <h2 class="cta-title">
+                        Train with <em>Suresh</em>.
+                    </h2>
+
+                    <p class="cta-desc">
+                        One-on-one sessions or group classes, scheduled
+                        around your availability. First session is free —
+                        no commitment.
+                    </p>
+
                     <div class="cta-actions">
                         <a href="https://wa.me/919545937344?text=Hi%20TSF%20Team%2C%20I%27d%20like%20to%20book%20a%20session%20with%20Master%20Suresh."
                            target="_blank" rel="noopener"
                            class="btn btn-primary">Book a session</a>
-                        <a href="index.html#programs" class="btn btn-ghost">
+                        <a href="index.html#programs" class="btn btn-outline">
                             View all programs
                             <span class="arrow">→</span>
                         </a>
                     </div>
-                </div>
 
+                </div>
             </div>
         </section>
 
     </main>
+
 
        <!-- ============================================================
     FOOTER

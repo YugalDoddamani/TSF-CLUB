@@ -310,7 +310,7 @@ section:first-of-type {
 }
 
 /* ============================================================
-   6. PRELOADER
+   6. PRELOADER — Numeric counter
    ============================================================ */
 .preloader {
     position: fixed;
@@ -337,23 +337,26 @@ section:first-of-type {
     flex-direction: column;
     align-items: center;
     gap: var(--space-6);
-    text-align: center;
-    max-width: 320px;
     width: 100%;
+    max-width: 320px;
     padding: 0 var(--container-pad);
 }
 
-.preloader-logo {
-    width: 180px;
-    height: auto;
-    animation: preloaderPulse 1.8s var(--ease-in-out) infinite alternate;
+/* The tall counter number */
+.preloader-counter {
+    font-family: var(--font-sans);
+    font-size: clamp(6rem, 20vw, 12rem);
+    font-weight: 600;
+    line-height: 0.85;
+    letter-spacing: -0.06em;
+    color: var(--text-primary);
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: 'tnum' 1;
+    text-align: center;
+    transition: color var(--dur-base) var(--ease-out);
 }
 
-@keyframes preloaderPulse {
-    from { opacity: 0.7; }
-    to   { opacity: 1; }
-}
-
+/* Progress bar below the counter */
 .preloader-bar-wrapper {
     width: 100%;
     height: 2px;
@@ -366,15 +369,7 @@ section:first-of-type {
     width: 0;
     height: 100%;
     background: var(--red-core);
-    transition: width 160ms linear;
-}
-
-.preloader-status {
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--text-muted);
+    transition: width 120ms linear;
 }
 
 /* ============================================================
@@ -1609,18 +1604,7 @@ section:first-of-type {
         grid-template-columns: repeat(2, 1fr);
     }
 
-     .founder-grid {
-        gap: var(--space-9);
-    }
-
-    .founder-figure {
-        aspect-ratio: 4 / 5;
-    }
-
-    .founder-credentials {
-        grid-template-columns: repeat(3, 1fr);
-        gap: var(--space-4);
-    }
+     
 
     .founder-credentials > div {
         flex-direction: column;
@@ -1678,15 +1662,6 @@ section:first-of-type {
 .hero-stats-bar {
     padding: var(--space-7) 0;
 }
-
-.founder-grid {
-        grid-template-columns: 0.85fr 1fr;
-        gap: var(--space-10);
-    }
-
-    .founder-figure {
-        aspect-ratio: 3 / 4;
-    }
 
     .founder-copy .section-title {
         margin-bottom: var(--space-6);
@@ -1832,5 +1807,203 @@ section:first-of-type {
         transform: none !important;
         opacity: 1 !important;
         transition: none !important;
+    }
+}
+
+/* ============================================================
+   FOUNDER — FINAL OVERRIDE (appended last for cascade priority)
+   ============================================================ */
+.founder {
+    padding: var(--space-10) 0;
+}
+
+.founder-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-8);
+    align-items: start;
+}
+
+.founder-media {
+    display: block;
+    width: 100%;
+}
+
+.founder-figure {
+    display: block;
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    aspect-ratio: 4 / 5;
+    overflow: hidden;
+    border-radius: var(--radius-lg);
+    background: var(--bg-surface);
+    border: 1px solid var(--line-subtle);
+    margin: 0;
+}
+
+.founder-figure img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 25%;
+}
+
+/* Meta row: stack cleanly on mobile, side-by-side on wide */
+.founder-media-meta {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+    padding-top: var(--space-4);
+    margin-top: var(--space-4);
+    border-top: 1px solid var(--line-subtle);
+}
+
+.founder-media-meta .mono {
+    line-height: 1.4;
+}
+
+.founder-copy {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.founder-copy .eyebrow {
+    margin-bottom: var(--space-4);
+}
+
+.founder-copy .section-title {
+    margin-bottom: var(--space-5);
+}
+
+.founder-lede {
+    font-size: 1rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-6);
+    max-width: 100%;
+}
+
+/* Pull quote: mark pinned to first line */
+.pull-quote {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: var(--space-3);
+    align-items: start;
+    font-family: var(--font-display);
+    font-size: clamp(1.375rem, 5vw, 1.75rem);
+    line-height: 1.3;
+    font-weight: 400;
+    font-style: italic;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+    margin: 0 0 var(--space-6);
+    max-width: 100%;
+}
+
+.pull-quote-mark {
+    color: var(--red-core);
+    font-style: normal;
+    line-height: 1.3;
+}
+
+.founder-note {
+    font-size: 0.9375rem;
+    line-height: 1.65;
+    color: var(--text-secondary);
+    margin-bottom: var(--space-6);
+    max-width: 100%;
+}
+
+/* Credentials: single-column rows on mobile */
+.founder-credentials {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0;
+    padding: 0;
+    border-top: 1px solid var(--line-subtle);
+    border-bottom: 1px solid var(--line-subtle);
+    margin: 0 0 var(--space-6);
+}
+
+.founder-credentials > div {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: var(--space-4);
+    padding: var(--space-4) 0;
+    border-bottom: 1px solid var(--line-subtle);
+}
+
+.founder-credentials > div:last-child {
+    border-bottom: 0;
+}
+
+.founder-credentials dt {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    line-height: 1.4;
+    flex-shrink: 0;
+}
+
+.founder-credentials dd {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    line-height: 1.2;
+    color: var(--text-primary);
+    letter-spacing: -0.01em;
+    text-align: right;
+    margin: 0;
+}
+
+/* --- Tablet and up: three-column credentials --- */
+@media (min-width: 640px) {
+    .founder-media-meta {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .founder-credentials {
+        grid-template-columns: repeat(3, 1fr);
+        gap: var(--space-5);
+        padding: var(--space-6) 0;
+        border-bottom: 1px solid var(--line-subtle);
+    }
+
+    .founder-credentials > div {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        justify-content: flex-start;
+        gap: var(--space-2);
+        padding: 0;
+        border-bottom: 0;
+    }
+
+    .founder-credentials dd {
+        text-align: left;
+        font-size: 1.25rem;
+    }
+}
+
+/* --- Desktop: two-column layout --- */
+@media (min-width: 900px) {
+    .founder-grid {
+        grid-template-columns: 0.85fr 1fr;
+        gap: var(--space-10);
+    }
+
+    .founder-figure {
+        aspect-ratio: 3 / 4;
+    }
+
+    .founder-credentials dd {
+        font-size: 1.375rem;
     }
 }

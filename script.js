@@ -18,16 +18,15 @@
     const bodyEl = document.body;
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    /* ============================================================
-       1. PRELOADER
+        /* ============================================================
+       1. PRELOADER — Numeric counter
        ============================================================ */
     function initPreloader() {
         const preloader = document.getElementById('tsfPreloader');
         const progressBar = document.getElementById('preloaderBar');
-        const statusText = document.getElementById('preloaderStatus');
+        const counterEl = document.getElementById('preloaderCounter');
 
-        if (!preloader || !progressBar) {
-            // No preloader present — fire ready on next frame
+        if (!preloader || !progressBar || !counterEl) {
             requestAnimationFrame(() => {
                 document.dispatchEvent(new CustomEvent('tsf:ready'));
             });
@@ -37,31 +36,22 @@
         bodyEl.classList.add('preloader-locked');
 
         let progress = 0;
-        const loadingSteps = [
-            { threshold: 35, text: 'Loading assets' },
-            { threshold: 70, text: 'Preparing studio' },
-            { threshold: 90, text: 'Calibrating equipment' }
-        ];
 
         const interval = setInterval(() => {
-            progress += Math.floor(Math.random() * 12) + 6;
+            progress += Math.floor(Math.random() * 8) + 4;
             if (progress > 100) progress = 100;
-            progressBar.style.width = progress + '%';
 
-            for (const step of loadingSteps) {
-                if (progress <= step.threshold) {
-                    if (statusText && statusText.textContent !== step.text) {
-                        statusText.textContent = step.text;
-                    }
-                    break;
-                }
-            }
+            // Update the counter number
+            counterEl.textContent = progress;
+
+            // Update the progress bar
+            progressBar.style.width = progress + '%';
 
             if (progress >= 100) {
                 clearInterval(interval);
-                setTimeout(dismissPreloader, 300);
+                setTimeout(dismissPreloader, 350);
             }
-        }, 100);
+        }, 80);
 
         function dismissPreloader() {
             preloader.classList.add('is-hidden');
@@ -73,10 +63,11 @@
             }, 700);
         }
 
-        // Safety net: if loading gets stuck, force-finish
+        // Safety net
         window.addEventListener('load', () => {
             if (progress < 100) {
                 progress = 100;
+                counterEl.textContent = '100';
                 progressBar.style.width = '100%';
             }
         });

@@ -463,6 +463,46 @@
         });
     }
 
+        /* ============================================================
+       9. PAGE TRANSITION
+       ============================================================ */
+    function initPageTransition() {
+        const transition = document.getElementById('pageTransition');
+        if (!transition) return;
+
+        // Fade the overlay OUT on page load (feels like an arrival)
+        transition.classList.add('is-active');
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                transition.classList.remove('is-active');
+            });
+        });
+
+        // Intercept internal link clicks and fade IN before navigating
+        document.querySelectorAll('a[href]').forEach(link => {
+            const href = link.getAttribute('href');
+            if (!href) return;
+            if (link.target === '_blank') return;
+            if (href.startsWith('http')) return;
+            if (href.startsWith('mailto:')) return;
+            if (href.startsWith('tel:')) return;
+            if (href.startsWith('#')) return;
+            if (href.endsWith('.pdf')) return;
+
+            link.addEventListener('click', function (e) {
+                // Don't intercept modifier keys (Cmd/Ctrl/middle-click)
+                if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+
+                e.preventDefault();
+                transition.classList.add('is-active');
+
+                setTimeout(() => {
+                    window.location.href = href;
+                }, 320);
+            });
+        });
+    }
+
     /* ============================================================
        7. BOOT
        ============================================================ */
@@ -474,6 +514,7 @@
         initNavigation();
          initProgramAccordion();
         initTouchFeedback();
+        initPageTransition(); 
 
         console.log('TSF Engine loaded — Caranzalem, Goa.');
     });

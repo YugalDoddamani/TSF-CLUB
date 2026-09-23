@@ -394,39 +394,57 @@ section:first-of-type {
     border: none;
     transition: padding var(--dur-base) var(--ease-out);
 }
-
 .header-pill {
     pointer-events: auto;
+    position: relative;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     gap: var(--space-5);
     width: 100%;
     max-width: var(--container);
     margin: 0 auto;
     height: 56px;
     padding: 0 12px 0 18px;
-    background: rgba(14, 14, 16, 0.72);
+    background: rgba(14, 14, 16, 0.62);
     border: 1px solid rgba(245, 244, 241, 0.08);
     border-radius: var(--radius-full);
-    backdrop-filter: blur(18px) saturate(160%);
-    -webkit-backdrop-filter: blur(18px) saturate(160%);
-    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.28);
+    backdrop-filter: blur(28px) saturate(180%);
+    -webkit-backdrop-filter: blur(28px) saturate(180%);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.32);
     transition: background-color var(--dur-base) var(--ease-out),
                 border-color var(--dur-base) var(--ease-out);
 }
 
 [data-theme="light"] .header-pill {
-    background: rgba(255, 255, 255, 0.72);
+    background: rgba(255, 255, 255, 0.62);
     border-color: rgba(21, 21, 21, 0.08);
     box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
 }
 
+/* Nav: absolutely centered in the pill */
+.primary-nav {
+    display: none;
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    align-items: center;
+    gap: var(--space-5);
+    white-space: nowrap;
+}
+
+@media (min-width: 900px) {
+    .primary-nav {
+        display: flex;
+    }
+}
+
 .site-header.is-scrolled .header-pill {
-    background: rgba(14, 14, 16, 0.88);
+    background: rgba(14, 14, 16, 0.78);
 }
 
 [data-theme="light"] .site-header.is-scrolled .header-pill {
-    background: rgba(255, 255, 255, 0.88);
+    background: rgba(255, 255, 255, 0.82);
 }
 
 .brand {
@@ -2364,23 +2382,23 @@ html {
 
 /* --- Profile hero --- */
 .profile-hero {
-    padding-top: calc(var(--header-h) + var(--space-9));
-    padding-bottom: var(--space-10);
+    padding-top: calc(var(--header-h) + var(--space-8));
+    padding-bottom: var(--space-9);
     border-top: 0;
 }
 
 .profile-hero-head {
-    margin-bottom: var(--space-9);
+    margin-bottom: var(--space-8);
 }
 
 .profile-hero-name {
     font-family: var(--font-display);
-    font-size: clamp(3rem, 9vw, 7rem);
+    font-size: clamp(2.75rem, 8vw, 6rem);
     font-weight: 400;
-    line-height: 0.95;
+    line-height: 0.98;
     letter-spacing: -0.025em;
     color: var(--text-primary);
-    margin: var(--space-4) 0 var(--space-4);
+    margin: var(--space-4) 0 var(--space-3);
     text-wrap: balance;
 }
 
@@ -2397,7 +2415,7 @@ html {
     display: grid;
     grid-template-columns: 1fr;
     gap: var(--space-8);
-    align-items: start;
+    align-items: center;
 }
 
 .profile-hero-portrait {
@@ -2407,6 +2425,7 @@ html {
     border-radius: var(--radius-lg);
     background: var(--bg-surface);
     border: 1px solid var(--line-subtle);
+    margin: 0;
 }
 
 .profile-hero-portrait img {
@@ -2430,16 +2449,18 @@ html {
     max-width: 540px;
 }
 
-.profile-hero-stats {
+/* Stats bar at the bottom of the hero, same as homepage */
+.profile-hero-stats-bar {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     gap: var(--space-5) var(--space-6);
+    margin-top: var(--space-9);
     padding-top: var(--space-6);
     border-top: 1px solid var(--line-subtle);
 }
 
 @media (min-width: 640px) {
-    .profile-hero-stats {
+    .profile-hero-stats-bar {
         grid-template-columns: repeat(4, 1fr);
     }
 }
@@ -2455,13 +2476,14 @@ html {
     }
 }
 
-/* --- Story --- */
+/* --- Story: tighten spacing, unify body type --- */
 .profile-story {
-    padding: var(--space-10) 0;
+    padding: var(--space-9) 0;
+    border-top: 1px solid var(--line-subtle);
 }
 
 .profile-story-prose {
-    max-width: 720px;
+    max-width: 680px;
     display: flex;
     flex-direction: column;
     gap: var(--space-5);
@@ -2473,16 +2495,23 @@ html {
     color: var(--text-secondary);
 }
 
+.profile-story-prose .pull-quote {
+    margin: var(--space-4) 0;
+    font-size: clamp(1.5rem, 4vw, 1.875rem);
+}
+
 /* --- Principles --- */
 .profile-principles {
-    padding: var(--space-10) 0;
+    padding: var(--space-9) 0;
     background: var(--bg-secondary);
+    border-top: 1px solid var(--line-subtle);
+    border-bottom: 1px solid var(--line-subtle);
 }
 
 .principles-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-5);
+    gap: var(--space-4);
 }
 
 @media (min-width: 640px) {
@@ -2500,7 +2529,7 @@ html {
 .principle {
     display: flex;
     flex-direction: column;
-    gap: var(--space-4);
+    gap: var(--space-3);
     padding: var(--space-6);
     background: var(--bg-surface);
     border: 1px solid var(--line-subtle);
@@ -2522,10 +2551,11 @@ html {
 
 .principle-title {
     font-family: var(--font-display);
-    font-size: 1.5rem;
-    line-height: 1.15;
+    font-size: 1.375rem;
+    line-height: 1.2;
     letter-spacing: -0.015em;
     color: var(--text-primary);
+    margin-top: var(--space-2);
 }
 
 .principle-desc {
@@ -2534,21 +2564,22 @@ html {
     color: var(--text-secondary);
 }
 
-/* --- Credentials --- */
+/* --- Credentials: cleaner grid with dividers --- */
 .profile-credentials {
-    padding: var(--space-10) 0;
+    padding: var(--space-9) 0;
+    border-top: 1px solid var(--line-subtle);
 }
 
 .credentials-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-5);
+    gap: 0;
 }
 
 @media (min-width: 640px) {
     .credentials-grid {
         grid-template-columns: repeat(2, 1fr);
-        gap: var(--space-5) var(--space-8);
+        column-gap: var(--space-8);
     }
 }
 
@@ -2563,7 +2594,7 @@ html {
     flex-direction: column;
     gap: var(--space-2);
     padding: var(--space-5) 0;
-    border-top: 1px solid var(--line-subtle);
+    border-bottom: 1px solid var(--line-subtle);
 }
 
 .credential-label {
@@ -2578,16 +2609,18 @@ html {
 
 .credential-value {
     font-family: var(--font-display);
-    font-size: 1.375rem;
-    line-height: 1.2;
+    font-size: 1.25rem;
+    line-height: 1.25;
     letter-spacing: -0.01em;
     color: var(--text-primary);
 }
 
 /* --- Beyond the studio --- */
 .profile-beyond {
-    padding: var(--space-10) 0;
+    padding: var(--space-9) 0;
     background: var(--bg-secondary);
+    border-top: 1px solid var(--line-subtle);
+    border-bottom: 1px solid var(--line-subtle);
 }
 
 .beyond-card {
@@ -2621,15 +2654,15 @@ html {
 
 .beyond-title {
     font-family: var(--font-display);
-    font-size: clamp(1.75rem, 3vw, 2.25rem);
+    font-size: clamp(1.5rem, 3vw, 2rem);
     line-height: 1.15;
     letter-spacing: -0.015em;
     color: var(--text-primary);
 }
 
 .beyond-desc {
-    font-size: 1rem;
-    line-height: 1.65;
+    font-size: 0.9375rem;
+    line-height: 1.6;
     color: var(--text-secondary);
     max-width: 520px;
 }
@@ -2638,6 +2671,48 @@ html {
     display: flex;
     gap: var(--space-4);
 }
+
+/* --- CTA --- */
+.profile-cta {
+    padding: var(--space-9) 0;
+}
+
+.cta-inner {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-6);
+    padding: var(--space-7);
+    background: var(--bg-surface);
+    border: 1px solid var(--line-subtle);
+    border-radius: var(--radius-lg);
+}
+
+@media (min-width: 900px) {
+    .cta-inner {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        padding: var(--space-8);
+    }
+}
+
+.cta-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 3.5vw, 2.25rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--text-primary);
+    max-width: 520px;
+}
+
+.cta-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-4);
+    align-items: center;
+}
+
 
 /* --- CTA --- */
 .profile-cta {
@@ -2678,4 +2753,23 @@ html {
     flex-wrap: wrap;
     gap: var(--space-4);
     align-items: center;
+}
+
+/* ============================================================
+   PAGE TRANSITION
+   ============================================================ */
+.page-transition {
+    position: fixed;
+    inset: 0;
+    z-index: 9990;
+    background: var(--bg-page);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 320ms cubic-bezier(0.16, 1, 0.3, 1);
+    will-change: opacity;
+}
+
+.page-transition.is-active {
+    opacity: 1;
+    pointer-events: all;
 }

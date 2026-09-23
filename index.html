@@ -459,84 +459,273 @@
 
         </section>
 
-        <!-- ============================================================
-        PLANS
+                <!-- ============================================================
+        PROGRAMS — Expandable list
         ============================================================ -->
-        <section class="plans" id="plans">
+        <section class="programs" id="programs">
             <div class="container">
 
                 <header class="section-head">
-                    <p class="eyebrow">Membership</p>
-                    <h2 class="section-title">Straightforward pricing</h2>
+                    <p class="eyebrow">Programs</p>
+                    <h2 class="section-title">What we teach</h2>
                     <p class="section-lede">
-                        One facility. Full access. No upsells, no hidden fees.
+                        Eight disciplines under one roof — coached, structured,
+                        and open to both adults and kids.
                     </p>
                 </header>
 
-                <div class="plans-grid">
+                <!-- Adults -->
+                <div class="program-group">
+                    <p class="program-group-label">Adults</p>
+                    <div class="program-list">
 
-                    <article class="plan">
-                        <header class="plan-head">
-                            <span class="mono">Monthly</span>
-                            <h3>₹2,999</h3>
-                            <p class="plan-period">per month</p>
-                        </header>
-                        <ul class="plan-features">
-                            <li>Access to all four zones</li>
-                            <li>Group classes</li>
-                            <li>Fitness tracker</li>
-                            <li>Locker room access</li>
-                        </ul>
-                        <a href="https://wa.me/919545937344?text=Hi%2C%20I%27d%20like%20to%20sign%20up%20for%20the%20Monthly%20plan."
-                           target="_blank" rel="noopener"
-                           class="btn btn-outline btn-block">Choose monthly</a>
-                    </article>
+                        <article class="program-row" data-program="kickboxing-mma">
+                            <button class="program-row-head" aria-expanded="false">
+                                <span class="program-row-title">Kickboxing &amp; MMA Training</span>
+                                <span class="program-row-meta">₹3,000 / month</span>
+                                <span class="program-row-icon" aria-hidden="true"></span>
+                            </button>
+                            <div class="program-row-body">
+                                <div class="program-row-content">
+                                    <div class="program-details">
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Morning</span>
+                                            <span class="program-detail-value">7:00 – 8:00 AM</span>
+                                        </div>
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Evening</span>
+                                            <span class="program-detail-value">7:00 – 8:30 PM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
 
-                    <article class="plan plan-featured">
-                        <span class="plan-flag">Most chosen</span>
-                        <header class="plan-head">
-                            <span class="mono">Quarterly</span>
-                            <h3>₹7,999</h3>
-                            <p class="plan-period">per quarter</p>
-                        </header>
-                        <ul class="plan-features">
-                            <li>Everything in Monthly</li>
-                            <li>One personal coaching session</li>
-                            <li>Recovery & mobility plan</li>
-                            <li>Priority class booking</li>
-                        </ul>
-                        <a href="https://wa.me/919545937344?text=Hi%2C%20I%27d%20like%20to%20sign%20up%20for%20the%20Quarterly%20plan."
-                           target="_blank" rel="noopener"
-                           class="btn btn-primary btn-block">Choose quarterly</a>
-                    </article>
+                        <article class="program-row" data-program="crossfit">
+                            <button class="program-row-head" aria-expanded="false">
+                                <span class="program-row-title">CrossFit Training</span>
+                                <span class="program-row-meta">Tue · Thu · Sat</span>
+                                <span class="program-row-icon" aria-hidden="true"></span>
+                            </button>
+                            <div class="program-row-body">
+                                <div class="program-row-content">
+                                    <div class="program-details">
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Morning</span>
+                                            <span class="program-detail-value">7:00 – 8:00 AM &nbsp;·&nbsp; 8:00 – 9:00 AM &nbsp;·&nbsp; 9:00 – 10:00 AM</span>
+                                        </div>
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Evening</span>
+                                            <span class="program-detail-value">6:30 – 7:30 PM &nbsp;·&nbsp; 7:30 – 8:30 PM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
 
-                    <article class="plan">
-                        <header class="plan-head">
-                            <span class="mono">Yearly</span>
-                            <h3>₹24,999</h3>
-                            <p class="plan-period">per year</p>
-                        </header>
-                        <ul class="plan-features">
-                            <li>Everything in Quarterly</li>
-                            <li>Unlimited personal training</li>
-                            <li>TSF merchandise</li>
-                            <li>Two months free</li>
-                        </ul>
-                        <a href="https://wa.me/919545937344?text=Hi%2C%20I%27d%20like%20to%20sign%20up%20for%20the%20Yearly%20plan."
-                           target="_blank" rel="noopener"
-                           class="btn btn-outline btn-block">Choose yearly</a>
-                    </article>
+                        <article class="program-row" data-program="personal-training">
+                            <button class="program-row-head" aria-expanded="false">
+                                <span class="program-row-title">Personal Training</span>
+                                <span class="program-row-meta">On request</span>
+                                <span class="program-row-icon" aria-hidden="true"></span>
+                            </button>
+                            <div class="program-row-body">
+                                <div class="program-row-content">
+                                    <div class="program-details">
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Format</span>
+                                            <span class="program-detail-value">One-on-one sessions. Scheduled around your availability.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
 
+                        <article class="program-row" data-program="calisthenics-adults">
+                            <button class="program-row-head" aria-expanded="false">
+                                <span class="program-row-title">Calisthenics</span>
+                                <span class="program-row-meta">₹3,000 / month</span>
+                                <span class="program-row-icon" aria-hidden="true"></span>
+                            </button>
+                            <div class="program-row-body">
+                                <div class="program-row-content">
+                                    <div class="program-details">
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Days</span>
+                                            <span class="program-detail-value">Tuesday, Thursday, Saturday</span>
+                                        </div>
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Time</span>
+                                            <span class="program-detail-value">6:00 – 7:00 PM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="program-row" data-program="yoga-adults">
+                            <button class="program-row-head" aria-expanded="false">
+                                <span class="program-row-title">Yoga</span>
+                                <span class="program-row-meta">₹3,000 / month</span>
+                                <span class="program-row-icon" aria-hidden="true"></span>
+                            </button>
+                            <div class="program-row-body">
+                                <div class="program-row-content">
+                                    <div class="program-details">
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Days</span>
+                                            <span class="program-detail-value">Monday, Wednesday, Friday</span>
+                                        </div>
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Batches</span>
+                                            <span class="program-detail-value">8:00 – 9:00 AM &nbsp;·&nbsp; 9:00 – 10:00 AM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
                 </div>
 
-                <p class="plans-note">
-                    First session is free. No card required, no commitment — just
-                    show up and try a class.
-                </p>
+                <!-- Kids -->
+                <div class="program-group">
+                    <p class="program-group-label">Kids</p>
+                    <div class="program-list">
+
+                        <article class="program-row" data-program="kids-kickboxing">
+                            <button class="program-row-head" aria-expanded="false">
+                                <span class="program-row-title">Kickboxing</span>
+                                <span class="program-row-meta">₹3,000 / month</span>
+                                <span class="program-row-icon" aria-hidden="true"></span>
+                            </button>
+                            <div class="program-row-body">
+                                <div class="program-row-content">
+                                    <div class="program-details">
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Days</span>
+                                            <span class="program-detail-value">Monday, Wednesday, Friday</span>
+                                        </div>
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Time</span>
+                                            <span class="program-detail-value">5:00 – 6:00 PM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="program-row" data-program="kids-taekwondo">
+                            <button class="program-row-head" aria-expanded="false">
+                                <span class="program-row-title">Taekwondo</span>
+                                <span class="program-row-meta">₹2,500 / month</span>
+                                <span class="program-row-icon" aria-hidden="true"></span>
+                            </button>
+                            <div class="program-row-body">
+                                <div class="program-row-content">
+                                    <div class="program-details">
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Days</span>
+                                            <span class="program-detail-value">Monday, Wednesday, Friday</span>
+                                        </div>
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Time</span>
+                                            <span class="program-detail-value">6:00 – 7:00 PM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="program-row" data-program="kids-yoga">
+                            <button class="program-row-head" aria-expanded="false">
+                                <span class="program-row-title">Yoga</span>
+                                <span class="program-row-meta">₹3,000 / month</span>
+                                <span class="program-row-icon" aria-hidden="true"></span>
+                            </button>
+                            <div class="program-row-body">
+                                <div class="program-row-content">
+                                    <div class="program-details">
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Days</span>
+                                            <span class="program-detail-value">Monday, Wednesday, Friday</span>
+                                        </div>
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Time</span>
+                                            <span class="program-detail-value">5:00 – 6:00 PM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="program-row" data-program="kids-gymnastics">
+                            <button class="program-row-head" aria-expanded="false">
+                                <span class="program-row-title">Gymnastics</span>
+                                <span class="program-row-meta">₹3,000 / month</span>
+                                <span class="program-row-icon" aria-hidden="true"></span>
+                            </button>
+                            <div class="program-row-body">
+                                <div class="program-row-content">
+                                    <div class="program-details">
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Time</span>
+                                            <span class="program-detail-value">6:00 – 7:00 PM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="program-row" data-program="kids-calisthenics">
+                            <button class="program-row-head" aria-expanded="false">
+                                <span class="program-row-title">Calisthenics</span>
+                                <span class="program-row-meta">₹3,000 / month</span>
+                                <span class="program-row-icon" aria-hidden="true"></span>
+                            </button>
+                            <div class="program-row-body">
+                                <div class="program-row-content">
+                                    <div class="program-details">
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Days</span>
+                                            <span class="program-detail-value">Tuesday, Thursday, Saturday</span>
+                                        </div>
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Time</span>
+                                            <span class="program-detail-value">5:00 – 6:00 PM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                        <article class="program-row" data-program="kids-dance">
+                            <button class="program-row-head" aria-expanded="false">
+                                <span class="program-row-title">Dance Classes</span>
+                                <span class="program-row-meta">On request</span>
+                                <span class="program-row-icon" aria-hidden="true"></span>
+                            </button>
+                            <div class="program-row-body">
+                                <div class="program-row-content">
+                                    <div class="program-details">
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Days</span>
+                                            <span class="program-detail-value">Tuesday, Thursday</span>
+                                        </div>
+                                        <div class="program-detail">
+                                            <span class="program-detail-label">Time</span>
+                                            <span class="program-detail-value">4:00 – 5:00 PM</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+
+                    </div>
+                </div>
 
             </div>
         </section>
-
 
                 <!-- ============================================================
         CONTACT

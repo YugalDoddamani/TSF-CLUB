@@ -190,6 +190,46 @@
         }
     }
 
+
+        /* ============================================================
+       8. PROGRAM ACCORDION — click-to-expand on touch devices
+       ============================================================ */
+    function initProgramAccordion() {
+        // On devices with hover + fine pointer (desktop/laptop), CSS handles
+        // hover-expand. On touch devices, we attach click listeners.
+        const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+        if (canHover) return;
+
+        const rows = document.querySelectorAll('.program-row');
+        if (!rows.length) return;
+
+        rows.forEach(row => {
+            const head = row.querySelector('.program-row-head');
+            if (!head) return;
+
+            head.addEventListener('click', function (e) {
+                e.preventDefault();
+
+                const isOpen = row.classList.contains('is-open');
+
+                // Close all others first (one-open-at-a-time accordion)
+                rows.forEach(other => {
+                    if (other !== row) {
+                        other.classList.remove('is-open');
+                        const otherHead = other.querySelector('.program-row-head');
+                        if (otherHead) otherHead.setAttribute('aria-expanded', 'false');
+                    }
+                });
+
+                // Toggle this one
+                row.classList.toggle('is-open', !isOpen);
+                head.setAttribute('aria-expanded', String(!isOpen));
+            });
+        });
+    }
+
+
+
     /* ============================================================
        5. WORD-BY-WORD TEXT REVEAL
        ============================================================ */
@@ -432,6 +472,7 @@
         initHeroParallax();
         initThemeToggle();
         initNavigation();
+         initProgramAccordion();
         initTouchFeedback();
 
         console.log('TSF Engine loaded — Caranzalem, Goa.');

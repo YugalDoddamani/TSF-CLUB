@@ -921,94 +921,204 @@ section:first-of-type {
     border-top: 0;
 }
 
+
 /* ============================================================
-   11. PROGRAMS
+   11. PROGRAMS — Expandable list
    ============================================================ */
-.programs-grid {
+.program-group {
+    margin-top: var(--space-8);
+}
+
+.program-group:first-of-type {
+    margin-top: 0;
+}
+
+.program-group-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding-bottom: var(--space-3);
+    margin-bottom: var(--space-2);
+    border-bottom: 1px solid var(--line-default);
+}
+
+.program-list {
+    display: flex;
+    flex-direction: column;
+}
+
+/* --- Row --- */
+.program-row {
+    border-bottom: 1px solid var(--line-subtle);
+    transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.program-row:hover {
+    background-color: color-mix(in srgb, var(--bg-page) 94%, var(--text-primary) 6%);
+}
+
+.program-row-head {
     display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-6);
-    margin-bottom: var(--space-8);
-}
-
-.program-card {
-    display: flex;
-    flex-direction: column;
-    background: var(--bg-surface);
-    border: 1px solid var(--line-subtle);
-    border-radius: var(--radius-lg);
-    overflow: hidden;
-    transition: border-color var(--dur-base) var(--ease-out),
-                transform var(--dur-base) var(--ease-out),
-                box-shadow var(--dur-base) var(--ease-out);
-}
-
-.program-card:hover {
-    border-color: var(--red-line);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
-}
-
-.program-media {
-    aspect-ratio: 16 / 10;
-    overflow: hidden;
-    background: var(--bg-surface-2);
-}
-
-.program-media img {
+    grid-template-columns: 1fr auto auto;
+    align-items: center;
+    gap: var(--space-4);
     width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform var(--dur-slow) var(--ease-out);
+    padding: var(--space-5) var(--space-4);
+    text-align: left;
+    cursor: pointer;
+    background: none;
+    border: none;
+    color: inherit;
+    font: inherit;
+    -webkit-tap-highlight-color: transparent;
 }
 
-.program-card:hover .program-media img {
-    transform: scale(1.03);
-}
-
-.program-body {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    padding: var(--space-5);
-}
-
-.program-body h3 {
+.program-row-title {
     font-family: var(--font-display);
-    font-size: 1.625rem;
+    font-size: clamp(1.25rem, 2.5vw, 1.625rem);
     font-weight: 400;
     line-height: 1.15;
     letter-spacing: -0.015em;
     color: var(--text-primary);
 }
 
-.program-body p {
+.program-row-meta {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    white-space: nowrap;
+}
+
+/* --- Toggle icon: + that becomes − --- */
+.program-row-icon {
+    position: relative;
+    flex-shrink: 0;
+    width: 14px;
+    height: 14px;
+    display: block;
+}
+
+.program-row-icon::before,
+.program-row-icon::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    background: var(--text-secondary);
+    transition: transform var(--dur-base) var(--ease-out),
+                background-color var(--dur-base) var(--ease-out);
+}
+
+.program-row-icon::before {
+    width: 14px;
+    height: 1.5px;
+    transform: translate(-50%, -50%);
+}
+
+.program-row-icon::after {
+    width: 1.5px;
+    height: 14px;
+    transform: translate(-50%, -50%);
+}
+
+.program-row.is-open .program-row-icon::after,
+.program-row:hover .program-row-icon::after {
+    transform: translate(-50%, -50%) scaleY(0);
+}
+
+.program-row.is-open .program-row-icon::before,
+.program-row:hover .program-row-icon::before {
+    background: var(--red-core);
+}
+
+/* --- Body: expand/collapse via grid-template-rows --- */
+.program-row-body {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows var(--dur-slow) var(--ease-out);
+}
+
+.program-row-content {
+    overflow: hidden;
+}
+
+.program-row.is-open .program-row-body {
+    grid-template-rows: 1fr;
+}
+
+/* --- Details inside expanded body --- */
+.program-details {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+    padding: 0 var(--space-4) var(--space-6);
+}
+
+.program-detail {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.program-detail-label {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    line-height: 1;
+}
+
+.program-detail-value {
     font-size: 0.9375rem;
     line-height: 1.55;
     color: var(--text-secondary);
 }
 
-.program-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    margin-top: var(--space-2);
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--red-core);
+/* --- Desktop: hover expands + two-column details --- */
+@media (hover: hover) and (pointer: fine) {
+    .program-row:hover .program-row-body {
+        grid-template-rows: 1fr;
+    }
 }
 
-.program-cta .arrow {
-    transition: transform var(--dur-fast) var(--ease-out);
+@media (min-width: 640px) {
+    .program-row-head {
+        grid-template-columns: 1fr auto 24px;
+        gap: var(--space-6);
+        padding: var(--space-6) var(--space-4);
+    }
+
+    .program-details {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-5) var(--space-8);
+        padding: var(--space-2) var(--space-4) var(--space-7);
+        max-width: 900px;
+    }
+
+    .program-detail-value {
+        font-size: 1rem;
+    }
 }
 
-.program-card:hover .program-cta .arrow {
-    transform: translateX(3px);
-}
+@media (min-width: 900px) {
+    .program-row-head {
+        padding: var(--space-6) var(--space-5);
+    }
 
-.section-foot {
-    display: flex;
-    justify-content: flex-start;
+    .program-details {
+        padding-left: var(--space-5);
+        padding-right: var(--space-5);
+    }
+
+    .program-row-title {
+        font-size: 1.75rem;
+    }
 }
 
 /* ============================================================
@@ -1689,10 +1799,7 @@ section:first-of-type {
         grid-template-columns: repeat(4, 1fr);
     }
 
-    .programs-grid {
-        grid-template-columns: repeat(2, 1fr);
-    }
-
+   
      
 
     .founder-credentials > div {

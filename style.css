@@ -459,12 +459,7 @@ section:first-of-type {
     object-fit: contain;
 }
 
-.primary-nav {
-    display: none;
-    align-items: center;
-    gap: var(--space-5);
-    margin: 0 auto;
-}
+
 
 .primary-nav a {
     font-size: 0.875rem;
@@ -1139,283 +1134,6 @@ section:first-of-type {
     }
 }
 
-/* ============================================================
-   12. FOUNDER
-   ============================================================ */
-.founder {
-    padding: var(--space-10) 0;
-}
-
-.founder-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-8);
-    align-items: start;
-}
-
-.founder-media {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-4);
-    width: 100%;
-}
-
-.founder-figure {
-    position: relative;
-    width: 100%;
-    aspect-ratio: 3 / 4;
-    overflow: hidden;
-    border-radius: var(--radius-lg);
-    background: var(--bg-surface);
-    border: 1px solid var(--line-subtle);
-}
-
-.founder-figure img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 25%;
-    display: block;
-}
-
-.founder-media-meta {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding-top: var(--space-3);
-    border-top: 1px solid var(--line-subtle);
-}
-
-.founder-copy {
-    display: flex;
-    flex-direction: column;
-}
-
-.founder-copy .eyebrow {
-    margin-bottom: var(--space-4);
-}
-
-.founder-copy .section-title {
-    margin-bottom: var(--space-5);
-}
-
-.founder-lede {
-    font-size: 1rem;
-    line-height: 1.65;
-    color: var(--text-secondary);
-    margin-bottom: var(--space-6);
-    max-width: 540px;
-}
-
-/* --- Pull quote: absolute em-dash, no grid, word-split compatible --- */
-.pull-quote {
-    display: block;
-    position: relative;
-    padding-left: 2.25rem;
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 4.5vw, 1.875rem);
-    line-height: 1.35;
-    font-weight: 400;
-    font-style: italic;
-    letter-spacing: -0.015em;
-    color: var(--text-primary);
-    margin: 0 0 var(--space-7);
-    max-width: 520px;
-}
-
-.pull-quote::before {
-    content: '—';
-    position: absolute;
-    left: 0;
-    top: 0;
-    color: var(--red-core);
-    font-style: normal;
-    font-weight: 400;
-    line-height: inherit;
-}
-
-/* Italic serif has deeper descenders — increase mask padding */
-.pull-quote .word {
-    padding-bottom: 0.24em;
-    margin-bottom: -0.24em;
-}
-.founder-note {
-    font-size: 0.9375rem;
-    line-height: 1.65;
-    color: var(--text-secondary);
-    margin-bottom: var(--space-6);
-    max-width: 500px;
-}
-
-/* --- Credentials: single column on mobile, 3-col on desktop --- */
-.founder-credentials {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
-    padding: var(--space-5) 0;
-    border-top: 1px solid var(--line-subtle);
-    border-bottom: 1px solid var(--line-subtle);
-    margin: 0 0 var(--space-6);
-}
-
-.founder-credentials > div {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: var(--space-4);
-}
-
-.founder-credentials dt {
-    font-family: var(--font-mono);
-    font-size: 0.625rem;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-    line-height: 1.4;
-    flex-shrink: 0;
-}
-
-.founder-credentials dd {
-    font-family: var(--font-display);
-    font-size: 1.125rem;
-    line-height: 1.2;
-    color: var(--text-primary);
-    letter-spacing: -0.01em;
-    text-align: right;
-}
-
-/* --- Founder meta: certifications + ventures --- */
-.founder-meta {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-5);
-    padding: var(--space-6) 0;
-    border-top: 1px solid var(--line-subtle);
-    border-bottom: 1px solid var(--line-subtle);
-    margin: 0 0 var(--space-7);
-}
-
-.founder-meta-item {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-}
-
-.founder-meta-item .mono {
-    font-size: 0.625rem;
-    color: var(--text-muted);
-}
-
-.founder-meta-item p {
-    font-size: 0.9375rem;
-    line-height: 1.55;
-    color: var(--text-primary);
-    margin: 0;
-}
-
-@media (min-width: 640px) {
-    .founder-meta {
-        grid-template-columns: 1fr 1fr;
-        gap: var(--space-6);
-    }
-}
-
-.founder-meta-item p a {
-    color: var(--text-primary);
-    border-bottom: 1px solid var(--line-default);
-    transition: color var(--dur-fast) var(--ease-out),
-                border-color var(--dur-fast) var(--ease-out);
-}
-
-.founder-meta-item p a:hover {
-    color: var(--red-core);
-    border-bottom-color: var(--red-core);
-}
-
-/* ============================================================
-   13. SCHEDULE
-   ============================================================ */
-.schedule-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-5);
-    margin-bottom: var(--space-7);
-}
-
-.day {
-    background: var(--bg-surface);
-    border: 1px solid var(--line-subtle);
-    border-radius: var(--radius-lg);
-    padding: var(--space-5);
-}
-
-.day-head {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-    padding-bottom: var(--space-4);
-    margin-bottom: var(--space-3);
-    border-bottom: 1px solid var(--line-subtle);
-}
-
-.day-head h3 {
-    font-family: var(--font-display);
-    font-size: 1.375rem;
-    font-weight: 400;
-    letter-spacing: -0.01em;
-    color: var(--text-primary);
-}
-
-.day-slots {
-    display: flex;
-    flex-direction: column;
-}
-
-.day-slots li {
-    display: grid;
-    grid-template-columns: 56px 1fr auto;
-    align-items: center;
-    gap: var(--space-4);
-    padding: var(--space-3) 0;
-    border-bottom: 1px solid var(--line-subtle);
-    font-size: 0.9375rem;
-}
-
-.day-slots li:last-child {
-    border-bottom: 0;
-}
-
-.slot-time {
-    font-family: var(--font-mono);
-    font-size: 0.8125rem;
-    color: var(--text-muted);
-    letter-spacing: 0.04em;
-}
-
-.slot-name {
-    color: var(--text-primary);
-    font-weight: 400;
-}
-
-.slot-coach {
-    font-size: 0.8125rem;
-    color: var(--text-muted);
-}
-
-.schedule-note {
-    font-size: 0.875rem;
-    color: var(--text-muted);
-}
-
-.schedule-note a {
-    color: var(--red-core);
-    font-weight: 500;
-}
-
-.schedule-note a:hover {
-    color: var(--red-hover);
-}
 
 /* ============================================================
    14. STUDIO STRIP
@@ -1485,111 +1203,6 @@ section:first-of-type {
     letter-spacing: 0.14em;
     text-transform: uppercase;
     font-weight: 500;
-}
-
-/* ============================================================
-   15. PLANS
-   ============================================================ */
-.plans-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-5);
-    margin-bottom: var(--space-7);
-}
-
-.plan {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-5);
-    padding: var(--space-6);
-    background: var(--bg-surface);
-    border: 1px solid var(--line-subtle);
-    border-radius: var(--radius-lg);
-    transition: border-color var(--dur-base) var(--ease-out),
-                transform var(--dur-base) var(--ease-out);
-}
-
-.plan:hover {
-    border-color: var(--line-strong);
-    transform: translateY(-2px);
-}
-
-.plan-featured {
-    border-color: var(--red-line);
-}
-
-.plan-featured:hover {
-    border-color: var(--red-core);
-}
-
-.plan-flag {
-    position: absolute;
-    top: var(--space-5);
-    right: var(--space-5);
-    padding: 4px 10px;
-    font-family: var(--font-mono);
-    font-size: 0.625rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: #FFFFFF;
-    background: var(--red-core);
-    border-radius: var(--radius-sm);
-}
-
-.plan-head {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-    padding-bottom: var(--space-5);
-    border-bottom: 1px solid var(--line-subtle);
-}
-
-.plan-head h3 {
-    font-family: var(--font-display);
-    font-size: 2.5rem;
-    font-weight: 400;
-    line-height: 1;
-    letter-spacing: -0.02em;
-    color: var(--text-primary);
-}
-
-.plan-period {
-    font-size: 0.8125rem;
-    color: var(--text-muted);
-}
-
-.plan-features {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-3);
-    flex: 1;
-}
-
-.plan-features li {
-    position: relative;
-    padding-left: var(--space-5);
-    font-size: 0.9375rem;
-    line-height: 1.5;
-    color: var(--text-secondary);
-}
-
-.plan-features li::before {
-    content: '';
-    position: absolute;
-    left: 0;
-    top: 0.65em;
-    width: 6px;
-    height: 6px;
-    border-radius: 50%;
-    background: var(--red-core);
-}
-
-.plans-note {
-    font-size: 0.875rem;
-    color: var(--text-muted);
-    text-align: left;
 }
 
 /* ============================================================
@@ -1868,16 +1481,7 @@ section:first-of-type {
    
      
 
-    .founder-credentials > div {
-        flex-direction: column;
-        align-items: flex-start;
-        justify-content: flex-start;
-    }
-
-    .founder-credentials dd {
-        text-align: left;
-        font-size: 1.25rem;
-    }
+   
 
 
     .schedule-grid {
@@ -1920,7 +1524,7 @@ section:first-of-type {
         padding-top: calc(18px + 60px + var(--space-10));
         padding-bottom: var(--space-10);
     }
-}
+
 .hero-stats-bar {
     padding: var(--space-7) 0;
 }
@@ -1951,7 +1555,7 @@ section:first-of-type {
         height: 100%;
         min-height: 480px;
     }
-
+}
 
 @media (min-width: 1024px) {
     .programs-grid {
@@ -2002,9 +1606,7 @@ section:first-of-type {
         scroll-behavior: auto !important;
     }
 
-    .preloader-logo {
-        animation: none;
-    }
+   
 }
 
 /* ============================================================
@@ -2270,9 +1872,7 @@ section:first-of-type {
 }
 
 
-blockquote.pull-quote {
-    display: block !important;
-}
+
 
 
 /* --- Footer credit --- */

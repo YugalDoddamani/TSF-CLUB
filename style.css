@@ -3461,3 +3461,96 @@ html {
     color: var(--red-hover);
     border-bottom-color: var(--red-hover);
 }
+
+/* ============================================================
+   CONTACT PAGE — Mobile overflow fixes
+   ============================================================ */
+
+/* 1. Prevent any flex/grid child from forcing horizontal scroll */
+.contact-layout,
+.contact-column,
+.contact-block,
+.contact-block-value,
+.contact-hours,
+.contact-hours-row,
+.contact-social,
+.contact-social-link,
+.faq-list,
+.faq-item,
+.faq-question,
+.faq-answer {
+    min-width: 0;
+}
+
+/* 2. Wrap long strings (emails, URLs) so they never force the page wide */
+.contact-block-value,
+.contact-block-value a,
+.contact-block-link,
+.contact-social-link span,
+.faq-question span:first-child,
+.faq-answer p,
+.faq-answer a {
+    overflow-wrap: break-word;
+    word-break: break-word;
+}
+
+/* 3. Email/phone size — reduce on mobile so serif doesn't overflow */
+@media (max-width: 640px) {
+    .contact-block-value {
+        font-size: 1.125rem;
+        letter-spacing: -0.01em;
+    }
+
+    /* Stack the hours rows so both strings always fit */
+    .contact-hours-row {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--space-1);
+    }
+
+    .contact-hours-row span:last-child {
+        font-family: var(--font-mono);
+        font-size: 0.8125rem;
+        letter-spacing: 0.04em;
+        color: var(--text-primary);
+    }
+
+    /* FAQ question: reduce size, allow wrapping */
+    .faq-question {
+        font-size: 1.0625rem;
+        padding: var(--space-4) 0;
+        gap: var(--space-4);
+    }
+
+    .faq-answer {
+        padding-bottom: var(--space-4);
+    }
+
+    /* Contact social links: tighter on mobile */
+    .contact-social-link {
+        font-size: 0.875rem;
+    }
+
+    /* Reduce contact layout vertical gap on mobile */
+    .contact-layout {
+        gap: var(--space-7);
+    }
+}
+
+/* 4. Safety net — kill any horizontal scroll on the body */
+html, body {
+    overflow-x: clip;
+    max-width: 100vw;
+}
+
+/* 5. Map iframe on mobile — force exact fit */
+.contact-map,
+.contact-map iframe {
+    max-width: 100%;
+}
+
+@media (max-width: 640px) {
+    .contact-map {
+        aspect-ratio: 3 / 4;
+    }
+}

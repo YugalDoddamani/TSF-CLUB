@@ -1012,85 +1012,137 @@ section:first-of-type {
 /* ============================================================
    12. FOUNDER
    ============================================================ */
+.founder {
+    padding: var(--space-10) 0;
+}
+
 .founder-grid {
     display: grid;
     grid-template-columns: 1fr;
-    gap: var(--space-8);
-    align-items: center;
+    gap: var(--space-9);
+    align-items: start;
 }
 
+/* --- Media column --- */
 .founder-media {
-    position: relative;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    width: 100%;
 }
 
-.founder-media img {
+.founder-figure {
+    position: relative;
     width: 100%;
     aspect-ratio: 4 / 5;
-    object-fit: cover;
+    overflow: hidden;
     border-radius: var(--radius-lg);
     background: var(--bg-surface);
+    border: 1px solid var(--line-subtle);
 }
 
-.founder-media-caption {
-    margin-top: var(--space-3);
+.founder-figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center 30%;
+    display: block;
+}
+
+.founder-media-meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--line-subtle);
+}
+
+/* --- Copy column --- */
+.founder-copy {
+    display: flex;
+    flex-direction: column;
+}
+
+.founder-copy .eyebrow {
+    margin-bottom: var(--space-4);
+}
+
+.founder-copy .section-title {
+    margin-bottom: var(--space-6);
 }
 
 .founder-lede {
     font-size: 1.0625rem;
-    line-height: 1.6;
+    line-height: 1.65;
     color: var(--text-secondary);
-    margin-bottom: var(--space-6);
+    margin-bottom: var(--space-7);
+    max-width: 540px;
 }
 
+/* --- Pull quote: editorial mark instead of border --- */
 .pull-quote {
+    position: relative;
+    display: flex;
+    gap: var(--space-4);
     font-family: var(--font-display);
-    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-size: clamp(1.625rem, 4vw, 2rem);
     line-height: 1.25;
     font-weight: 400;
     font-style: italic;
     letter-spacing: -0.015em;
     color: var(--text-primary);
-    padding-left: var(--space-5);
-    border-left: 2px solid var(--red-core);
-    margin: var(--space-6) 0;
+    margin: 0 0 var(--space-7);
+    max-width: 520px;
+}
+
+.pull-quote-mark {
+    flex-shrink: 0;
+    color: var(--red-core);
+    font-style: normal;
+    font-weight: 400;
+    line-height: inherit;
 }
 
 .founder-note {
     font-size: 0.9375rem;
-    line-height: 1.6;
+    line-height: 1.65;
     color: var(--text-secondary);
-    margin-bottom: var(--space-6);
+    margin-bottom: var(--space-7);
+    max-width: 500px;
 }
 
+/* --- Credentials: 3-column strip --- */
 .founder-credentials {
     display: grid;
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
     gap: var(--space-4);
     padding: var(--space-6) 0;
     border-top: 1px solid var(--line-subtle);
     border-bottom: 1px solid var(--line-subtle);
-    margin-bottom: var(--space-6);
+    margin: 0 0 var(--space-7);
 }
 
 .founder-credentials > div {
     display: flex;
     flex-direction: column;
-    gap: var(--space-1);
+    gap: var(--space-2);
 }
 
 .founder-credentials dt {
     font-family: var(--font-mono);
-    font-size: 0.6875rem;
+    font-size: 0.625rem;
     letter-spacing: 0.14em;
     text-transform: uppercase;
     color: var(--text-muted);
+    line-height: 1.4;
 }
 
 .founder-credentials dd {
     font-family: var(--font-display);
-    font-size: 1.375rem;
-    line-height: 1.2;
+    font-size: 1.25rem;
+    line-height: 1.15;
     color: var(--text-primary);
+    letter-spacing: -0.01em;
 }
 
 /* ============================================================
@@ -1603,10 +1655,23 @@ section:first-of-type {
     padding: var(--space-7) 0;
 }
 
-    .founder-grid {
-        grid-template-columns: 1fr 1.15fr;
-        gap: var(--space-9);
-    }
+   .founder-grid {
+    grid-template-columns: 0.85fr 1fr;
+    gap: var(--space-10);
+    align-items: start;
+}
+
+.founder-figure {
+    aspect-ratio: 3 / 4;
+}
+
+.founder-credentials {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.founder-credentials dd {
+    font-size: 1.375rem;
+}
 
     .contact-grid {
         grid-template-columns: 1fr 1fr;

@@ -3696,3 +3696,174 @@ html, body {
     flex-direction: column;
     gap: var(--space-5);
 }
+
+
+/* ============================================================
+   MACRO CALCULATOR — Mobile optimization
+   ============================================================ */
+
+/* --- Field row (weight + height side by side) --- */
+.macro-field-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--space-4);
+    align-items: start;
+}
+
+/* --- Mobile hint text (hidden on desktop) --- */
+.macro-hint {
+    display: none;
+    font-size: 0.75rem;
+    line-height: 1.5;
+    color: var(--text-muted);
+    text-align: center;
+    margin: 0;
+}
+
+/* --- Back to calculator button (hidden on desktop) --- */
+.macro-back {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    width: 100%;
+    padding: 12px 20px;
+    margin-top: var(--space-2);
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid var(--line-default);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--dur-fast) var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.macro-back:hover {
+    color: var(--text-primary);
+    border-color: var(--line-strong);
+}
+
+.macro-back .arrow {
+    transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.macro-back:hover .arrow {
+    transform: translateY(-2px);
+}
+
+/* --- Mobile-specific compact layout --- */
+@media (max-width: 899px) {
+
+    /* Tighter form container */
+    .macro-form {
+        padding: var(--space-5);
+        gap: var(--space-5);
+    }
+
+    .macro-result-inner {
+        padding: var(--space-5);
+        gap: var(--space-5);
+    }
+
+    /* Smaller gap between fields */
+    .macro-field {
+        gap: var(--space-2);
+    }
+
+    /* Compact input padding */
+    .macro-input-wrap input {
+        padding: 10px 52px 10px 12px;
+        font-size: 0.9375rem;
+    }
+
+    .macro-select-wrap select {
+        padding: 10px 40px 10px 12px;
+        font-size: 0.875rem;
+    }
+
+    /* Compact radio pills */
+    .macro-radio {
+        padding: 8px 14px;
+        font-size: 0.8125rem;
+    }
+
+    /* Show the mobile hint and back button */
+    .macro-hint {
+        display: block;
+    }
+
+    .macro-back {
+        display: flex;
+    }
+
+    /* Tighter section padding on mobile */
+    .macro-section {
+        padding: var(--space-7) 0 var(--space-8);
+    }
+
+    /* Smaller calories number on mobile */
+    .macro-calories-value {
+        font-size: clamp(2.5rem, 12vw, 3.5rem);
+    }
+
+    /* Reduce explainer card padding */
+    .macro-explainer-item {
+        padding: var(--space-5);
+    }
+
+    /* Reduce FAQ question font on mobile (already set on contact page) */
+    .macro-faq .faq-question {
+        font-size: 1.0625rem;
+        padding: var(--space-4) 0;
+        gap: var(--space-4);
+    }
+
+    /* Tighter disclaimer */
+    .macro-disclaimer {
+        padding-top: var(--space-2);
+        font-size: 0.6875rem;
+    }
+}
+
+/* --- Extra small screens: shrink further --- */
+@media (max-width: 400px) {
+    .macro-form {
+        padding: var(--space-4);
+    }
+
+    .macro-radio {
+        padding: 7px 11px;
+        font-size: 0.75rem;
+    }
+
+    .macro-input-wrap input {
+        padding: 9px 48px 9px 11px;
+        font-size: 0.875rem;
+    }
+
+    .macro-unit {
+        right: 10px;
+        font-size: 0.625rem;
+    }
+}
+
+/* --- Smooth-scroll target --- */
+.macro-result {
+    scroll-margin-top: calc(var(--header-h) + var(--space-5));
+}
+
+/* --- Pulse animation after submit (before scroll) --- */
+.macro-result.is-flashing {
+    animation: macroFlash 600ms var(--ease-out);
+}
+
+@keyframes macroFlash {
+    0%   { box-shadow: 0 0 0 0 rgba(200, 30, 30, 0.0); }
+    40%  { box-shadow: 0 0 0 6px rgba(200, 30, 30, 0.15); }
+    100% { box-shadow: 0 0 0 12px rgba(200, 30, 30, 0); }
+}

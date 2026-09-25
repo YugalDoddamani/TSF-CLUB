@@ -534,6 +534,8 @@
         const placeholder = document.getElementById('macroPlaceholder');
         const output = document.getElementById('macroOutput');
         const resetBtn = document.getElementById('macroReset');
+        const backBtn = document.getElementById('macroBack');
+        const resultPanel = document.getElementById('macroResult');
 
         const weightUnitLabel = document.getElementById('weightUnitLabel');
         const heightUnitLabel = document.getElementById('heightUnitLabel');
@@ -562,12 +564,10 @@
                     if (activeUnits[groupName] === newUnit) return;
 
                     activeUnits[groupName] = newUnit;
-
                     buttons.forEach(b => b.classList.toggle('is-active', b === this));
 
                     if (groupName === 'weight') {
                         weightUnitLabel.textContent = newUnit === 'kg' ? 'kg' : 'lbs';
-                        // Clear value so user doesn't confuse the numbers
                         form.querySelector('#macroWeight').value = '';
                     }
 
@@ -576,7 +576,6 @@
                         form.querySelector('#macroHeight').value = '';
                     }
 
-                    // Reset output since unit changed
                     hasCalculated = false;
                     placeholder.hidden = false;
                     output.hidden = true;
@@ -584,7 +583,20 @@
             });
         });
 
-        /* ---------- Form validation + read ---------- */
+        /* ---------- Helpers ---------- */
+        function isMobile() {
+            return window.matchMedia('(max-width: 899px)').matches;
+        }
+
+        function scrollToResults() {
+            if (!isMobile() || !resultPanel) return;
+            setTimeout(() => {
+                resultPanel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                resultPanel.classList.add('is-flashing');
+                setTimeout(() => resultPanel.classList.remove('is-flashing'), 700);
+            }, 80);
+        }
+
         function getValues() {
             const gender = form.querySelector('input[name="gender"]:checked');
             const age = parseFloat(form.querySelector('#macroAge').value);
@@ -597,7 +609,6 @@
             if (!age || !weightInput || !heightInput || !activity) return null;
             if (age < 14 || age > 90) return null;
 
-            // Convert units to metric
             const weightKg = activeUnits.weight === 'kg'
                 ? weightInput
                 : weightInput * 0.453592;
@@ -623,9 +634,7 @@
             };
         }
 
-        /* ---------- Calculation ---------- */
         function calculate(v) {
-            // Mifflin-St Jeor on metric values
             let bmr;
             if (v.gender === 'male') {
                 bmr = (10 * v.weightKg) + (6.25 * v.heightCm) - (5 * v.age) + 5;
@@ -634,9 +643,9 @@
             }
 
             const tdee = bmr * v.activity;
-
             let targetCalories;
             let adjustLabel;
+
             if (v.goal === 'lose') {
                 targetCalories = tdee - 500;
                 adjustLabel = '−500 kcal (fat loss)';
@@ -674,7 +683,6 @@
             };
         }
 
-        /* ---------- Render ---------- */
         function render(r) {
             outCalories.textContent = r.targetCalories.toLocaleString('en-IN');
             outCaloriesLabel.textContent = r.goal === 'lose'
@@ -700,26 +708,28 @@
             output.hidden = false;
             hasCalculated = true;
 
-            // Re-trigger the entrance animation on every render
             output.style.animation = 'none';
             void output.offsetWidth;
             output.style.animation = '';
         }
 
-        /* ---------- Submit — explicit calculate ---------- */
+        /* ---------- Submit ---------- */
         form.addEventListener('submit', function (e) {
             e.preventDefault();
 
             const v = getValues();
             if (!v) {
-                // Shake or highlight invalid fields — simplest: just bail
+                // Highlight the first invalid field
+                const firstInvalid = form.querySelector('input:invalid, select:invalid');
+                if (firstInvalid) firstInvalid.focus();
                 return;
             }
 
             render(calculate(v));
+            scrollToResults();
         });
 
-        /* ---------- Live update (only after first calculation) ---------- */
+        /* ---------- Live update after first calculation ---------- */
         form.addEventListener('input', function () {
             if (!hasCalculated) return;
             const v = getValues();
@@ -734,6 +744,13 @@
             render(calculate(v));
         });
 
+        /* ---------- Back to calculator (mobile) ---------- */
+        if (backBtn) {
+            backBtn.addEventListener('click', function () {
+                form.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            });
+        }
+
         /* ---------- Reset ---------- */
         if (resetBtn) {
             resetBtn.addEventListener('click', function () {
@@ -746,7 +763,6 @@
                 form.querySelector('input[name="gender"][value="male"]').checked = true;
                 form.querySelector('input[name="goal"][value="maintain"]').checked = true;
 
-                // Reset unit toggles
                 activeUnits = { weight: 'kg', height: 'cm' };
                 weightUnitLabel.textContent = 'kg';
                 heightUnitLabel.textContent = 'cm';

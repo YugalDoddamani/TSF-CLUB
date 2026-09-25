@@ -3867,3 +3867,50 @@ html, body {
     40%  { box-shadow: 0 0 0 6px rgba(200, 30, 30, 0.15); }
     100% { box-shadow: 0 0 0 12px rgba(200, 30, 30, 0); }
 }
+
+/* ============================================================
+   MACRO PAGE — Compact hero on mobile
+   ============================================================ */
+@media (max-width: 899px) {
+
+    /* Reduce hero padding dramatically */
+    .page-macro .page-hero {
+        padding-top: calc(var(--header-h) + var(--space-5));
+        padding-bottom: var(--space-4);
+    }
+
+    /* Shrink the title */
+    .page-macro .page-hero-title {
+        font-size: clamp(2rem, 9vw, 2.75rem);
+        margin: var(--space-2) 0 var(--space-2);
+        line-height: 1;
+    }
+
+    /* Tighten the eyebrow */
+    .page-macro .eyebrow {
+        margin-bottom: var(--space-2);
+    }
+
+    /* Shrink or hide the lede */
+    .page-macro .page-hero-lede {
+        font-size: 0.875rem;
+        line-height: 1.5;
+        margin-top: var(--space-2);
+        /* Optionally clamp to 2 lines to save space */
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    /* Tighten the calculator section padding */
+    .page-macro .macro-section {
+        padding-top: var(--space-4);
+        padding-bottom: var(--space-7);
+    }
+
+    /* Kill the gap between hero and form */
+    .page-macro .macro-layout {
+        gap: var(--space-5);
+    }
+}

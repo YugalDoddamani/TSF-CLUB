@@ -524,7 +524,7 @@
 
 
 
-        /* ============================================================
+    /* ============================================================
        11. MACRO CALCULATOR
        ============================================================ */
     function initMacroCalculator() {
@@ -535,7 +535,9 @@
         const output = document.getElementById('macroOutput');
         const resetBtn = document.getElementById('macroReset');
 
-        // Output elements
+        const weightUnitLabel = document.getElementById('weightUnitLabel');
+        const heightUnitLabel = document.getElementById('heightUnitLabel');
+
         const outCalories = document.getElementById('outCalories');
         const outCaloriesLabel = document.getElementById('outCaloriesLabel');
         const outProtein = document.getElementById('outProtein');
@@ -547,38 +549,88 @@
         const outSummary = document.getElementById('outSummary');
 
         let hasCalculated = false;
+        let activeUnits = { weight: 'kg', height: 'cm' };
 
+        /* ---------- Unit toggles ---------- */
+        document.querySelectorAll('.macro-unit-toggle').forEach(group => {
+            const groupName = group.dataset.unitGroup;
+            const buttons = group.querySelectorAll('button');
+
+            buttons.forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const newUnit = this.dataset.unit;
+                    if (activeUnits[groupName] === newUnit) return;
+
+                    activeUnits[groupName] = newUnit;
+
+                    buttons.forEach(b => b.classList.toggle('is-active', b === this));
+
+                    if (groupName === 'weight') {
+                        weightUnitLabel.textContent = newUnit === 'kg' ? 'kg' : 'lbs';
+                        // Clear value so user doesn't confuse the numbers
+                        form.querySelector('#macroWeight').value = '';
+                    }
+
+                    if (groupName === 'height') {
+                        heightUnitLabel.textContent = newUnit === 'cm' ? 'cm' : 'in';
+                        form.querySelector('#macroHeight').value = '';
+                    }
+
+                    // Reset output since unit changed
+                    hasCalculated = false;
+                    placeholder.hidden = false;
+                    output.hidden = true;
+                });
+            });
+        });
+
+        /* ---------- Form validation + read ---------- */
         function getValues() {
             const gender = form.querySelector('input[name="gender"]:checked');
             const age = parseFloat(form.querySelector('#macroAge').value);
-            const weight = parseFloat(form.querySelector('#macroWeight').value);
-            const height = parseFloat(form.querySelector('#macroHeight').value);
+            const weightInput = parseFloat(form.querySelector('#macroWeight').value);
+            const heightInput = parseFloat(form.querySelector('#macroHeight').value);
             const activity = parseFloat(form.querySelector('#macroActivity').value);
             const goal = form.querySelector('input[name="goal"]:checked');
 
             if (!gender || !goal) return null;
-            if (!age || !weight || !height || !activity) return null;
+            if (!age || !weightInput || !heightInput || !activity) return null;
             if (age < 14 || age > 90) return null;
-            if (weight < 30 || weight > 250) return null;
-            if (height < 120 || height > 230) return null;
+
+            // Convert units to metric
+            const weightKg = activeUnits.weight === 'kg'
+                ? weightInput
+                : weightInput * 0.453592;
+
+            const heightCm = activeUnits.height === 'cm'
+                ? heightInput
+                : heightInput * 2.54;
+
+            if (weightKg < 30 || weightKg > 250) return null;
+            if (heightCm < 120 || heightCm > 230) return null;
 
             return {
                 gender: gender.value,
                 age: age,
-                weight: weight,
-                height: height,
+                weightKg: weightKg,
+                heightCm: heightCm,
+                weightDisplay: weightInput,
+                heightDisplay: heightInput,
+                weightUnit: activeUnits.weight,
+                heightUnit: activeUnits.height,
                 activity: activity,
                 goal: goal.value
             };
         }
 
+        /* ---------- Calculation ---------- */
         function calculate(v) {
-            // Mifflin-St Jeor
+            // Mifflin-St Jeor on metric values
             let bmr;
             if (v.gender === 'male') {
-                bmr = (10 * v.weight) + (6.25 * v.height) - (5 * v.age) + 5;
+                bmr = (10 * v.weightKg) + (6.25 * v.heightCm) - (5 * v.age) + 5;
             } else {
-                bmr = (10 * v.weight) + (6.25 * v.height) - (5 * v.age) - 161;
+                bmr = (10 * v.weightKg) + (6.25 * v.heightCm) - (5 * v.age) - 161;
             }
 
             const tdee = bmr * v.activity;
@@ -596,8 +648,7 @@
                 adjustLabel = 'Maintenance';
             }
 
-            // Macros
-            const proteinG = Math.round(v.weight * 2);
+            const proteinG = Math.round(v.weightKg * 2);
             const proteinCal = proteinG * 4;
             const fatCal = targetCalories * 0.25;
             const fatG = Math.round(fatCal / 9);
@@ -615,12 +666,15 @@
                 goal: v.goal,
                 gender: v.gender,
                 age: v.age,
-                weight: v.weight,
-                height: v.height,
+                weightDisplay: v.weightDisplay,
+                heightDisplay: v.heightDisplay,
+                weightUnit: v.weightUnit,
+                heightUnit: v.heightUnit,
                 activity: v.activity
             };
         }
 
+        /* ---------- Render ---------- */
         function render(r) {
             outCalories.textContent = r.targetCalories.toLocaleString('en-IN');
             outCaloriesLabel.textContent = r.goal === 'lose'
@@ -639,31 +693,48 @@
 
             const genderLabel = r.gender === 'male' ? 'Male' : 'Female';
             outSummary.textContent =
-                `Based on ${r.age} yrs · ${r.weight} kg · ${r.height} cm · ` +
-                `${genderLabel} · activity ×${r.activity}.`;
+                `Based on ${r.age} yrs · ${r.weightDisplay} ${r.weightUnit} · ` +
+                `${r.heightDisplay} ${r.heightUnit} · ${genderLabel} · activity ×${r.activity}.`;
 
-            if (!hasCalculated) {
-                placeholder.hidden = true;
-                output.hidden = false;
-                hasCalculated = true;
-            }
+            placeholder.hidden = true;
+            output.hidden = false;
+            hasCalculated = true;
+
+            // Re-trigger the entrance animation on every render
+            output.style.animation = 'none';
+            void output.offsetWidth;
+            output.style.animation = '';
         }
 
-        function update() {
+        /* ---------- Submit — explicit calculate ---------- */
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+
+            const v = getValues();
+            if (!v) {
+                // Shake or highlight invalid fields — simplest: just bail
+                return;
+            }
+
+            render(calculate(v));
+        });
+
+        /* ---------- Live update (only after first calculation) ---------- */
+        form.addEventListener('input', function () {
+            if (!hasCalculated) return;
             const v = getValues();
             if (!v) return;
             render(calculate(v));
-        }
-
-        // Live-update whenever any input changes
-        form.addEventListener('input', update);
-        form.addEventListener('change', update);
-        form.addEventListener('submit', function (e) {
-            e.preventDefault();
-            update();
         });
 
-        // Reset
+        form.addEventListener('change', function () {
+            if (!hasCalculated) return;
+            const v = getValues();
+            if (!v) return;
+            render(calculate(v));
+        });
+
+        /* ---------- Reset ---------- */
         if (resetBtn) {
             resetBtn.addEventListener('click', function () {
                 form.reset();
@@ -671,10 +742,19 @@
                 placeholder.hidden = false;
                 output.hidden = true;
 
-                // Restore default selections
                 form.querySelector('#macroActivity').value = '1.55';
                 form.querySelector('input[name="gender"][value="male"]').checked = true;
                 form.querySelector('input[name="goal"][value="maintain"]').checked = true;
+
+                // Reset unit toggles
+                activeUnits = { weight: 'kg', height: 'cm' };
+                weightUnitLabel.textContent = 'kg';
+                heightUnitLabel.textContent = 'cm';
+
+                document.querySelectorAll('.macro-unit-toggle').forEach(group => {
+                    const buttons = group.querySelectorAll('button');
+                    buttons.forEach((b, i) => b.classList.toggle('is-active', i === 0));
+                });
             });
         }
     }

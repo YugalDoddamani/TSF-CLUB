@@ -147,7 +147,7 @@
                 <div class="macro-layout">
 
                     <!-- Form -->
-                    <form class="macro-form" id="macroForm" novalidate>
+                                        <form class="macro-form" id="macroForm" novalidate>
 
                         <div class="macro-field">
                             <span class="macro-label">Gender</span>
@@ -163,29 +163,41 @@
                             </div>
                         </div>
 
-                        <div class="macro-row">
-                            <div class="macro-field">
-                                <label class="macro-label" for="macroAge">Age</label>
-                                <div class="macro-input-wrap">
-                                    <input type="number" id="macroAge" name="age" min="14" max="90" step="1" placeholder="25" required />
-                                    <span class="macro-unit">years</span>
-                                </div>
+                        <div class="macro-field">
+                            <label class="macro-label" for="macroAge">Age</label>
+                            <div class="macro-input-wrap">
+                                <input type="number" id="macroAge" name="age" min="14" max="90" step="1" placeholder="25" required />
+                                <span class="macro-unit">years</span>
                             </div>
+                        </div>
 
-                            <div class="macro-field">
+                        <!-- Weight with unit toggle -->
+                        <div class="macro-field">
+                            <div class="macro-field-head">
                                 <label class="macro-label" for="macroWeight">Weight</label>
-                                <div class="macro-input-wrap">
-                                    <input type="number" id="macroWeight" name="weight" min="30" max="250" step="0.5" placeholder="70" required />
-                                    <span class="macro-unit">kg</span>
+                                <div class="macro-unit-toggle" data-unit-group="weight">
+                                    <button type="button" data-unit="kg" class="is-active">KG</button>
+                                    <button type="button" data-unit="lbs">LBS</button>
                                 </div>
                             </div>
+                            <div class="macro-input-wrap">
+                                <input type="number" id="macroWeight" name="weight" min="0" step="0.1" placeholder="70" required />
+                                <span class="macro-unit" id="weightUnitLabel">kg</span>
+                            </div>
+                        </div>
 
-                            <div class="macro-field">
+                        <!-- Height with unit toggle -->
+                        <div class="macro-field">
+                            <div class="macro-field-head">
                                 <label class="macro-label" for="macroHeight">Height</label>
-                                <div class="macro-input-wrap">
-                                    <input type="number" id="macroHeight" name="height" min="120" max="230" step="1" placeholder="175" required />
-                                    <span class="macro-unit">cm</span>
+                                <div class="macro-unit-toggle" data-unit-group="height">
+                                    <button type="button" data-unit="cm" class="is-active">CM</button>
+                                    <button type="button" data-unit="in">IN</button>
                                 </div>
+                            </div>
+                            <div class="macro-input-wrap">
+                                <input type="number" id="macroHeight" name="height" min="0" step="0.1" placeholder="175" required />
+                                <span class="macro-unit" id="heightUnitLabel">cm</span>
                             </div>
                         </div>
 
@@ -220,6 +232,11 @@
                                 </label>
                             </div>
                         </div>
+
+                        <button type="submit" class="macro-submit">
+                            Calculate my macros
+                            <span class="arrow">→</span>
+                        </button>
 
                         <p class="macro-disclaimer">
                             Estimates only. Not medical advice. Consult a professional before changing your diet.

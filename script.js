@@ -521,6 +521,167 @@
         });
     }
 
+
+
+
+        /* ============================================================
+       11. MACRO CALCULATOR
+       ============================================================ */
+    function initMacroCalculator() {
+        const form = document.getElementById('macroForm');
+        if (!form) return;
+
+        const placeholder = document.getElementById('macroPlaceholder');
+        const output = document.getElementById('macroOutput');
+        const resetBtn = document.getElementById('macroReset');
+
+        // Output elements
+        const outCalories = document.getElementById('outCalories');
+        const outCaloriesLabel = document.getElementById('outCaloriesLabel');
+        const outProtein = document.getElementById('outProtein');
+        const outCarbs = document.getElementById('outCarbs');
+        const outFat = document.getElementById('outFat');
+        const outBmr = document.getElementById('outBmr');
+        const outTdee = document.getElementById('outTdee');
+        const outAdjust = document.getElementById('outAdjust');
+        const outSummary = document.getElementById('outSummary');
+
+        let hasCalculated = false;
+
+        function getValues() {
+            const gender = form.querySelector('input[name="gender"]:checked');
+            const age = parseFloat(form.querySelector('#macroAge').value);
+            const weight = parseFloat(form.querySelector('#macroWeight').value);
+            const height = parseFloat(form.querySelector('#macroHeight').value);
+            const activity = parseFloat(form.querySelector('#macroActivity').value);
+            const goal = form.querySelector('input[name="goal"]:checked');
+
+            if (!gender || !goal) return null;
+            if (!age || !weight || !height || !activity) return null;
+            if (age < 14 || age > 90) return null;
+            if (weight < 30 || weight > 250) return null;
+            if (height < 120 || height > 230) return null;
+
+            return {
+                gender: gender.value,
+                age: age,
+                weight: weight,
+                height: height,
+                activity: activity,
+                goal: goal.value
+            };
+        }
+
+        function calculate(v) {
+            // Mifflin-St Jeor
+            let bmr;
+            if (v.gender === 'male') {
+                bmr = (10 * v.weight) + (6.25 * v.height) - (5 * v.age) + 5;
+            } else {
+                bmr = (10 * v.weight) + (6.25 * v.height) - (5 * v.age) - 161;
+            }
+
+            const tdee = bmr * v.activity;
+
+            let targetCalories;
+            let adjustLabel;
+            if (v.goal === 'lose') {
+                targetCalories = tdee - 500;
+                adjustLabel = '−500 kcal (fat loss)';
+            } else if (v.goal === 'gain') {
+                targetCalories = tdee + 300;
+                adjustLabel = '+300 kcal (muscle gain)';
+            } else {
+                targetCalories = tdee;
+                adjustLabel = 'Maintenance';
+            }
+
+            // Macros
+            const proteinG = Math.round(v.weight * 2);
+            const proteinCal = proteinG * 4;
+            const fatCal = targetCalories * 0.25;
+            const fatG = Math.round(fatCal / 9);
+            const carbCal = Math.max(0, targetCalories - proteinCal - fatCal);
+            const carbG = Math.round(carbCal / 4);
+
+            return {
+                bmr: Math.round(bmr),
+                tdee: Math.round(tdee),
+                targetCalories: Math.round(targetCalories),
+                proteinG: proteinG,
+                carbsG: carbG,
+                fatG: fatG,
+                adjustLabel: adjustLabel,
+                goal: v.goal,
+                gender: v.gender,
+                age: v.age,
+                weight: v.weight,
+                height: v.height,
+                activity: v.activity
+            };
+        }
+
+        function render(r) {
+            outCalories.textContent = r.targetCalories.toLocaleString('en-IN');
+            outCaloriesLabel.textContent = r.goal === 'lose'
+                ? 'calories / day · fat loss'
+                : r.goal === 'gain'
+                    ? 'calories / day · muscle gain'
+                    : 'calories / day · maintenance';
+
+            outProtein.textContent = r.proteinG;
+            outCarbs.textContent = r.carbsG;
+            outFat.textContent = r.fatG;
+
+            outBmr.textContent = r.bmr.toLocaleString('en-IN') + ' kcal';
+            outTdee.textContent = r.tdee.toLocaleString('en-IN') + ' kcal';
+            outAdjust.textContent = r.adjustLabel;
+
+            const genderLabel = r.gender === 'male' ? 'Male' : 'Female';
+            outSummary.textContent =
+                `Based on ${r.age} yrs · ${r.weight} kg · ${r.height} cm · ` +
+                `${genderLabel} · activity ×${r.activity}.`;
+
+            if (!hasCalculated) {
+                placeholder.hidden = true;
+                output.hidden = false;
+                hasCalculated = true;
+            }
+        }
+
+        function update() {
+            const v = getValues();
+            if (!v) return;
+            render(calculate(v));
+        }
+
+        // Live-update whenever any input changes
+        form.addEventListener('input', update);
+        form.addEventListener('change', update);
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            update();
+        });
+
+        // Reset
+        if (resetBtn) {
+            resetBtn.addEventListener('click', function () {
+                form.reset();
+                hasCalculated = false;
+                placeholder.hidden = false;
+                output.hidden = true;
+
+                // Restore default selections
+                form.querySelector('#macroActivity').value = '1.55';
+                form.querySelector('input[name="gender"][value="male"]').checked = true;
+                form.querySelector('input[name="goal"][value="maintain"]').checked = true;
+            });
+        }
+    }
+
+
+
+
     /* ============================================================
        7. BOOT
        ============================================================ */
@@ -533,6 +694,7 @@
          initProgramAccordion();
         initTouchFeedback();
         initPageTransition(); 
+        initMacroCalculator();   
 
         console.log('TSF Engine loaded — Caranzalem, Goa.');
     });

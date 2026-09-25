@@ -34,4 +34,11 @@
         <priority>0.8</priority>
     </url>
 
+    <url>
+    <loc>https://tsfclub.com/macro-calculator.html</loc>
+    <lastmod>2026-02-15</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.7</priority>
+</url>
+
 </urlset>

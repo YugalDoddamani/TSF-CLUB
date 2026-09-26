@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0b0b09">
+<title>TSF Digital Platform — Architecture &amp; Flows</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="flow.css">
+</head>
+<body>
+
+<!-- Pure-CSS toggles (no JS) -->
+<input type="checkbox" id="theme-toggle" class="ghost">
+<input type="checkbox" id="toc-toggle" class="ghost">
+
+<!-- ── TOP BAR ─────────────────────────────── -->
+<header class="topbar">
+  <div class="topbar-in">
+    <span class="brand">TSF <i>·</i> Platform Flows</span>
+    <div class="topbar-actions">
+      <label for="toc-toggle" class="btn-ghost">Contents</label>
+      <label for="theme-toggle" class="btn-icon" aria-label="Toggle dark or light theme">
+        <svg class="ico-moon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>
+        <svg class="ico-sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"/></svg>
+      </label>
+    </div>
+  </div>
+</header>
+
+<!-- ── TOC DRAWER ──────────────────────────── -->
+<label for="toc-toggle" class="toc-backdrop" aria-hidden="true"></label>
+<nav class="toc-drawer" aria-label="Table of contents">
+  <p class="toc-title">Contents</p>
+  <ol class="toc-list">
+    <li><a href="#s1"><i>01</i>Executive Summary</a></li>
+    <li><a href="#s2"><i>02</i>System Architecture</a></li>
+    <li><a href="#s3"><i>03</i>The Three Domains</a></li>
+    <li><a href="#s4"><i>04</i>Technology Stack</a></li>
+    <li><a href="#s5"><i>05</i>Feature Breakdown</a></li>
+    <li><a href="#s6"><i>06</i>User Flows</a></li>
+    <li><a href="#s7"><i>07</i>Payment System</a></li>
+    <li><a href="#s8"><i>08</i>Reminders &amp; Notifications</a></li>
+    <li><a href="#s9"><i>09</i>Database Schema</a></li>
+    <li><a href="#s10"><i>10</i>Auth &amp; Security</a></li>
+    <li><a href="#s11"><i>11</i>Hosting &amp; DNS</a></li>
+    <li><a href="#s12"><i>12</i>Cost Structure</a></li>
+    <li><a href="#s13"><i>13</i>Development Roadmap</a></li>
+    <li><a href="#s14"><i>14</i>Glossary</a></li>
+  </ol>
+</nav>
+
+<main class="wrap">
+
+<!-- ── HERO ────────────────────────────────── -->
+<section class="hero">
+  <p class="eyebrow">TSF Digital Platform · Reference v1.0 · 2026</p>
+  <h1>From paper to platform.<br><em>The complete TSF digital flow.</em></h1>
+  <p class="hero-sub">Every system, screen, and step that takes TSF Fitness Studio from a register-and-WhatsApp operation to one unified member platform — three sites, one database, near-zero running costs.</p>
+  <ul class="meta">
+    <li>Client — TSF Fitness Studio</li>
+    <li>Caranzalem, Goa</li>
+    <li>Owner — Yugal Doddamani</li>
+    <li>14 sections · 6 flows</li>
+  </ul>
+</section>
+
+<!-- ── 01 EXECUTIVE SUMMARY ────────────────── -->
+<section id="s1" class="sec">
+  <div class="sec-head"><span class="sec-num">01</span><h2>Executive Summary</h2></div>
+  <p class="lead">TSF is moving from a paper-based, WhatsApp-driven operation to a fully digital platform — all under the TSF brand and domain, with no monthly SaaS fees.</p>
+  <div class="cards">
+    <div class="ccard">
+      <p class="ccard-tag">Today — manual</p>
+      <h3>The current operation</h3>
+      <ul class="ticks">
+        <li>Register maintained manually by a staff member</li>
+        <li>Payments arrive on a personal number, verified through WhatsApp screenshots</li>
+        <li>Events announced in WhatsApp groups — no official registration system</li>
+        <li>Member data, attendance and payments exist only on paper or individual devices</li>
+        <li>No unified system connects the website, member records, or operations</li>
+      </ul>
+    </div>
+    <div class="ccard accent">
+      <p class="ccard-tag">Tomorrow — unified</p>
+      <h3>The digital platform</h3>
+      <ul class="ticks">
+        <li>One domain, three connected sites — public, members, admin</li>
+        <li>Members log in once: profile, payments, events, nutrition in one place</li>
+        <li>Payments via Razorpay with automatic receipts and records</li>
+        <li>Automated reminders — renewals, events, birthdays</li>
+        <li>Data lives in the cloud, accessible from any device — the client owns everything</li>
+      </ul>
+    </div>
+  </div>
+  <div class="note"><strong>One ecosystem, three doors.</strong> All three parts share the same domain, the same authentication, and the same visual identity. Members never leave the TSF ecosystem — and running costs stay near zero until the member base outgrows free tiers, realistically 2+ years away.</div>
+</section>
+
+<!-- ── 02 SYSTEM ARCHITECTURE ──────────────── -->
+<section id="s2" class="sec">
+  <div class="sec-head"><span class="sec-num">02</span><h2>System Architecture</h2></div>
+  <p class="lead">The TSF ecosystem at a glance: three domains on top, one shared backend underneath, free infrastructure at the base.</p>
+
+  <div class="arch">
+    <p class="arch-label">The TSF ecosystem</p>
+    <div class="arch-domains">
+      <div class="abox hot"><p class="abox-k">Public · static</p><p class="abox-n">tsfclub.com</p><p class="abox-s">Marketing · programs · founder · contact · macro calculator</p></div>
+      <div class="abox"><p class="abox-k">Members · login</p><p class="abox-n">members.tsfclub.com</p><p class="abox-s">Profile · payments · events · nutrition</p></div>
+      <div class="abox"><p class="abox-k">Staff · login</p><p class="abox-n">admin.tsfclub.com</p><p class="abox-s">Members · payments · events · reports</p></div>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="abox wide">
+      <p class="abox-k">Application backend — shared by members + admin</p>
+      <div class="pill-row">
+        <span class="pill">Authentication</span><span class="pill">Member database</span><span class="pill">Payments</span><span class="pill">Notifications</span><span class="pill">File storage</span>
+      </div>
+    </div>
+    <p class="arch-foot">tsfclub.com is pure static HTML, CSS and JS — no backend, no data stored.</p>
+  </div>
+
+  <h3 class="sub-h">The four layers</h3>
+  <div class="arch">
+    <div class="layer"><p class="layer-tag">Layer 1 — Presentation</p><p>Public website · Member portal · Admin panel — all sharing one design system: Instrument Serif, Inter Tight, JetBrains Mono, dark/light theme.</p></div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="layer"><p class="layer-tag">Layer 2 — Application</p><p>Authentication · Route protection · Form handling · Client-side validation · API calls · State management.</p></div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="layer"><p class="layer-tag">Layer 3 — Services</p><p>Supabase (auth + database + storage) · Razorpay (payments) · Resend (email) · WhatsApp Cloud API (messaging).</p></div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="layer"><p class="layer-tag">Layer 4 — Infrastructure</p><p>Vercel / Netlify (hosting) · GitHub (code repository) · Wix DNS (domain records).</p></div>
+  </div>
+</section>
+
+<!-- ── 03 THREE DOMAINS ───────────────────── -->
+<section id="s3" class="sec">
+  <div class="sec-head"><span class="sec-num">03</span><h2>The Three Domains</h2></div>
+  <p class="lead">Each site has a single job. Members never need to guess where to go.</p>
+  <div class="domains">
+    <article class="dcard">
+      <p class="durl">tsfclub.com</p>
+      <h3>Public Website</h3>
+      <p class="dpurpose">Marketing, information, discovery, trust building.</p>
+      <p class="dlabel">Contains</p>
+      <div class="dtags"><span>Homepage</span><span>11 programs</span><span>Founder bio</span><span>Contact + FAQ</span><span>Macro calculator</span><span>robots · sitemap · llms.txt</span></div>
+      <p class="dlabel">Setup</p>
+      <div class="dtags"><span>GitHub Pages</span><span>No auth</span><span>No data stored</span><span>Links to portal via “Member Login”</span></div>
+    </article>
+    <article class="dcard">
+      <p class="durl">members.tsfclub.com</p>
+      <h3>Member Portal</h3>
+      <p class="dpurpose">Member self-service, event enrollment, payment, nutrition tracking.</p>
+      <p class="dlabel">Contains</p>
+      <div class="dtags"><span>Login / signup</span><span>Dashboard</span><span>Profile</span><span>Payment history</span><span>Events</span><span>Attendance + streaks</span><span>Nutrition tracker</span><span>Progress</span></div>
+      <p class="dlabel">Setup</p>
+      <div class="dtags"><span>Vercel / Netlify</span><span>Email + password</span><span>Own data only</span><span>Supabase · Razorpay · WhatsApp · Resend</span></div>
+    </article>
+    <article class="dcard">
+      <p class="durl">admin.tsfclub.com</p>
+      <h3>Admin Panel</h3>
+      <p class="dpurpose">Staff and owner operations, with elevated permissions.</p>
+      <p class="dlabel">Contains</p>
+      <div class="dtags"><span>Staff login</span><span>Member management</span><span>Payment tracking</span><span>Event creation</span><span>Enrollment dashboard</span><span>Attendance marking</span><span>Broadcasts</span><span>Reports</span><span>CSV / Excel export</span></div>
+      <p class="dlabel">Setup</p>
+      <div class="dtags"><span>Vercel / Netlify</span><span>Staff / admin role</span><span>All data access</span><span>Same services, elevated privileges</span></div>
+    </article>
+  </div>
+</section>
+
+<!-- ── 04 TECH STACK ───────────────────────── -->
+<section id="s4" class="sec">
+  <div class="sec-head"><span class="sec-num">04</span><h2>Technology Stack</h2></div>
+  <p class="lead">Every tool chosen for a reason: client ownership, zero monthly fees, minimal maintenance.</p>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>Component</th><th>Technology</th><th>Purpose</th></tr></thead>
+      <tbody>
+        <tr class="grp"><td colspan="3">Frontend</td></tr>
+        <tr><td>Markup</td><td>HTML5</td><td>Semantic, accessible, SEO friendly</td></tr>
+        <tr><td>Styling</td><td>Vanilla CSS</td><td>Custom properties, theme switching built in</td></tr>
+        <tr><td>Interactivity</td><td>Vanilla JS (ES6)</td><td>No framework, no build step, fast</td></tr>
+        <tr><td>Fonts</td><td>Instrument Serif · Inter Tight · JetBrains Mono</td><td>Same design system as the live site</td></tr>
+        <tr><td>Icons</td><td>Inline SVG</td><td>Lightweight, themable via currentColor</td></tr>
+        <tr class="grp"><td colspan="3">Backend services</td></tr>
+        <tr><td>Authentication</td><td>Supabase Auth</td><td>Signup, login, reset, session management</td></tr>
+        <tr><td>Database</td><td>Supabase (Postgres)</td><td>Members, payments, events, attendance, nutrition</td></tr>
+        <tr><td>File storage</td><td>Supabase Storage</td><td>Profile photos, receipts, event images</td></tr>
+        <tr><td>Payments</td><td>Razorpay</td><td>UPI, cards, net banking, auto receipts</td></tr>
+        <tr><td>Email</td><td>Resend</td><td>Confirmations, reminders, receipts</td></tr>
+        <tr><td>WhatsApp</td><td>WhatsApp Cloud API</td><td>Reminders, event notifications</td></tr>
+        <tr><td>Automation</td><td>Make.com / Zapier</td><td>Razorpay webhooks → Supabase + notifications</td></tr>
+        <tr class="grp"><td colspan="3">Infrastructure</td></tr>
+        <tr><td>Code hosting</td><td>GitHub</td><td>Version control, source of truth</td></tr>
+        <tr><td>Static hosting</td><td>GitHub Pages</td><td>Serving tsfclub.com</td></tr>
+        <tr><td>App hosting</td><td>Vercel / Netlify</td><td>Serving members + admin portals</td></tr>
+        <tr><td>DNS</td><td>Wix</td><td>Domain records</td></tr>
+        <tr><td>SSL</td><td>Automatic</td><td>HTTPS on all domains</td></tr>
+        <tr class="grp"><td colspan="3">Development tools</td></tr>
+        <tr><td>Git · VS Code · DevTools · Postman</td><td colspan="2">Version control, editing, debugging, API testing (optional)</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── 05 FEATURES ─────────────────────────── -->
+<section id="s5" class="sec">
+  <div class="sec-head"><span class="sec-num">05</span><h2>Feature Breakdown</h2></div>
+  <p class="lead">Everything the platform does, grouped by who uses it. Tap any section to expand.</p>
+
+  <details class="acc" open>
+    <summary>Public Website <span class="acc-n">6</span></summary>
+    <div class="acc-body">
+      <div class="feat"><span><strong>Programs listing</strong> — all 11 programs with details</span><i class="st built">Built</i></div>
+      <div class="feat"><span><strong>Founder biography</strong> — Master Suresh's credentials and story</span><i class="st built">Built</i></div>
+      <div class="feat"><span><strong>Contact page</strong> — address, map, hours, FAQ</span><i class="st built">Built</i></div>
+      <div class="feat"><span><strong>Macro calculator</strong> — client-side tool for nutrition targets</span><i class="st built">Built</i></div>
+      <div class="feat"><span><strong>SEO files</strong> — robots.txt, sitemap.xml, llms.txt</span><i class="st built">Built</i></div>
+      <div class="feat"><span><strong>Member login link</strong> — navigation link to members.tsfclub.com</span><i class="st todo">To add</i></div>
+    </div>
+  </details>
+
+  <p class="acc-group">Member Portal</p>
+  <details class="acc"><summary>Profile Management <span class="acc-n">6</span></summary>
+    <div class="acc-body">
+      <div class="feat"><span><strong>Signup</strong> — email + password, verify email, complete profile</span></div>
+      <div class="feat"><span><strong>Login</strong> — email + password, remember me option</span></div>
+      <div class="feat"><span><strong>Password reset</strong> — email-based reset flow</span></div>
+      <div class="feat"><span><strong>Profile view</strong> — photo, name, contact, emergency contact, medical notes</span></div>
+      <div class="feat"><span><strong>Profile edit</strong> — update any field, saved immediately</span></div>
+      <div class="feat"><span><strong>Photo upload</strong> — stored in Supabase Storage</span></div>
+    </div>
+  </details>
+  <details class="acc"><summary>Membership <span class="acc-n">4</span></summary>
+    <div class="acc-body">
+      <div class="feat"><span><strong>Status view</strong> — active, expiring soon, expired</span></div>
+      <div class="feat"><span><strong>Expiry date</strong> — days remaining, clear visual indicator</span></div>
+      <div class="feat"><span><strong>Current plan</strong> — which membership tier the member is on</span></div>
+      <div class="feat"><span><strong>Renewal</strong> — one-tap renewal with Razorpay</span></div>
+    </div>
+  </details>
+  <details class="acc"><summary>Payments <span class="acc-n">4</span></summary>
+    <div class="acc-body">
+      <div class="feat"><span><strong>Payment history</strong> — all past payments with dates and amounts</span></div>
+      <div class="feat"><span><strong>Receipts</strong> — downloadable PDF or viewable online</span></div>
+      <div class="feat"><span><strong>Invoice</strong> — automatic invoice for each payment</span></div>
+      <div class="feat"><span><strong>Pending payments</strong> — failed or incomplete, with retry option</span></div>
+    </div>
+  </details>
+  <details class="acc"><summary>Events <span class="acc-n">7</span></summary>
+    <div class="acc-body">
+      <div class="feat"><span><strong>Event listing</strong> — upcoming events with dates, venues, prices</span></div>
+      <div class="feat"><span><strong>Event detail</strong> — description, schedule, gallery of past events</span></div>
+      <div class="feat"><span><strong>Enrollment</strong> — name, contact, emergency, dietary notes</span></div>
+      <div class="feat"><span><strong>Payment</strong> — instant Razorpay payment to confirm spot</span></div>
+      <div class="feat"><span><strong>Confirmation</strong> — email + WhatsApp with event details</span></div>
+      <div class="feat"><span><strong>Reminder</strong> — automatic, 24 hours before the event</span></div>
+      <div class="feat"><span><strong>Cancellation</strong> — cancel and refund, subject to policy</span></div>
+    </div>
+  </details>
+  <details class="acc"><summary>Training <span class="acc-n">4</span></summary>
+    <div class="acc-body">
+      <div class="feat"><span><strong>Attendance history</strong> — every class attended, sorted by date</span></div>
+      <div class="feat"><span><strong>Current streak</strong> — consecutive days or weeks of training</span></div>
+      <div class="feat"><span><strong>Personal records</strong> — best performance metrics if tracked</span></div>
+      <div class="feat"><span><strong>Coach notes</strong> — notes from coaches about the member</span></div>
+    </div>
+  </details>
+  <details class="acc"><summary>Nutrition <span class="acc-n">6</span></summary>
+    <div class="acc-body">
+      <div class="feat"><span><strong>Macro targets</strong> — personalized from the calculator</span></div>
+      <div class="feat"><span><strong>Daily food log</strong> — add foods, auto-calculate macros</span></div>
+      <div class="feat"><span><strong>Food database</strong> — 150+ Indian foods with macros per serving</span></div>
+      <div class="feat"><span><strong>Today's progress</strong> — visual bars for protein, carbs, fat</span></div>
+      <div class="feat"><span><strong>Weekly summary</strong> — averages, adherence %, trends</span></div>
+      <div class="feat"><span><strong>Meal plan</strong> — auto-generated from targets</span></div>
+    </div>
+  </details>
+  <details class="acc"><summary>Dashboard <span class="acc-n">5</span></summary>
+    <div class="acc-body">
+      <div class="feat"><span><strong>Welcome card</strong> — personalized greeting, quick stats</span></div>
+      <div class="feat"><span><strong>Membership status</strong> — expiry countdown, renewal button</span></div>
+      <div class="feat"><span><strong>Upcoming events</strong> — next event, enrollment button</span></div>
+      <div class="feat"><span><strong>Today's nutrition</strong> — progress toward macro targets</span></div>
+      <div class="feat"><span><strong>Recent activity</strong> — last payment, last class, last log</span></div>
+    </div>
+  </details>
+
+  <p class="acc-group">Admin Panel</p>
+  <details class="acc"><summary>Member Management <span class="acc-n">8</span></summary>
+    <div class="acc-body">
+      <div class="feat"><span><strong>Member list</strong> — all members, sortable and searchable</span></div>
+      <div class="feat"><span><strong>Search</strong> — by name, phone, email, membership status</span></div>
+      <div class="feat"><span><strong>Add member</strong> — full form, generates welcome email</span></div>
+      <div class="feat"><span><strong>Edit member</strong> — update any detail, changes logged</span></div>
+      <div class="feat"><span><strong>Deactivate</strong> — mark inactive with reason</span></div>
+      <div class="feat"><span><strong>Delete</strong> — permanent removal with confirmation</span></div>
+      <div class="feat"><span><strong>Bulk actions</strong> — export, message, tag multiple members</span></div>
+      <div class="feat"><span><strong>Notes</strong> — private notes on any member profile</span></div>
+    </div>
+  </details>
+  <details class="acc"><summary>Payments <span class="acc-n">6</span></summary>
+    <div class="acc-body">
+      <div class="feat"><span><strong>All payments</strong> — chronological list with names, amounts, method</span></div>
+      <div class="feat"><span><strong>Filter</strong> — by date range, member, method, status</span></div>
+      <div class="feat"><span><strong>Pending</strong> — initiated but not completed</span></div>
+      <div class="feat"><span><strong>Failed</strong> — did not go through, with retry option</span></div>
+      <div class="feat"><span><strong>Refunds</strong> — issue via Razorpay directly from the panel</span></div>
+      <div class="feat"><span><strong>Export</strong> — CSV and Excel for accounting</span></div>
+    </div>
+  </details>
+  <details class="acc"><summary>Memberships <span class="acc-n">5</span></summary>
+    <div class="acc-body">
+      <div class="feat"><span><strong>Active memberships</strong> — all active with expiry dates</span></div>
+      <div class="feat"><span><strong>Expiring soon</strong> — expires in the next 7 days</span></div>
+      <div class="feat"><span><strong>Expired</strong> — memberships that have lapsed</span></div>
+      <div class="feat"><span><strong>Auto-flags</strong> — highlight members needing follow-up</span></div>
+      <div class="feat"><span><strong>Renewal tracking</strong> — renewal rate, average duration</span></div>
+    </div>
+  </details>
+  <details class="acc"><summary>Events <span class="acc-n">7</span></summary>
+    <div class="acc-body">
+      <div class="feat"><span><strong>Create event</strong> — name, date, venue, price, capacity, description</span></div>
+      <div class="feat"><span><strong>Event list</strong> — all upcoming and past events</span></div>
+      <div class="feat"><span><strong>Enrollment dashboard</strong> — real-time view of who registered</span></div>
+      <div class="feat"><span><strong>Payment status</strong> — who paid, pending, cancelled</span></div>
+      <div class="feat"><span><strong>Participant export</strong> — CSV of all enrolled members</span></div>
+      <div class="feat"><span><strong>Reminders</strong> — one-click send to enrolled members</span></div>
+      <div class="feat"><span><strong>Post-event</strong> — feedback, photos, archive</span></div>
+    </div>
+  </details>
+  <details class="acc"><summary>Attendance <span class="acc-n">5</span></summary>
+    <div class="acc-body">
+      <div class="feat"><span><strong>Class list</strong> — schedule of all classes</span></div>
+      <div class="feat"><span><strong>Mark attendance</strong> — tap present / absent per member</span></div>
+      <div class="feat"><span><strong>Bulk marking</strong> — mark all present, unmark absentees</span></div>
+      <div class="feat"><span><strong>Coach assignment</strong> — track which coach taught each class</span></div>
+      <div class="feat"><span><strong>Reports</strong> — rates per member, class, and coach</span></div>
+    </div>
+  </details>
+  <details class="acc"><summary>Communication <span class="acc-n">6</span></summary>
+    <div class="acc-body">
+      <div class="feat"><span><strong>Broadcast</strong> — WhatsApp or email to all members or groups</span></div>
+      <div class="feat"><span><strong>Segments</strong> — filter by status, program, join date</span></div>
+      <div class="feat"><span><strong>Templates</strong> — pre-built for common messages</span></div>
+      <div class="feat"><span><strong>Schedule</strong> — send at a future time</span></div>
+      <div class="feat"><span><strong>History</strong> — log of all messages sent</span></div>
+      <div class="feat"><span><strong>Delivery status</strong> — track received and read</span></div>
+    </div>
+  </details>
+  <details class="acc"><summary>Reminders <span class="acc-n">5</span></summary>
+    <div class="acc-body">
+      <div class="feat"><span><strong>Renewal reminders</strong> — automatic, 5 days before expiry</span></div>
+      <div class="feat"><span><strong>Payment reminders</strong> — automatic if payment failed</span></div>
+      <div class="feat"><span><strong>Event reminders</strong> — automatic, 24 hours before</span></div>
+      <div class="feat"><span><strong>Birthday messages</strong> — automatic on the member's birthday</span></div>
+      <div class="feat"><span><strong>Custom reminders</strong> — one-time, any purpose</span></div>
+    </div>
+  </details>
+  <details class="acc"><summary>Reports <span class="acc-n">6</span></summary>
+    <div class="acc-body">
+      <div class="feat"><span><strong>Revenue</strong> — daily, weekly, monthly, yearly, with charts</span></div>
+      <div class="feat"><span><strong>Member growth</strong> — new, churned, net growth</span></div>
+      <div class="feat"><span><strong>Attendance</strong> — rates by class, coach, time of day</span></div>
+      <div class="feat"><span><strong>Payments</strong> — total received, pending, refunded</span></div>
+      <div class="feat"><span><strong>Program popularity</strong> — most attended classes</span></div>
+      <div class="feat"><span><strong>Custom reports</strong> — build your own with filters</span></div>
+    </div>
+  </details>
+</section>
+
+<!-- ── 06 USER FLOWS ───────────────────────── -->
+<section id="s6" class="sec">
+  <div class="sec-head"><span class="sec-num">06</span><h2>User Flows</h2></div>
+  <p class="lead">The heart of the platform — every journey, step by step, from first click to final confirmation.</p>
+
+  <!-- 6.1 Signup -->
+  <div class="flow">
+    <div class="flow-head">
+      <p class="flow-kicker">Flow 6.1 · Member</p>
+      <h3>New Member Signup</h3>
+      <p>From first click to a fully activated member.</p>
+    </div>
+    <div class="fnode start">
+      <div class="fnode-top"><span class="fnum">1</span><h4>Visitor clicks “Member Login” on tsfclub.com</h4></div>
+      <p>Redirected to members.tsfclub.com</p>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">2</span><h4>Signup screen</h4></div>
+      <ul class="flist"><li>Full name</li><li>Email</li><li>Phone</li><li>Password</li></ul>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">3</span><h4>Email verification sent</h4></div>
+      <p>Handled by Supabase Auth</p>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">4</span><h4>Member clicks the email link</h4></div>
+      <p>Account activated</p>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">5</span><h4>Profile setup</h4></div>
+      <ul class="flist"><li>Age, weight, height</li><li>Emergency contact</li><li>Medical notes (optional)</li><li>Profile photo (optional)</li></ul>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">6</span><h4>Membership selection</h4></div>
+      <ul class="flist"><li>Choose plan — Monthly / Quarterly / Yearly</li><li>Razorpay checkout</li></ul>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">7</span><h4>Payment confirmed via Razorpay webhook</h4></div>
+      <ul class="flist"><li>Supabase records the payment</li><li>Welcome email sent</li><li>WhatsApp confirmation sent</li></ul>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode end">
+      <div class="fnode-top"><span class="fnum">8</span><h4>Member lands on the dashboard</h4></div>
+      <p>Everything set up — profile, membership, and notifications active</p>
+    </div>
+  </div>
+
+  <!-- 6.2 Login -->
+  <div class="flow">
+    <div class="flow-head">
+      <p class="flow-kicker">Flow 6.2 · Member</p>
+      <h3>Existing Member Login</h3>
+      <p>Three steps, every single day.</p>
+    </div>
+    <div class="fnode start">
+      <div class="fnode-top"><span class="fnum">1</span><h4>Member opens members.tsfclub.com</h4></div>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">2</span><h4>Enters email and password</h4></div>
+      <ul class="flist"><li>Supabase validates credentials</li><li>Session token issued</li></ul>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode end">
+      <div class="fnode-top"><span class="fnum">3</span><h4>Redirected to the dashboard</h4></div>
+      <ul class="flist"><li>Membership status</li><li>Upcoming events</li><li>Today's nutrition</li><li>Recent activity</li></ul>
+    </div>
+  </div>
+
+  <!-- 6.3 Event enrollment -->
+  <div class="flow">
+    <div class="flow-head">
+      <p class="flow-kicker">Flow 6.3 · Member + Admin</p>
+      <h3>Event Enrollment</h3>
+      <p>From event creation to the 24-hour reminder.</p>
+    </div>
+    <div class="fnode start">
+      <div class="fnode-top"><span class="fnum">1</span><h4>Admin creates the event</h4></div>
+      <ul class="flist"><li>Name, date, venue, price, capacity</li><li>Description, schedule, rules</li></ul>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">2</span><h4>Event published — visible to all members</h4></div>
+      <p>Notification sent via WhatsApp and email</p>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">3</span><h4>Member opens the event detail page</h4></div>
+      <ul class="flist"><li>Reads description</li><li>Views schedule</li><li>Clicks “Enroll”</li></ul>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">4</span><h4>Enrollment form</h4></div>
+      <ul class="flist"><li>Confirms contact details</li><li>Adds emergency contact for the event</li><li>Adds dietary or medical notes</li></ul>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">5</span><h4>Payment page</h4></div>
+      <ul class="flist"><li>Razorpay checkout</li><li>UPI, card, netbanking</li></ul>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">6</span><h4>Payment confirmed</h4></div>
+      <ul class="flist"><li>Enrollment recorded</li><li>Confirmation email sent</li><li>WhatsApp confirmation sent</li><li>Admin panel updated in real time</li></ul>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode end">
+      <div class="fnode-top"><span class="fnum">7</span><h4>24 hours before the event</h4></div>
+      <p>Automatic reminder sent via WhatsApp and email</p>
+    </div>
+  </div>
+
+  <!-- 6.4 Nutrition -->
+  <div class="flow">
+    <div class="flow-head">
+      <p class="flow-kicker">Flow 6.4 · Member</p>
+      <h3>Nutrition Logging</h3>
+      <p>Daily food tracking with live macro feedback.</p>
+    </div>
+    <div class="fnode start">
+      <div class="fnode-top"><span class="fnum">1</span><h4>Member opens the nutrition tab</h4></div>
+      <ul class="flist"><li>Sees today's targets — from the macro calculator</li><li>Sees progress so far</li></ul>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">2</span><h4>Taps “Log a meal”</h4></div>
+      <p>Selects meal type — breakfast, lunch, snack, dinner</p>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">3</span><h4>Searches the food database</h4></div>
+      <ul class="flist"><li>Types the food name</li><li>Selects from suggestions</li><li>Enters quantity in standard servings</li></ul>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">4</span><h4>Food added to today's log</h4></div>
+      <ul class="flist"><li>Auto-calculates protein, carbs, fat, calories</li><li>Updates progress bars</li></ul>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">5</span><h4>Member keeps logging through the day</h4></div>
+      <ul class="flist"><li>Visual feedback as they approach targets</li><li>Alerts if protein or calorie targets are exceeded</li></ul>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode end">
+      <div class="fnode-top"><span class="fnum">6</span><h4>End of day</h4></div>
+      <ul class="flist"><li>Summary saved to history</li><li>Weekly averages calculated</li><li>Progress visible on the dashboard</li></ul>
+    </div>
+  </div>
+
+  <!-- 6.5 Event creation -->
+  <div class="flow">
+    <div class="flow-head">
+      <p class="flow-kicker">Flow 6.5 · Admin</p>
+      <h3>Admin Event Creation</h3>
+      <p>The staff-side journey from draft to archive.</p>
+    </div>
+    <div class="fnode start">
+      <div class="fnode-top"><span class="fnum">1</span><h4>Admin logs in at admin.tsfclub.com</h4></div>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">2</span><h4>Navigates to Events → “Create Event”</h4></div>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">3</span><h4>Fills in the event details</h4></div>
+      <ul class="flist"><li>Name, date, time, venue</li><li>Price, capacity</li><li>Description, rules, what to bring</li><li>Hero image upload</li></ul>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">4</span><h4>Saves as draft, reviews the preview</h4></div>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">5</span><h4>Publishes the event</h4></div>
+      <ul class="flist"><li>Auto-generates the public event page</li><li>Sends notification to all members</li><li>Event appears in the member portal</li></ul>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">6</span><h4>Monitors the enrollment dashboard</h4></div>
+      <ul class="flist"><li>Real-time count</li><li>Individual enrollees</li><li>Payment status</li></ul>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode end">
+      <div class="fnode-top"><span class="fnum">7</span><h4>After the event</h4></div>
+      <ul class="flist"><li>Mark attendance</li><li>Upload photos</li><li>Send feedback request</li><li>Archive event</li></ul>
+    </div>
+  </div>
+</section>
+
+<!-- ── 07 PAYMENT SYSTEM ───────────────────── -->
+<section id="s7" class="sec">
+  <div class="sec-head"><span class="sec-num">07</span><h2>Payment System</h2></div>
+  <p class="lead">Razorpay handles the money; Supabase records it; members get receipts automatically.</p>
+
+  <div class="cards">
+    <div class="ccard">
+      <p class="ccard-tag">Setup</p>
+      <ol class="steps">
+        <li>Business account created with business PAN and bank account</li>
+        <li>KYC verified by Razorpay — usually 1–2 business days</li>
+        <li>API keys generated — test mode and live mode</li>
+        <li>Keys stored securely in environment variables</li>
+      </ol>
+    </div>
+    <div class="ccard">
+      <p class="ccard-tag">Methods supported</p>
+      <div class="dtags big">
+        <span>UPI — GPay, PhonePe, Paytm, BHIM</span>
+        <span>Cards — Visa, Mastercard, RuPay, Amex</span>
+        <span>Net banking — all major Indian banks</span>
+        <span>Wallets — Paytm, Amazon Pay, Freecharge</span>
+        <span>EMI — for larger payments</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="flow">
+    <div class="flow-head">
+      <p class="flow-kicker">Flow 7.2 · Technical</p>
+      <h3>Payment Flow — Member → App → Razorpay</h3>
+      <p>Nine steps between clicking “Pay” and the success page.</p>
+    </div>
+    <div class="fnode start">
+      <div class="fnode-top"><span class="fnum">1</span><span class="actor a-m">Member</span><h4>Clicks “Pay ₹500”</h4></div>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">2</span><span class="actor a-a">Application</span><h4>Creates the order</h4></div>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">3</span><span class="actor a-r">Razorpay</span><h4>Order ID returned</h4></div>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">4</span><span class="actor a-m">Member</span><h4>Checkout opens</h4></div>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">5</span><span class="actor a-m">Member</span><h4>Completes the payment</h4></div>
+      <p>UPI, card, or netbanking — directly with Razorpay</p>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">6</span><span class="actor a-a">Application</span><h4>Receives the payment-success webhook</h4></div>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">7</span><span class="actor a-a">Application</span><h4>Records the payment in Supabase</h4></div>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode">
+      <div class="fnode-top"><span class="fnum">8</span><span class="actor a-a">Application</span><h4>Triggers email + WhatsApp receipt</h4></div>
+    </div>
+    <div class="farrow" aria-hidden="true"></div>
+    <div class="fnode end">
+      <div class="fnode-top"><span class="fnum">9</span><span class="actor a-m">Member</span><h4>Success page</h4></div>
+      <p>Spot or membership confirmed instantly</p>
+    </div>
+  </div>
+
+  <h3 class="sub-h">Webhook events handled</h3>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>Event</th><th>Action</th></tr></thead>
+      <tbody>
+        <tr><td><code>payment.captured</code></td><td>Record payment in Supabase, send receipt to member</td></tr>
+        <tr><td><code>payment.failed</code></td><td>Log failure, notify member, offer retry</td></tr>
+        <tr><td><code>refund.processed</code></td><td>Update payment status, notify member</td></tr>
+        <tr><td><code>subscription.charged</code></td><td>For recurring payments, extend membership</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub-h">Receipts &amp; invoices — generated automatically</h3>
+  <ul class="ticks card-list">
+    <li><strong>Email receipt</strong> sent to the member with transaction details</li>
+    <li><strong>Downloadable PDF</strong> available in payment history</li>
+    <li><strong>Invoice</strong> with TSF details, member details, amount, and tax breakdown if applicable</li>
+    <li><strong>WhatsApp confirmation</strong> with a link to the receipt</li>
+  </ul>
+</section>
+
+<!-- ── 08 REMINDERS ────────────────────────── -->
+<section id="s8" class="sec">
+  <div class="sec-head"><span class="sec-num">08</span><h2>Reminders &amp; Notifications</h2></div>
+  <p class="lead">Three channels, eight automated triggers — the studio stays in touch without anyone lifting a phone.</p>
+
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>Channel</th><th>Service</th><th>Use case</th></tr></thead>
+      <tbody>
+        <tr><td>Email</td><td>Resend</td><td>Receipts, formal confirmations, reminders</td></tr>
+        <tr><td>WhatsApp</td><td>WhatsApp Cloud API</td><td>Instant notifications, reminders, announcements</td></tr>
+        <tr><td>In-app</td><td>Supabase realtime</td><td>Real-time updates while using the portal</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub-h">Automated reminders</h3>
+  <div class="reminds">
+    <div class="rrow"><p class="r-what">Membership expiring</p><p class="r-when">5 days before · Email + WhatsApp</p><p class="r-msg">“Your TSF membership expires in 5 days. Renew now to keep training.”</p></div>
+    <div class="rrow"><p class="r-what">Membership expired</p><p class="r-when">On expiry day · Email + WhatsApp</p><p class="r-msg">“Your TSF membership has expired. Renew today to reactivate.”</p></div>
+    <div class="rrow"><p class="r-what">Payment failed</p><p class="r-when">Immediate · Email + WhatsApp</p><p class="r-msg">“Your payment didn't go through. Click here to retry.”</p></div>
+    <div class="rrow"><p class="r-what">Event reminder</p><p class="r-when">24 hours before · Email + WhatsApp</p><p class="r-msg">“Your [event name] is tomorrow at [time] at [venue]. See you there!”</p></div>
+    <div class="rrow"><p class="r-what">Birthday</p><p class="r-when">On birthday · WhatsApp</p><p class="r-msg">“Happy birthday from all of us at TSF! Come celebrate with a free class.”</p></div>
+    <div class="rrow"><p class="r-what">Class no-show</p><p class="r-when">3 days absent · WhatsApp</p><p class="r-msg">“We missed you at training. Everything okay? Let us know if we can help.”</p></div>
+    <div class="rrow"><p class="r-what">Welcome</p><p class="r-when">On signup · Email + WhatsApp</p><p class="r-msg">“Welcome to TSF! Here's everything you need to know.”</p></div>
+    <div class="rrow"><p class="r-what">Payment received</p><p class="r-when">Immediate · Email</p><p class="r-msg">Receipt with details</p></div>
+  </div>
+
+  <h3 class="sub-h">Broadcast messaging</h3>
+  <p class="lead">Admin can send custom messages to any segment:</p>
+  <div class="dtags big">
+    <span>All members</span><span>By membership status — active, expired, expiring</span><span>By program — MMA, Taekwondo, CrossFit…</span><span>By join date — new or long-time members</span><span>Specific individuals</span><span>Event enrollees only</span>
+  </div>
+  <div class="note">Templates are provided for common scenarios, and messages can be scheduled for future delivery.</div>
+</section>
+
+<!-- ── 09 DATABASE ─────────────────────────── -->
+<section id="s9" class="sec">
+  <div class="sec-head"><span class="sec-num">09</span><h2>Database Schema</h2></div>
+  <p class="lead">Seven tables in Supabase Postgres. Tap any table to see its fields.</p>
+
+  <details class="acc"><summary>Members <span class="acc-n">17 fields</span></summary>
+    <div class="acc-body tscroll">
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>id</td><td>UUID</td><td>Primary key</td></tr>
+          <tr><td>email</td><td>String</td><td>Unique, used for login</td></tr>
+          <tr><td>phone</td><td>String</td><td>Contact number</td></tr>
+          <tr><td>full_name</td><td>String</td><td>Member's full name</td></tr>
+          <tr><td>date_of_birth</td><td>Date</td><td>For birthday messages</td></tr>
+          <tr><td>gender</td><td>String</td><td>Male / Female / Other</td></tr>
+          <tr><td>emergency_name</td><td>String</td><td>Emergency contact name</td></tr>
+          <tr><td>emergency_phone</td><td>String</td><td>Emergency contact number</td></tr>
+          <tr><td>medical_notes</td><td>Text</td><td>Allergies or conditions</td></tr>
+          <tr><td>profile_photo_url</td><td>String</td><td>Link to photo in Supabase Storage</td></tr>
+          <tr><td>joined_date</td><td>Date</td><td>When member joined</td></tr>
+          <tr><td>membership_status</td><td>String</td><td>active / expired / inactive</td></tr>
+          <tr><td>membership_expiry</td><td>Date</td><td>When current membership ends</td></tr>
+          <tr><td>current_plan</td><td>String</td><td>Monthly / Quarterly / Yearly</td></tr>
+          <tr><td>role</td><td>String</td><td>member / staff / admin</td></tr>
+          <tr><td>created_at</td><td>Timestamp</td><td>Auto</td></tr>
+          <tr><td>updated_at</td><td>Timestamp</td><td>Auto</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <details class="acc"><summary>Payments <span class="acc-n">11 fields</span></summary>
+    <div class="acc-body tscroll">
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>id</td><td>UUID</td><td>Primary key</td></tr>
+          <tr><td>member_id</td><td>UUID</td><td>Foreign key to members</td></tr>
+          <tr><td>razorpay_order_id</td><td>String</td><td>Razorpay order reference</td></tr>
+          <tr><td>razorpay_payment_id</td><td>String</td><td>Razorpay payment reference</td></tr>
+          <tr><td>amount</td><td>Decimal</td><td>Amount in rupees</td></tr>
+          <tr><td>currency</td><td>String</td><td>INR</td></tr>
+          <tr><td>status</td><td>String</td><td>created / captured / failed / refunded</td></tr>
+          <tr><td>payment_method</td><td>String</td><td>UPI, card, netbanking, etc.</td></tr>
+          <tr><td>purpose</td><td>String</td><td>membership / event / personal_training</td></tr>
+          <tr><td>related_id</td><td>UUID</td><td>Event or membership ID if applicable</td></tr>
+          <tr><td>receipt_url</td><td>String</td><td>Link to generated receipt</td></tr>
+          <tr><td>created_at</td><td>Timestamp</td><td>Auto</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <details class="acc"><summary>Events <span class="acc-n">13 fields</span></summary>
+    <div class="acc-body tscroll">
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>id</td><td>UUID</td><td>Primary key</td></tr>
+          <tr><td>title</td><td>String</td><td>Event name</td></tr>
+          <tr><td>description</td><td>Text</td><td>Full description</td></tr>
+          <tr><td>event_date</td><td>Date</td><td>When the event happens</td></tr>
+          <tr><td>event_time</td><td>Time</td><td>Start time</td></tr>
+          <tr><td>venue</td><td>String</td><td>Location</td></tr>
+          <tr><td>price</td><td>Decimal</td><td>Entry fee</td></tr>
+          <tr><td>capacity</td><td>Integer</td><td>Max participants</td></tr>
+          <tr><td>enrolled_count</td><td>Integer</td><td>Current enrollees</td></tr>
+          <tr><td>hero_image_url</td><td>String</td><td>Event image</td></tr>
+          <tr><td>rules</td><td>Text</td><td>Rules or requirements</td></tr>
+          <tr><td>status</td><td>String</td><td>draft / published / completed / cancelled</td></tr>
+          <tr><td>created_by</td><td>UUID</td><td>Admin who created it</td></tr>
+          <tr><td>created_at</td><td>Timestamp</td><td>Auto</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <details class="acc"><summary>Enrollments <span class="acc-n">6 fields</span></summary>
+    <div class="acc-body tscroll">
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>id</td><td>UUID</td><td>Primary key</td></tr>
+          <tr><td>event_id</td><td>UUID</td><td>Foreign key to events</td></tr>
+          <tr><td>member_id</td><td>UUID</td><td>Foreign key to members</td></tr>
+          <tr><td>payment_id</td><td>UUID</td><td>Foreign key to payments</td></tr>
+          <tr><td>status</td><td>String</td><td>pending / confirmed / cancelled</td></tr>
+          <tr><td>notes</td><td>Text</td><td>Member notes for this event</td></tr>
+          <tr><td>enrolled_at</td><td>Timestamp</td><td>Auto</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <details class="acc"><summary>Attendance <span class="acc-n">8 fields</span></summary>
+    <div class="acc-body tscroll">
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>id</td><td>UUID</td><td>Primary key</td></tr>
+          <tr><td>member_id</td><td>UUID</td><td>Foreign key to members</td></tr>
+          <tr><td>class_name</td><td>String</td><td>Which class</td></tr>
+          <tr><td>coach</td><td>String</td><td>Which coach taught</td></tr>
+          <tr><td>class_date</td><td>Date</td><td>When</td></tr>
+          <tr><td>attended</td><td>Boolean</td><td>Present or absent</td></tr>
+          <tr><td>marked_by</td><td>UUID</td><td>Staff who marked it</td></tr>
+          <tr><td>created_at</td><td>Timestamp</td><td>Auto</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <details class="acc"><summary>Nutrition Logs <span class="acc-n">11 fields</span></summary>
+    <div class="acc-body tscroll">
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>id</td><td>UUID</td><td>Primary key</td></tr>
+          <tr><td>member_id</td><td>UUID</td><td>Foreign key to members</td></tr>
+          <tr><td>log_date</td><td>Date</td><td>Which day</td></tr>
+          <tr><td>meal_type</td><td>String</td><td>breakfast / lunch / snack / dinner</td></tr>
+          <tr><td>food_name</td><td>String</td><td>What was eaten</td></tr>
+          <tr><td>quantity</td><td>Decimal</td><td>How much</td></tr>
+          <tr><td>calories</td><td>Integer</td><td>Auto-calculated</td></tr>
+          <tr><td>protein_g</td><td>Decimal</td><td>Auto-calculated</td></tr>
+          <tr><td>carbs_g</td><td>Decimal</td><td>Auto-calculated</td></tr>
+          <tr><td>fat_g</td><td>Decimal</td><td>Auto-calculated</td></tr>
+          <tr><td>created_at</td><td>Timestamp</td><td>Auto</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+
+  <details class="acc"><summary>Notifications Log <span class="acc-n">8 fields</span></summary>
+    <div class="acc-body tscroll">
+      <table>
+        <thead><tr><th>Field</th><th>Type</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td>id</td><td>UUID</td><td>Primary key</td></tr>
+          <tr><td>member_id</td><td>UUID</td><td>Recipient</td></tr>
+          <tr><td>channel</td><td>String</td><td>email / whatsapp / in_app</td></tr>
+          <tr><td>type</td><td>String</td><td>reminder / confirmation / broadcast</td></tr>
+          <tr><td>subject</td><td>String</td><td>Subject or template name</td></tr>
+          <tr><td>body</td><td>Text</td><td>Message content</td></tr>
+          <tr><td>status</td><td>String</td><td>sent / delivered / failed</td></tr>
+          <tr><td>sent_at</td><td>Timestamp</td><td>Auto</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </details>
+</section>
+
+<!-- ── 10 AUTH & SECURITY ──────────────────── -->
+<section id="s10" class="sec">
+  <div class="sec-head"><span class="sec-num">10</span><h2>Auth &amp; Security</h2></div>
+  <p class="lead">Members see only their own data. Staff see everything. Nobody else sees anything.</p>
+
+  <div class="cards">
+    <div class="ccard">
+      <p class="ccard-tag">Member authentication</p>
+      <ul class="ticks">
+        <li>Email and password — hashed via Supabase Auth, never plain text</li>
+        <li>Email verification required for signup</li>
+        <li>Session tokens (JWT) with automatic expiry</li>
+        <li>Password reset via email link</li>
+      </ul>
+    </div>
+    <div class="ccard">
+      <p class="ccard-tag">Admin authentication</p>
+      <ul class="ticks">
+        <li>Separate login page at admin.tsfclub.com</li>
+        <li>Same Supabase Auth — requires role: admin or staff</li>
+        <li>Two-factor authentication recommended — Supabase supports TOTP</li>
+      </ul>
+    </div>
+  </div>
+
+  <h3 class="sub-h">Data access — Row Level Security</h3>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>Table</th><th>Member access</th><th>Admin access</th></tr></thead>
+      <tbody>
+        <tr><td>members</td><td>Read / write own record only</td><td>Read / write all records</td></tr>
+        <tr><td>payments</td><td>Read own payments only</td><td>Read / write all</td></tr>
+        <tr><td>events</td><td>Read published events</td><td>Read / write all</td></tr>
+        <tr><td>enrollments</td><td>Read / write own</td><td>Read / write all</td></tr>
+        <tr><td>attendance</td><td>Read own</td><td>Read / write all</td></tr>
+        <tr><td>nutrition_logs</td><td>Read / write own</td><td>Read all</td></tr>
+        <tr><td>notifications_log</td><td>Read own</td><td>Read / write all</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note">No member can access another member's data. No unauthenticated user can access any data.</div>
+
+  <h3 class="sub-h">Security best practices</h3>
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>Concern</th><th>Solution</th></tr></thead>
+      <tbody>
+        <tr><td>Password storage</td><td>Bcrypt hashing via Supabase Auth</td></tr>
+        <tr><td>Session hijacking</td><td>JWT tokens with short expiry and refresh</td></tr>
+        <tr><td>SQL injection</td><td>Parameterized queries via Supabase client</td></tr>
+        <tr><td>XSS attacks</td><td>Input sanitization and Content Security Policy</td></tr>
+        <tr><td>CSRF attacks</td><td>SameSite cookies and CSRF tokens</td></tr>
+        <tr><td>Data in transit</td><td>HTTPS on all domains — auto via Vercel and GitHub Pages</td></tr>
+        <tr><td>Data at rest</td><td>Encrypted by Supabase — AES-256</td></tr>
+        <tr><td>Payment data</td><td>Never touches the server — Razorpay handles all card data</td></tr>
+        <tr><td>API keys</td><td>Stored in environment variables, never in code</td></tr>
+        <tr><td>Backups</td><td>Automated daily by Supabase</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- ── 11 HOSTING & DNS ────────────────────── -->
+<section id="s11" class="sec">
+  <div class="sec-head"><span class="sec-num">11</span><h2>Hosting &amp; DNS</h2></div>
+  <p class="lead">The domain already lives at Wix. Two new CNAME records unlock the portals.</p>
+
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>Component</th><th>Service</th><th>Domain</th></tr></thead>
+      <tbody>
+        <tr class="grp"><td colspan="3">Current setup</td></tr>
+        <tr><td>Public website</td><td>GitHub Pages</td><td>tsfclub.com</td></tr>
+        <tr><td>Domain registrar</td><td>Wix</td><td>holds the domain</td></tr>
+        <tr><td>DNS management</td><td>Wix</td><td>A and CNAME records</td></tr>
+        <tr class="grp"><td colspan="3">Expanded setup</td></tr>
+        <tr><td>Public website</td><td>GitHub Pages</td><td>tsfclub.com</td></tr>
+        <tr><td>Member portal</td><td>Vercel / Netlify</td><td>members.tsfclub.com</td></tr>
+        <tr><td>Admin panel</td><td>Vercel / Netlify</td><td>admin.tsfclub.com</td></tr>
+        <tr><td>Application backend</td><td>Supabase</td><td>managed service</td></tr>
+        <tr><td>Payments</td><td>Razorpay</td><td>managed service</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3 class="sub-h">DNS records in Wix</h3>
+  <div class="cards">
+    <div class="ccard">
+      <p class="ccard-tag">Existing — already set</p>
+      <div class="tscroll plain">
+        <table>
+          <thead><tr><th>Type</th><th>Host</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>A</td><td>tsfclub.com</td><td>185.199.108.153</td></tr>
+            <tr><td>A</td><td>tsfclub.com</td><td>185.199.109.153</td></tr>
+            <tr><td>A</td><td>tsfclub.com</td><td>185.199.110.153</td></tr>
+            <tr><td>A</td><td>tsfclub.com</td><td>185.199.111.153</td></tr>
+            <tr><td>CNAME</td><td>www</td><td>yugaldoddamani.github.io</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="ccard accent">
+      <p class="ccard-tag">New — to add</p>
+      <div class="tscroll plain">
+        <table>
+          <thead><tr><th>Type</th><th>Host</th><th>Value</th></tr></thead>
+          <tbody>
+            <tr><td>CNAME</td><td>members</td><td>cname.vercel-dns.com</td></tr>
+            <tr><td>CNAME</td><td>admin</td><td>cname.vercel-dns.com</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="fine">Exact CNAME value will be provided by Vercel when the custom domain is added.</p>
+    </div>
+  </div>
+
+  <h3 class="sub-h">HTTPS / SSL — automatic everywhere</h3>
+  <ul class="ticks card-list">
+    <li><strong>tsfclub.com</strong> — certificate via GitHub Pages</li>
+    <li><strong>members.tsfclub.com</strong> — certificate via Vercel</li>
+    <li><strong>admin.tsfclub.com</strong> — certificate via Vercel</li>
+  </ul>
+  <p class="fine">No manual certificate management. Renewal is automatic.</p>
+</section>
+
+<!-- ── 12 COST ─────────────────────────────── -->
+<section id="s12" class="sec">
+  <div class="sec-head"><span class="sec-num">12</span><h2>Cost Structure</h2></div>
+  <p class="lead">The client owns everything and pays no monthly SaaS fees.</p>
+
+  <div class="cost">
+    <p class="cost-big">₹100<span>/month</span></p>
+    <p class="cost-sub">Domain amortized + payment fees only. Everything else runs on free tiers.</p>
+  </div>
+
+  <div class="tscroll">
+    <table>
+      <thead><tr><th>Component</th><th>Cost</th></tr></thead>
+      <tbody>
+        <tr><td>Domain — annual, amortized</td><td>About ₹100 per month</td></tr>
+        <tr><td>Hosting — GitHub Pages</td><td>Free</td></tr>
+        <tr><td>Hosting — Vercel</td><td>Free tier</td></tr>
+        <tr><td>Supabase</td><td>Free tier — up to 50,000 monthly active users</td></tr>
+        <tr><td>Razorpay</td><td>Free setup, ~2% per transaction</td></tr>
+        <tr><td>Resend</td><td>Free tier — 100 emails per day</td></tr>
+        <tr><td>WhatsApp Cloud API</td><td>Free tier — 1,000 conversations per month</td></tr>
+        <tr><td>Automation — Make.com</td><td>Free tier</td></tr>
+        <tr class="total"><td>Total monthly cost</td><td>~₹100 + payment fees</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="note">The client pays only when the member base grows beyond free-tier limits — realistically 2+ years away at the current studio size.</div>
+
+  <h3 class="sub-h">Development cost — quoted separately</h3>
+  <ul class="ticks card-list">
+    <li><strong>Phase 1 — Foundation:</strong> Razorpay setup, event registration page, auto-confirmations, admin dashboard</li>
+    <li><strong>Phase 2 — Member Portal:</strong> login, profiles, payments, event enrollment, attendance tracking</li>
+    <li><strong>Phase 3 — Nutrition &amp; Advanced:</strong> nutrition tracker, meal plans, progress dashboard, reports, broadcast messaging</li>
+    <li><strong>Maintenance retainer:</strong> optional monthly fee for updates, new features, and priority support</li>
+  </ul>
+  <p class="fine">Each phase quoted independently — to be discussed after the client reviews the proposal.</p>
+</section>
+
+<!-- ── 13 ROADMAP ──────────────────────────── -->
+<section id="s13" class="sec">
+  <div class="sec-head"><span class="sec-num">13</span><h2>Development Roadmap</h2></div>
+  <p class="lead">Four phases from first payment to optional extensions.</p>
+
+  <div class="tl">
+    <div class="phase">
+      <h3 class="p-title">Phase 1 — Foundation</h3>
+      <p class="p-dur">1–2 weeks</p>
+      <div class="prow"><span>Razorpay business setup</span><i>Working payment account</i></div>
+      <div class="prow"><span>Event page template</span><i>tsfclub.com/events/boot-camp/</i></div>
+      <div class="prow"><span>Payment integration</span><i>Razorpay button, auto-receipt</i></div>
+      <div class="prow"><span>Admin dashboard v1</span><i>Sheet or Airtable view of enrollments</i></div>
+      <div class="prow"><span>Testing with real payment</span><i>End-to-end verification</i></div>
+    </div>
+    <div class="phase">
+      <h3 class="p-title">Phase 2 — Member Portal</h3>
+      <p class="p-dur">3–4 weeks</p>
+      <div class="prow"><span>Supabase project setup</span><i>Auth, database, storage ready</i></div>
+      <div class="prow"><span>Member signup and login</span><i>members.tsfclub.com live</i></div>
+      <div class="prow"><span>Profile management</span><i>Add, edit, view profile</i></div>
+      <div class="prow"><span>Payment history</span><i>Member sees past payments</i></div>
+      <div class="prow"><span>Event listing and enrollment</span><i>Full flow from browse to payment</i></div>
+      <div class="prow"><span>Admin panel v1</span><i>Member + event management</i></div>
+      <div class="prow"><span>Attendance marking</span><i>Basic interface for coaches</i></div>
+    </div>
+    <div class="phase">
+      <h3 class="p-title">Phase 3 — Nutrition &amp; Advanced</h3>
+      <p class="p-dur">2–3 weeks</p>
+      <div class="prow"><span>Food database</span><i>150+ Indian foods with macros</i></div>
+      <div class="prow"><span>Daily logging</span><i>Add, edit, delete meals</i></div>
+      <div class="prow"><span>Progress dashboard</span><i>Weekly averages, adherence</i></div>
+      <div class="prow"><span>Reports module</span><i>Revenue, growth, attendance charts</i></div>
+      <div class="prow"><span>Broadcast messaging</span><i>Segments via WhatsApp and email</i></div>
+      <div class="prow"><span>Automated reminders</span><i>Renewal, event, birthday triggers</i></div>
+    </div>
+    <div class="phase opt">
+      <h3 class="p-title">Phase 4 — Optional Extensions</h3>
+      <p class="p-dur">Future</p>
+      <div class="prow"><span>Class booking</span><i>Reserve a spot in specific classes</i></div>
+      <div class="prow"><span>Coach mobile app</span><i>Simple attendance interface</i></div>
+      <div class="prow"><span>Loyalty program</span><i>Points for attendance and referrals</i></div>
+      <div class="prow"><span>Referral tracking</span><i>Members refer friends, both rewarded</i></div>
+      <div class="prow"><span>Payment plans</span><i>Installments for yearly memberships</i></div>
+      <div class="prow"><span>Custom mobile app</span><i>Native iOS and Android wrapper</i></div>
+    </div>
+  </div>
+</section>
+
+<!-- ── 14 GLOSSARY ─────────────────────────── -->
+<section id="s14" class="sec">
+  <div class="sec-head"><span class="sec-num">14</span><h2>Glossary</h2></div>
+  <p class="lead">Plain-English meanings for every technical term in this document.</p>
+  <dl class="gloss">
+    <dt>DNS</dt><dd>Domain Name System — the phone book of the internet that maps domains to servers</dd>
+    <dt>CNAME</dt><dd>A DNS record that points a subdomain to another domain</dd>
+    <dt>A Record</dt><dd>A DNS record that points a domain to an IP address</dd>
+    <dt>SSL</dt><dd>Secure Sockets Layer — encrypts traffic between browser and server, the padlock in the URL bar</dd>
+    <dt>HTTPS</dt><dd>HTTP Secure — the encrypted version of HTTP</dd>
+    <dt>JWT</dt><dd>JSON Web Token — a secure way to transmit authentication information</dd>
+    <dt>Row Level Security</dt><dd>A database feature that restricts access per user</dd>
+    <dt>Webhook</dt><dd>An automatic message sent from one system to another when something happens</dd>
+    <dt>API</dt><dd>Application Programming Interface — a way for two systems to talk to each other</dd>
+    <dt>Subdomain</dt><dd>A prefix on a domain — example: members.tsfclub.com</dd>
+    <dt>Cloud</dt><dd>Servers that live on the internet, accessible from anywhere</dd>
+    <dt>Uptime</dt><dd>The percentage of time a service is available</dd>
+    <dt>Free Tier</dt><dd>A free level of service from a paid provider, usually with usage limits</dd>
+    <dt>Razorpay</dt><dd>An Indian payment gateway that handles UPI, cards, and net banking</dd>
+    <dt>Supabase</dt><dd>An open-source backend platform offering database, auth, and storage</dd>
+    <dt>Vercel</dt><dd>A hosting platform optimized for modern web applications</dd>
+    <dt>Resend</dt><dd>An email sending service for developers</dd>
+    <dt>WhatsApp Cloud API</dt><dd>Meta's official API for sending WhatsApp messages programmatically</dd>
+  </dl>
+</section>
+
+<!-- ── FOOTER ──────────────────────────────── -->
+<footer class="foot">
+  <p>TSF Digital Platform · Version 1.0 · 2026</p>
+  <p>Owner — Yugal Doddamani · Client — Team Suresh Fitness, Caranzalem, Goa</p>
+  <p class="fine">Canonical reference for the TSF Digital Platform. Updates tracked with version bumps and dated entries.</p>
+</footer>
+
+</main>
+</body>
+</html>

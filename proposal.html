@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TSF Digital Platform — Scope & Investment</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0E0E10;
+  --surface: #17171A;
+  --surface-2: #1E1E22;
+  --text: #F5F4F1;
+  --soft: #A6A5A1;
+  --mute: #6B6A67;
+  --red: #C81E1E;
+  --red-soft: rgba(200, 30, 30, 0.10);
+  --line: rgba(245, 244, 241, 0.08);
+  --line-strong: rgba(245, 244, 241, 0.16);
+  --serif: 'Instrument Serif', Georgia, serif;
+  --sans: 'Inter Tight', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --r: 10px;
+  --r-lg: 14px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+body {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  padding: 0;
+}
+
+.wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 32px 100px;
+}
+
+/* --- Cover --- */
+.cover {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 48px;
+  margin-bottom: 60px;
+}
+
+.brand-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.brand-mark {
+  font-family: var(--serif);
+  font-size: 32px;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.brand-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--line-strong);
+}
+
+.brand-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.cover h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(40px, 6vw, 64px);
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  margin-bottom: 20px;
+  text-wrap: balance;
+}
+
+.cover h1 em {
+  font-style: italic;
+  color: var(--red);
+}
+
+.cover p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--soft);
+  max-width: 640px;
+}
+
+.cover-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meta-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.meta-value {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--text);
+}
+
+/* --- Sections --- */
+section {
+  margin-bottom: 56px;
+  padding-bottom: 56px;
+  border-bottom: 1px solid var(--line);
+}
+
+section:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.sec-num {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--red);
+  margin-bottom: 12px;
+}
+
+h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  text-wrap: balance;
+}
+
+h3 {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.35;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+h4 {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 14px;
+}
+
+p {
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--soft);
+  margin-bottom: 16px;
+}
+
+p strong { color: var(--text); font-weight: 600; }
+
+/* --- Two-column card grid --- */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin: 28px 0;
+}
+
+@media (min-width: 700px) {
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 24px 22px;
+}
+
+.card h3 {
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.card.accent {
+  border-color: var(--red);
+  background: linear-gradient(180deg, var(--red-soft) 0%, var(--surface) 60%);
+}
+
+/* --- Feature list --- */
+.feature-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feature-list li {
+  position: relative;
+  padding-left: 24px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--soft);
+}
+
+.feature-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 9px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 1.5px solid var(--red);
+}
+
+.feature-list li strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* --- Numbered list --- */
+.num-list {
+  list-style: none;
+  counter-reset: item;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.num-list li {
+  position: relative;
+  padding-left: 44px;
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--soft);
+  counter-increment: item;
+}
+
+.num-list li::before {
+  content: counter(item, decimal-leading-zero);
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--red);
+  padding-top: 3px;
+}
+
+.num-list li strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* --- Table --- */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--surface);
+  margin: 20px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14.5px;
+}
+
+th, td {
+  text-align: left;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+thead th {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+  background: var(--surface-2);
+  font-weight: 500;
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+td strong { color: var(--text); font-weight: 600; }
+
+/* --- Investment block --- */
+.investment {
+  background: var(--surface);
+  border: 1px solid var(--red);
+  border-radius: var(--r-lg);
+  padding: 40px 32px;
+  text-align: center;
+  margin: 32px 0;
+}
+
+.investment-amount {
+  font-family: var(--serif);
+  font-size: clamp(56px, 12vw, 88px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--red);
+  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.investment-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--soft);
+  margin-bottom: 24px;
+}
+
+.investment-divider {
+  width: 60px;
+  height: 1px;
+  background: var(--line-strong);
+  margin: 24px auto;
+}
+
+.investment-sub {
+  font-family: var(--serif);
+  font-size: 24px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.investment-sub-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+/* --- Callout --- */
+.callout {
+  background: var(--red-soft);
+  border-left: 3px solid var(--red);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 18px 22px;
+  margin: 24px 0;
+}
+
+.callout p {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.callout strong { color: var(--red); }
+
+/* --- Payment plan --- */
+.plan-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+@media (min-width: 640px) {
+  .plan-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.plan-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 22px 20px;
+}
+
+.plan-card.highlight {
+  border-color: var(--red);
+}
+
+.plan-stage {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+
+.plan-amount {
+  font-family: var(--serif);
+  font-size: 32px;
+  line-height: 1;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.plan-desc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--soft);
+}
+
+/* --- Footer --- */
+.doc-footer {
+  margin-top: 80px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.doc-footer p {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--mute);
+  line-height: 2;
+  margin: 0;
+}
+
+/* --- Print --- */
+@media print {
+  body { background: #fff; color: #111; }
+  :root {
+    --bg: #fff;
+    --surface: #f7f7f7;
+    --surface-2: #eee;
+    --text: #111;
+    --soft: #444;
+    --mute: #777;
+    --line: rgba(0,0,0,0.12);
+    --line-strong: rgba(0,0,0,0.2);
+    --red: #b01818;
+    --red-soft: rgba(200,30,30,0.06);
+  }
+  section { break-inside: avoid-page; }
+  .investment, .card, .plan-card { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ============================================================
+     COVER
+     ============================================================ -->
+<header class="cover">
+  <div class="brand-line">
+    <span class="brand-mark">TSF</span>
+    <span class="brand-divider"></span>
+    <span class="brand-tag">Digital Platform · Scope Document</span>
+  </div>
+
+  <h1>The TSF Digital Platform.<br /><em>Everything, in one place.</em></h1>
+  <p>
+    A complete member and admin platform for Team Suresh Fitness — built on
+    tsfclub.com, owned entirely by the studio, and designed to run quietly
+    in the background while the gym does what it does best.
+  </p>
+
+  <div class="cover-meta">
+    <div class="meta-item">
+      <span class="meta-label">Client</span>
+      <span class="meta-value">Team Suresh Fitness</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Location</span>
+      <span class="meta-value">Caranzalem, Goa</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Platform</span>
+      <span class="meta-value">tsfclub.com</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Version</span>
+      <span class="meta-value">1.0 · 2026</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     01 · OVERVIEW
+     ============================================================ -->
+<section>
+  <span class="sec-num">01 — Overview</span>
+  <h2>A single platform for the studio, the members, and the coaches.</h2>
+  <p>
+    The TSF Digital Platform replaces the current register, the payment
+    screenshots on WhatsApp, and the manual fee tracking with a clean,
+    connected system. Everything lives under one domain. Everything is
+    owned by the studio. Nothing is rented from a third-party gym software.
+  </p>
+  <p>
+    The platform has three parts — all sharing the same design, the same
+    brand, and the same login:
+  </p>
+
+  <div class="grid-2">
+    <div class="card">
+      <h4>Public site</h4>
+      <h3>tsfclub.com</h3>
+      <p style="font-size:14.5px;margin:0;">
+        The marketing and information site. Programs, founder, contact,
+        macro calculator, payment page. Already live and maintained as
+        part of this engagement.
+      </p>
+    </div>
+    <div class="card accent">
+      <h4>Member & Admin app</h4>
+      <h3>members.tsfclub.com</h3>
+      <p style="font-size:14.5px;margin:0;">
+        The new platform. Members register, pay fees, view their program,
+        and get notifications. Admins and coaches log in to the same app
+        with different levels of access.
+      </p>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p>
+      <strong>Everything is owned by the studio.</strong> The code, the database,
+      the accounts, the domain, the payment gateway, the phone number — all
+      registered in the studio's name. There is no vendor lock-in, no monthly
+      licence, and no third-party app standing between TSF and its members.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     02 · MEMBER APP FEATURES
+     ============================================================ -->
+<section>
+  <span class="sec-num">02 — Member App</span>
+  <h2>What every member sees.</h2>
+  <p>
+    Members register with their Gmail, and from that point on, everything
+    they need is one tap away — fees, program details, events, and their
+    own training history.
+  </p>
+
+  <h3 style="margin-top:28px;">Registration & Onboarding</h3>
+  <ul class="feature-list">
+    <li><strong>Gmail sign-in.</strong> One tap, no password to remember. Secure and verified.</li>
+    <li><strong>WhatsApp number collection</strong> at signup — used for all future notifications.</li>
+    <li><strong>Program selection</strong> from a live list of all active programs at the studio.</li>
+    <li><strong>Preferred joining date</strong> picked from a date selector, so members can start on a day that suits them.</li>
+    <li><strong>Emergency contact</strong> and basic health notes captured once and stored securely.</li>
+    <li><strong>Welcome flow</strong> that confirms their registration and shows the next steps.</li>
+  </ul>
+
+  <h3 style="margin-top:32px;">Member Dashboard</h3>
+  <ul class="feature-list">
+    <li><strong>Profile card</strong> — name, photo, program, coach, and contact details.</li>
+    <li><strong>Program status</strong> — which program they are enrolled in, how long they have been running it, and days remaining.</li>
+    <li><strong>Fee status</strong> — current month's fee, due date, payment status, and a single button to pay.</li>
+    <li><strong>Streak counter</strong> — consecutive sessions attended, updated by the coach.</li>
+    <li><strong>Payment history</strong> — every payment made, with downloadable receipts.</li>
+    <li><strong>Upcoming events</strong> — events the studio has published, with a one-tap "I'm interested" button.</li>
+    <li><strong>Notification centre</strong> — a log of all WhatsApp messages and emails sent to them.</li>
+  </ul>
+
+  <h3 style="margin-top:32px;">Payments</h3>
+  <ul class="feature-list">
+    <li><strong>Pay Now button</strong> opens a secure Razorpay checkout in the member's app.</li>
+    <li><strong>All payment modes</strong> — UPI, cards, net banking, wallets, and EMI for larger amounts.</li>
+    <li><strong>Instant receipt</strong> delivered by email and WhatsApp the moment payment succeeds.</li>
+    <li><strong>Auto-pay option</strong> — members can authorize a recurring UPI mandate, and the fee is deducted automatically each month. Nothing to remember, nothing to miss.</li>
+    <li><strong>Payment records</strong> stored permanently against the member's profile.</li>
+  </ul>
+</section>
+
+<!-- ============================================================
+     03 · ADMIN APP FEATURES
+     ============================================================ -->
+<section>
+  <span class="sec-num">03 — Admin App</span>
+  <h2>What the studio sees.</h2>
+  <p>
+    A complete back office, accessed from any device. The owner logs in
+    from their phone, their laptop, or the receptionist's computer — and
+    sees the same data, always up to date.
+  </p>
+
+  <h3 style="margin-top:28px;">Member Management</h3>
+  <ul class="feature-list">
+    <li><strong>Full member list</strong> with search by name, phone, program, or membership status.</li>
+    <li><strong>Add a member manually</strong> — for walk-ins or members who prefer to register in person.</li>
+    <li><strong>Edit any field</strong> — program, joining date, amount due, streak count, notes.</li>
+    <li><strong>Deactivate or archive</strong> — with a record of when and why.</li>
+    <li><strong>Private notes</strong> on each member — injuries, preferences, or anything worth remembering.</li>
+    <li><strong>CSV export</strong> for accounting, backups, or offline review.</li>
+  </ul>
+
+  <h3 style="margin-top:32px;">Fee & Payment Management</h3>
+  <ul class="feature-list">
+    <li><strong>Overview of all dues</strong> — who has paid, who is pending, who is overdue.</li>
+    <li><strong>Filters</strong> by due date, program, member, or payment status.</li>
+    <li><strong>Payment records</strong> from Razorpay synced into the admin dashboard in real time.</li>
+    <li><strong>Manual entry</strong> for cash payments made at the reception.</li>
+    <li><strong>Export to Excel</strong> for month-end reconciliation.</li>
+  </ul>
+
+  <h3 style="margin-top:32px;">Events Management</h3>
+  <ul class="feature-list">
+    <li><strong>Create an event</strong> — name, date, venue, description, image, capacity.</li>
+    <li><strong>Publish with one tap.</strong> The moment an event is published, every active member receives a WhatsApp notification.</li>
+    <li><strong>Interest tracking</strong> — see who has tapped "I'm interested" so you can plan attendance.</li>
+    <li><strong>Reminder broadcast</strong> — send a follow-up message 24 hours before the event.</li>
+    <li><strong>Archive past events</strong> with photos and a short write-up.</li>
+  </ul>
+
+  <h3 style="margin-top:32px;">Reports & Insights</h3>
+  <ul class="feature-list">
+    <li><strong>Monthly revenue</strong> — collected, pending, and projected.</li>
+    <li><strong>Member growth</strong> — new signups, active members, and inactive members.</li>
+    <li><strong>Program breakdown</strong> — how many members in each program.</li>
+    <li><strong>Dues report</strong> — upcoming payments and overdue accounts, at a glance.</li>
+  </ul>
+</section>
+
+<!-- ============================================================
+     04 · COACH ROLE
+     ============================================================ -->
+<section>
+  <span class="sec-num">04 — Coach Access</span>
+  <h2>Coaches get exactly what they need. Nothing more.</h2>
+  <p>
+    The platform has a built-in role system. When a new account is created,
+    the owner assigns a role — Admin, Coach, or Member. Each role determines
+    what that person can see and do.
+  </p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Feature</th>
+          <th>Admin (Owner)</th>
+          <th>Coach</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>View member list</strong></td>
+          <td>Full access</td>
+          <td>Only members of their assigned programs</td>
+        </tr>
+        <tr>
+          <td><strong>Member personal details</strong> (phone, email, emergency contact)</td>
+          <td>Full access</td>
+          <td>Not visible</td>
+        </tr>
+        <tr>
+          <td><strong>Payment records</strong></td>
+          <td>Full access</td>
+          <td>Not visible</td>
+        </tr>
+        <tr>
+          <td><strong>Fee reminders & billing</strong></td>
+          <td>Full access</td>
+          <td>Not visible</td>
+        </tr>
+        <tr>
+          <td><strong>Attendance / streak updates</strong></td>
+          <td>Full access</td>
+          <td>Only for their assigned programs</td>
+        </tr>
+        <tr>
+          <td><strong>Create events</strong></td>
+          <td>Yes</td>
+          <td>Not permitted</td>
+        </tr>
+        <tr>
+          <td><strong>Reports</strong></td>
+          <td>Full access</td>
+          <td>Not visible</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <p>
+      Coaches use the same member app — they simply log in with their
+      assigned role. This keeps the platform simple for everyone, and
+      ensures that member privacy is protected without adding extra tools.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     05 · COMMUNICATION
+     ============================================================ -->
+<section>
+  <span class="sec-num">05 — Communication</span>
+  <h2>WhatsApp and email — the studio's voice, on autopilot.</h2>
+  <p>
+    Every important moment in a member's journey triggers the right
+    message, automatically. No one has to remember to send anything.
+  </p>
+
+  <h3 style="margin-top:28px;">WhatsApp Business API</h3>
+  <p>
+    The studio's own verified WhatsApp Business number sends all member
+    communication. Messages come from the official business account, not
+    from a personal number, so they carry authority and stay reliable.
+  </p>
+  <ul class="feature-list">
+    <li><strong>Welcome message</strong> — sent the moment a member registers.</li>
+    <li><strong>Fee reminder</strong> — sent 5 days before the due date, again 1 day before, and on the due date.</li>
+    <li><strong>Overdue reminder</strong> — sent if a fee is not paid on time, with a direct link to pay.</li>
+    <li><strong>Payment confirmation</strong> — sent immediately after a successful payment, with the receipt attached.</li>
+    <li><strong>Event notification</strong> — sent the moment the studio publishes a new event.</li>
+    <li><strong>Event reminder</strong> — sent 24 hours before an event the member showed interest in.</li>
+    <li><strong>Membership expiry reminder</strong> — sent one week before a program ends, to encourage renewal.</li>
+  </ul>
+
+  <h3 style="margin-top:32px;">Email</h3>
+  <p>
+    A dedicated email address on the studio's own domain handles all formal
+    correspondence. This replaces the current reliance on a Gmail address
+    and gives TSF a professional, branded touch.
+  </p>
+  <ul class="feature-list">
+    <li><strong>Sender address</strong> — messages come from <em>hello@tsfclub.com</em> or a similar address on the studio's domain.</li>
+    <li><strong>Payment receipts</strong> — formal invoices generated automatically for every payment.</li>
+    <li><strong>Welcome email</strong> — with program details, coach introduction, and what to expect on day one.</li>
+    <li><strong>Monthly summary</strong> — optional monthly email to the owner with revenue, growth, and dues.</li>
+  </ul>
+
+  <div class="callout">
+    <p>
+      <strong>Message costs.</strong> WhatsApp utility messages in India cost approximately ₹0.11 to ₹0.35 each. Based on a studio of 200 members
+      receiving 3–4 messages per month, the total WhatsApp cost is roughly
+      ₹200 to ₹400 per month — a small, predictable monthly cost that scales
+      with the member base, not a fixed subscription.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     06 · PAYMENT SYSTEM
+     ============================================================ -->
+<section>
+  <span class="sec-num">06 — Payment System</span>
+  <h2>Razorpay — India's leading payment gateway, in the studio's name.</h2>
+  <p>
+    All payments — membership fees, event entry, personal training, or
+    custom amounts — flow through a single Razorpay account registered
+    under the studio's business name.
+  </p>
+
+  <h3 style="margin-top:28px;">What the payment system handles</h3>
+  <ul class="feature-list">
+    <li><strong>Membership fees</strong> — monthly, quarterly, or yearly programs.</li>
+    <li><strong>Event registrations</strong> — one-time payments for fight nights, boot camps, or workshops.</li>
+    <li><strong>Personal training</strong> — session-based or package-based payments.</li>
+    <li><strong>Custom amounts</strong> — for anything the studio needs to collect outside the standard catalog.</li>
+    <li><strong>Recurring payments</strong> — via UPI Autopay mandate, so monthly fees are collected without members needing to remember.</li>
+  </ul>
+
+  <h3 style="margin-top:32px;">Transaction fees — what they cover</h3>
+  <p>
+    Razorpay charges a small fee on each successful transaction, deducted
+    at source. This is not a fee paid to the developer; it is what the
+    payment network charges for delivering money securely from the member
+    to the studio's bank account.
+  </p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th>Payment method</th>
+          <th>Transaction fee</th>
+          <th>What it covers</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>UPI</strong></td>
+          <td>Approximately 2% + GST</td>
+          <td>Instant bank-to-bank transfer, auto-receipt generation, and settlement into the studio's account within T+2 days</td>
+        </tr>
+        <tr>
+          <td><strong>Credit / Debit card</strong></td>
+          <td>Approximately 2% + GST</td>
+          <td>Full card processing, PCI-DSS compliance, fraud detection, and settlement</td>
+        </tr>
+        <tr>
+          <td><strong>Net banking</strong></td>
+          <td>Approximately 2% + GST</td>
+          <td>Secure bank authentication and instant confirmation</td>
+        </tr>
+        <tr>
+          <td><strong>Wallets</strong></td>
+          <td>Approximately 2% + GST</td>
+          <td>Paytm, PhonePe, Amazon Pay, and other wallet integrations</td>
+        </tr>
+        <tr>
+          <td><strong>Recurring (UPI Autopay)</strong></td>
+          <td>Approximately 1.5% + GST</td>
+          <td>Automatic monthly collection, mandate management, and failure retries</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="callout">
+    <p>
+      <strong>The benefits of these fees.</strong> Every rupee of the transaction
+      fee buys real value — instant payments, fraud protection, automatic
+      receipts, dispute resolution, settlement reports for accounting, and
+      round-the-clock support. This is what allows the studio to move away
+      from personal UPI numbers and screenshots toward a formal, auditable
+      payment system.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     07 · PRIVACY & COMPLIANCE
+     ============================================================ -->
+<section>
+  <span class="sec-num">07 — Privacy &amp; Compliance</span>
+  <h2>Member data is protected by design.</h2>
+  <p>
+    India's Digital Personal Data Protection Act requires businesses that
+    handle personal information to follow specific practices. The platform
+    is built to meet those standards from day one.
+  </p>
+
+  <ul class="feature-list">
+    <li><strong>Privacy policy page</strong> — a clear, plain-English document explaining what data is collected, why, how it is stored, and how members can request its removal.</li>
+    <li><strong>Terms of service page</strong> — covering membership, fees, refunds, and acceptable use of the platform.</li>
+    <li><strong>Data encryption</strong> — all member data is encrypted in transit and at rest.</li>
+    <li><strong>Row-level security</strong> — a member can only view their own data. A coach can only view members of their programs. An admin can view everything.</li>
+    <li><strong>Consent tracking</strong> — members explicitly consent to receiving WhatsApp notifications during signup.</li>
+    <li><strong>Data portability</strong> — the studio can export the entire member database at any time in standard formats.</li>
+    <li><strong>Right to deletion</strong> — members can request account deletion, and the platform supports it cleanly.</li>
+  </ul>
+</section>
+
+<!-- ============================================================
+     08 · WHAT THE STUDIO OWNS
+     ============================================================ -->
+<section>
+  <span class="sec-num">08 — Ownership</span>
+  <h2>What the studio owns at the end of the build.</h2>
+  <p>
+    There is no vendor lock-in, no rented platform, and no monthly software
+    licence. Everything created in this engagement belongs to Team Suresh
+    Fitness, permanently.
+  </p>
+
+  <ul class="feature-list">
+    <li><strong>The domain name</strong> — tsfclub.com, already registered in the studio's name.</li>
+    <li><strong>The codebase</strong> — every line of HTML, CSS, JavaScript, and backend configuration. Full source access.</li>
+    <li><strong>The database</strong> — all member records, payment history, event data, and notification logs, stored in the studio's own account.</li>
+    <li><strong>The Razorpay account</strong> — registered to the studio's business PAN and bank account. Money lands directly in the studio's account, never in the developer's.</li>
+    <li><strong>The WhatsApp Business number</strong> — verified under the studio's name. Members see the studio as the sender.</li>
+    <li><strong>The email address on the domain</strong> — hello@tsfclub.com or similar, owned by the studio.</li>
+    <li><strong>The admin access</strong> — top-level credentials to every service used, held by the studio owner.</li>
+    <li><strong>The right to migrate</strong> — the studio can move the platform to any hosting provider at any time, with full data export support.</li>
+  </ul>
+
+  <div class="callout">
+    <p>
+      <strong>Compare this to off-the-shelf gym software.</strong> Most gym
+      software charges a monthly subscription, holds the member data in its
+      own systems, and offers no real ownership. Over three years, that
+      subscription typically exceeds the one-time cost of a custom build,
+      and at the end of it the studio still owns nothing. This engagement
+      inverts that model entirely.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     09 · INVESTMENT
+     ============================================================ -->
+<section>
+  <span class="sec-num">09 — Investment</span>
+  <h2>One build. One yearly maintenance fee.</h2>
+
+  <div class="investment">
+    <div class="investment-amount">₹50,000</div>
+    <div class="investment-label">Complete platform · One-time</div>
+    <div class="investment-divider"></div>
+    <div class="investment-sub">₹1,000</div>
+    <div class="investment-sub-label">Per year · Maintenance</div>
+  </div>
+
+  <h3 style="margin-top:32px;">What's included in the ₹50,000</h3>
+  <ul class="feature-list">
+    <li><strong>Complete member app</strong> — registration, login, dashboard, profile, streak, payments, events.</li>
+    <li><strong>Complete admin panel</strong> — member management, fee tracking, event management, reports, exports.</li>
+    <li><strong>Coach role system</strong> — role-based access control, program-scoped member views.</li>
+    <li><strong>Razorpay integration</strong> — full payment setup, receipts, and recurring UPI Autopay.</li>
+    <li><strong>WhatsApp Business API setup</strong> — business account registration, phone number verification, message templates, and all automated triggers.</li>
+    <li><strong>Email setup on the domain</strong> — branded sending address, welcome emails, receipts, monthly summaries.</li>
+    <li><strong>Database and file storage</strong> — set up, secured, and structured for growth.</li>
+    <li><strong>Privacy policy and terms of service pages</strong> — written and integrated into the site.</li>
+    <li><strong>Design integration</strong> — matches the existing tsfclub.com visual identity, so nothing feels bolted on.</li>
+    <li><strong>Deployment to production</strong> — the platform goes live on members.tsfclub.com.</li>
+    <li><strong>Testing and QA</strong> — the platform is tested end to end with real member flows before launch.</li>
+    <li><strong>Handover session</strong> — a walkthrough for the owner and receptionist on how to use the admin panel.</li>
+  </ul>
+
+  <h3 style="margin-top:32px;">What the ₹1,000 yearly fee covers</h3>
+  <ul class="feature-list">
+    <li>Continuous hosting of the member portal.</li>
+    <li>Domain renewal management.</li>
+    <li>Bug fixes and small adjustments.</li>
+    <li>One minor enhancement per year — for example, a new field, a new report, or a small workflow tweak.</li>
+    <li>Priority support for urgent issues via WhatsApp.</li>
+  </ul>
+
+  <h3 style="margin-top:32px;">Payment schedule</h3>
+  <div class="plan-grid">
+    <div class="plan-card highlight">
+      <div class="plan-stage">To begin</div>
+      <div class="plan-amount">₹30,000</div>
+      <div class="plan-desc">
+        Paid at kickoff. Covers database setup, authentication, member
+        registration, and initial design integration.
+      </div>
+    </div>
+    <div class="plan-card">
+      <div class="plan-stage">At launch</div>
+      <div class="plan-amount">₹20,000</div>
+      <div class="plan-desc">
+        Paid on the day the platform goes live with members onboarded
+        and payments flowing.
+      </div>
+    </div>
+  </div>
+
+  <div class="callout">
+    <p>
+      The yearly maintenance fee of ₹1,000 is billed annually on the
+      anniversary of launch. There is no monthly subscription, no per-user
+      charge, and no fee that scales with the size of the studio.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     10 · TIMELINE
+     ============================================================ -->
+<section>
+  <span class="sec-num">10 — Timeline</span>
+  <h2>Five to six weeks from kickoff to launch.</h2>
+
+  <ol class="num-list">
+    <li>
+      <strong>Kickoff and setup (Week 1).</strong>
+      Razorpay account opening, WhatsApp Business application, email address
+      configuration, database setup, and the initial structure of the
+      member portal.
+    </li>
+    <li>
+      <strong>Member registration and login (Week 2).</strong>
+      Google sign-in, registration form, program selection, joining date
+      picker, and profile creation.
+    </li>
+    <li>
+      <strong>Payments and member dashboard (Week 3).</strong>
+      Razorpay checkout integration, "Pay Now" flow, receipts, payment
+      history, and the member's daily dashboard.
+    </li>
+    <li>
+      <strong>Admin panel and coach roles (Week 4).</strong>
+      Full member management, fee tracking, event creation, role-based
+      access, and report generation.
+    </li>
+    <li>
+      <strong>WhatsApp and email automation (Week 5).</strong>
+      Fee reminders, event notifications, welcome messages, and payment
+      confirmations all going out automatically.
+    </li>
+    <li>
+      <strong>Testing and launch (Week 6).</strong>
+      End-to-end testing, refinement, member onboarding of the first
+      pilot group, and full handover.
+    </li>
+  </ol>
+</section>
+
+<!-- ============================================================
+     11 · NEXT STEPS
+     ============================================================ -->
+<section>
+  <span class="sec-num">11 — Next Steps</span>
+  <h2>How we begin.</h2>
+
+  <ol class="num-list">
+    <li>
+      <strong>Approval of this scope.</strong> A simple confirmation is all that is needed to move forward.
+    </li>
+    <li>
+      <strong>Kickoff payment of ₹30,000.</strong> This activates the Razorpay account setup, WhatsApp application, and initial build.
+    </li>
+    <li>
+      <strong>Document collection.</strong> Business PAN, bank account details, GST certificate (if available), and one unused phone number for WhatsApp Business.
+    </li>
+    <li>
+      <strong>First working demo in two weeks.</strong> A live registration form with real Razorpay payments, so the owner can see the platform working before the full build completes.
+    </li>
+    <li>
+      <strong>Full platform launch by week six.</strong> Members onboarded, admin in control, WhatsApp live.
+    </li>
+  </ol>
+
+  <div class="callout">
+    <p>
+      <strong>A note on the timeline.</strong> WhatsApp Business API approval
+      from Meta typically takes one to two weeks. To keep the overall project
+      on schedule, the application is submitted during week one so that
+      approval is ready by the time the platform is built.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="doc-footer">
+  <p>TSF Digital Platform · Scope &amp; Investment · Version 1.0</p>
+  <p>Team Suresh Fitness · Caranzalem, Goa</p>
+  <p>Prepared by Yugal Doddamani</p>
+</footer>
+
+</div>
+</body>
+</html>

@@ -91,8 +91,7 @@
                 </p>
                 <h1 class="page-hero-title">Pay for your program.</h1>
                 <p class="page-hero-lede">
-                    Tap any program to open a UPI payment QR with the amount
-                    pre-filled. Scan with GPay, PhonePe, or Paytm to pay instantly.
+                    Tap any program to view its UPI payment QR. Scan with GPay, PhonePe, or Paytm, then enter the listed amount in your UPI app.
                 </p>
             </div>
         </section>
@@ -101,10 +100,10 @@
         <section class="pay-section" id="payments">
             <div class="container">
 
-                <div class="pay-tabs" role="tablist" aria-label="Filter programs">
-                    <button type="button" class="pay-tab is-active" data-filter="all">All programs</button>
-                    <button type="button" class="pay-tab" data-filter="adults">Adults</button>
-                    <button type="button" class="pay-tab" data-filter="kids">Kids</button>
+                <div class="pay-tabs" role="group" aria-label="Filter programs">
+                    <button type="button" class="pay-tab is-active" aria-pressed="true" data-filter="all">All programs</button>
+                    <button type="button" class="pay-tab" aria-pressed="false" data-filter="adults">Adults</button>
+                    <button type="button" class="pay-tab" aria-pressed="false" data-filter="kids">Kids</button>
                 </div>
 
                 <div class="pay-grid" id="payGrid">
@@ -266,8 +265,8 @@
 
     </main>
 
-    <!-- MODAL — FIXED LAYOUT -->
-    <div class="pay-modal" id="payModal" aria-hidden="true" role="dialog" aria-modal="true">
+    <!-- Payment QR dialog -->
+    <div class="pay-modal" id="payModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="payModalTitle" aria-describedby="payModalDesc">
         <div class="pay-modal-backdrop" data-close-modal></div>
         <div class="pay-modal-inner">
 
@@ -284,15 +283,14 @@
                 Scan the QR with any UPI app and enter the amount.
             </p>
 
-            
-<div class="pay-modal-qr">
-    <div
-        id="payQrContainer"
-        class="pay-qr-container"
-        role="img"
-        aria-label="UPI payment QR code"
-    ></div>
-</div>
+            <div class="pay-modal-qr">
+                <div
+                    id="payQrContainer"
+                    class="pay-qr-container"
+                    role="img"
+                    aria-label="UPI payment QR code"
+                ></div>
+            </div>
 
             <a href="#" class="pay-modal-download" id="payDownloadBtn" download="tsf-payment-qr.png">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>

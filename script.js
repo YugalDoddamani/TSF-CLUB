@@ -850,6 +850,7 @@
         var toast = document.getElementById('payToast');
 
         var activeLink = '';
+        var modalReturnFocus = null;
 
         /* ---------- Toast ---------- */
         var toastTimer = null;
@@ -872,7 +873,9 @@
                 var filter = this.dataset.filter;
 
                 tabs.forEach(function (t) {
-                    t.classList.toggle('is-active', t === tab);
+                    var isSelected = t === tab;
+                    t.classList.toggle('is-active', isSelected);
+                    t.setAttribute('aria-pressed', String(isSelected));
                 });
 
                 cards.forEach(function (card) {
@@ -882,8 +885,9 @@
         });
 
         /* ---------- Open modal ---------- */
-               function openModal(program, amount, note) {
+        function openModal(program, amount, note, trigger) {
             var hasAmount = amount && parseFloat(amount) > 0;
+            modalReturnFocus = trigger || document.activeElement;
 
             eyebrow.textContent = program || 'TSF Payment';
             title.textContent = hasAmount
@@ -899,6 +903,9 @@
             modal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
 
+            var closeButton = modal.querySelector('.pay-modal-close');
+            if (closeButton) closeButton.focus();
+
             requestAnimationFrame(function () {
                 renderQRInto(qrContainer, activeLink);
             });
@@ -910,6 +917,10 @@
             modal.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
             activeLink = '';
+            if (modalReturnFocus && typeof modalReturnFocus.focus === 'function') {
+                modalReturnFocus.focus();
+            }
+            modalReturnFocus = null;
         }
 
         /* ---------- Wire up card clicks ---------- */
@@ -918,7 +929,7 @@
                 var program = card.dataset.program || 'TSF Payment';
                 var amount = card.dataset.amount || '';
                 var note = card.dataset.note || program;
-                openModal(program, amount, note);
+                openModal(program, amount, note, card);
             });
         });
 
@@ -926,7 +937,7 @@
         var customBtn = document.querySelector('.pay-custom-btn');
         if (customBtn) {
             customBtn.addEventListener('click', function () {
-                openModal('Custom amount', '', 'TSF Fitness Studio Payment');
+                openModal('Custom amount', '', 'TSF Fitness Studio Payment', customBtn);
             });
         }
 

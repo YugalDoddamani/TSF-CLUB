@@ -284,13 +284,13 @@
                 Scan the QR with any UPI app to pay.
             </p>
 
-            <div class="pay-modal-qr">
-                <canvas id="payQrCanvas" width="512" height="512"></canvas>
+                       <div class="pay-modal-qr">
+                <div id="payQrContainer" class="pay-qr-container"></div>
             </div>
 
-            <a href="#" class="pay-modal-app-btn" id="payAppBtn" rel="noopener">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-                Open in UPI app
+            <a href="#" class="pay-modal-download" id="payDownloadBtn" download="tsf-payment-qr.png">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                Download QR
             </a>
 
             <p class="pay-modal-note">

@@ -778,24 +778,21 @@
 
 
 
-
     /* ============================================================
        13. PAYMENT PAGE — filters + QR modal
        ============================================================ */
 
-    const UPI_CONFIG = {
+    var UPI_CONFIG = {
         pa: 'sureshitf5@okhdfcbank',
         pn: 'TSF Fitness Studio',
         currency: 'INR'
     };
 
-    /* Build UPI link — with or without amount */
-    function buildUpiLink(amount, note, includeAmount) {
+    function buildUpiLink(amount, note) {
         var link = 'upi://pay?pa=' + encodeURIComponent(UPI_CONFIG.pa)
                  + '&pn=' + encodeURIComponent(UPI_CONFIG.pn)
                  + '&cu=' + UPI_CONFIG.currency;
-
-        if (includeAmount && amount && parseFloat(amount) > 0) {
+        if (amount && parseFloat(amount) > 0) {
             link += '&am=' + parseFloat(amount).toFixed(2);
         }
         if (note) {
@@ -804,20 +801,56 @@
         return link;
     }
 
+    /* Render QR inside the given container element.
+       Uses local library first, falls back to API if library missing. */
+    function renderQRInto(container, link) {
+        container.innerHTML = '';
+
+        /* Fallback: generate as an image via a public API */
+        function useApiFallback() {
+            var img = document.createElement('img');
+            img.alt = 'Payment QR code';
+            img.src = 'https://api.qrserver.com/v1/create-qr-code/?size=520x520&margin=0&data=' + encodeURIComponent(link);
+            img.style.width = '100%';
+            img.style.height = '100%';
+            img.style.objectFit = 'contain';
+            container.appendChild(img);
+        }
+
+        if (typeof QRCode === 'undefined') {
+            console.warn('QRCode library not available, using API fallback');
+            useApiFallback();
+            return;
+        }
+
+        try {
+            new QRCode(container, {
+                text: link,
+                width: 512,
+                height: 512,
+                colorDark: '#0E0E10',
+                colorLight: '#FFFFFF',
+                correctLevel: QRCode.CorrectLevel.M
+            });
+        } catch (err) {
+            console.error('QR render error, falling back to API:', err);
+            useApiFallback();
+        }
+    }
+
     function initPaymentQR() {
         var grid = document.getElementById('payGrid');
         if (!grid) return;
 
         var modal = document.getElementById('payModal');
-        var qrContainer = document.getElementById('payQrCanvas');
+        var qrContainer = document.getElementById('payQrContainer');
         var eyebrow = document.getElementById('payModalEyebrow');
         var title = document.getElementById('payModalTitle');
         var desc = document.getElementById('payModalDesc');
-        var appBtn = document.getElementById('payAppBtn');
+        var downloadBtn = document.getElementById('payDownloadBtn');
         var toast = document.getElementById('payToast');
 
-        var activeQrLink = '';    /* full link with amount — for QR */
-        var activeAppLink = '';   /* link without amount — for app button */
+        var activeLink = '';
 
         /* ---------- Toast ---------- */
         var toastTimer = null;
@@ -849,32 +882,6 @@
             });
         });
 
-        /* ---------- QR rendering using qrcodejs ---------- */
-        function renderQR(link) {
-            /* Clear previous QR */
-            qrContainer.innerHTML = '';
-
-            if (typeof QRCode === 'undefined') {
-                qrContainer.innerHTML = '<p style="color:#666;font-size:13px;text-align:center;padding:20px;">QR library not loaded</p>';
-                return;
-            }
-
-            try {
-                /* qrcodejs API */
-                new QRCode(qrContainer, {
-                    text: link,
-                    width: 240,
-                    height: 240,
-                    colorDark: '#0E0E10',
-                    colorLight: '#FFFFFF',
-                    correctLevel: QRCode.CorrectLevel.M
-                });
-            } catch (err) {
-                console.error('QR render error:', err);
-                qrContainer.innerHTML = '<p style="color:#666;font-size:13px;text-align:center;padding:20px;">Could not generate QR</p>';
-            }
-        }
-
         /* ---------- Open modal ---------- */
         function openModal(program, amount, note) {
             var hasAmount = amount && parseFloat(amount) > 0;
@@ -882,27 +889,21 @@
             eyebrow.textContent = program || 'TSF Payment';
             title.textContent = hasAmount
                 ? 'Pay \u20B9' + parseFloat(amount).toLocaleString('en-IN')
-                : 'Enter amount in UPI app';
+                : 'Pay any amount';
             desc.textContent = hasAmount
-                ? 'Scan the QR below, or tap "Open in UPI app" to pay.'
+                ? 'Scan the QR with any UPI app to pay.'
                 : 'Scan the QR and enter the amount in your UPI app.';
 
-            /* Two different links:
-               — QR gets the amount (scanning handles it fine)
-               — App button gets NO amount (avoids risk-policy block) */
-            activeQrLink = buildUpiLink(amount, note, true);
-            activeAppLink = buildUpiLink(amount, note, false);
-
-            appBtn.href = activeAppLink;
+            activeLink = buildUpiLink(hasAmount ? amount : '', note);
 
             /* Show modal */
             modal.classList.add('is-open');
             modal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
 
-            /* Render QR after modal is visible */
+            /* Render QR after the modal is visible */
             requestAnimationFrame(function () {
-                renderQR(activeQrLink);
+                renderQRInto(qrContainer, activeLink);
             });
         }
 
@@ -911,8 +912,7 @@
             modal.classList.remove('is-open');
             modal.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
-            activeQrLink = '';
-            activeAppLink = '';
+            activeLink = '';
         }
 
         /* ---------- Wire up card clicks ---------- */
@@ -943,6 +943,53 @@
                 closeModal();
             }
         });
+
+        /* ---------- Download QR ---------- */
+        if (downloadBtn) {
+            downloadBtn.addEventListener('click', function (e) {
+                e.preventDefault();
+                if (!activeLink) return;
+
+                var canvas = qrContainer.querySelector('canvas');
+                var img = qrContainer.querySelector('img');
+                var filename = 'tsf-payment-qr.png';
+
+                /* Preferred: canvas data URL */
+                if (canvas && canvas.toDataURL) {
+                    try {
+                        var dataUrl = canvas.toDataURL('image/png');
+                        var a = document.createElement('a');
+                        a.href = dataUrl;
+                        a.download = filename;
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        showToast('QR downloaded');
+                        return;
+                    } catch (err) {
+                        console.warn('Canvas export failed:', err);
+                    }
+                }
+
+                /* Fallback: image source (works for API-generated images) */
+                if (img && img.src) {
+                    var a2 = document.createElement('a');
+                    a2.href = img.src;
+                    a2.download = filename;
+                    a2.target = '_blank';
+                    a2.rel = 'noopener';
+                    document.body.appendChild(a2);
+                    a2.click();
+                    document.body.removeChild(a2);
+                    showToast('Opening QR image');
+                    return;
+                }
+
+                /* Last resort: generate a fresh QR on the fly */
+                var fallbackUrl = 'https://api.qrserver.com/v1/create-qr-code/?size=520x520&margin=0&data=' + encodeURIComponent(activeLink);
+                window.open(fallbackUrl, '_blank');
+            });
+        }
     }
 
     /* ============================================================

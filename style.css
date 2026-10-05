@@ -4248,10 +4248,12 @@ html, body {
     box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
 }
 
-.pay-modal-qr canvas {
+.pay-modal-qr canvas,
+.pay-modal-qr img {
     display: block;
     width: 100%;
     height: 100%;
+    object-fit: contain;
 }
 
 .pay-modal-app-btn {

@@ -789,11 +789,13 @@
         currency: 'INR'
     };
 
-    function buildUpiLink(amount, note) {
-        let link = 'upi://pay?pa=' + encodeURIComponent(UPI_CONFIG.pa)
+    /* Build UPI link — with or without amount */
+    function buildUpiLink(amount, note, includeAmount) {
+        var link = 'upi://pay?pa=' + encodeURIComponent(UPI_CONFIG.pa)
                  + '&pn=' + encodeURIComponent(UPI_CONFIG.pn)
                  + '&cu=' + UPI_CONFIG.currency;
-        if (amount && parseFloat(amount) > 0) {
+
+        if (includeAmount && amount && parseFloat(amount) > 0) {
             link += '&am=' + parseFloat(amount).toFixed(2);
         }
         if (note) {
@@ -803,93 +805,104 @@
     }
 
     function initPaymentQR() {
-        const grid = document.getElementById('payGrid');
+        var grid = document.getElementById('payGrid');
         if (!grid) return;
 
-        const modal = document.getElementById('payModal');
-        const canvas = document.getElementById('payQrCanvas');
-        const eyebrow = document.getElementById('payModalEyebrow');
-        const title = document.getElementById('payModalTitle');
-        const desc = document.getElementById('payModalDesc');
-        const appBtn = document.getElementById('payAppBtn');
-        const toast = document.getElementById('payToast');
+        var modal = document.getElementById('payModal');
+        var qrContainer = document.getElementById('payQrCanvas');
+        var eyebrow = document.getElementById('payModalEyebrow');
+        var title = document.getElementById('payModalTitle');
+        var desc = document.getElementById('payModalDesc');
+        var appBtn = document.getElementById('payAppBtn');
+        var toast = document.getElementById('payToast');
 
-        let activeLink = '';
+        var activeQrLink = '';    /* full link with amount — for QR */
+        var activeAppLink = '';   /* link without amount — for app button */
 
         /* ---------- Toast ---------- */
-        let toastTimer = null;
+        var toastTimer = null;
         function showToast(msg) {
             if (!toast) return;
             toast.textContent = msg;
             toast.classList.add('is-visible');
             clearTimeout(toastTimer);
-            toastTimer = setTimeout(() => {
+            toastTimer = setTimeout(function () {
                 toast.classList.remove('is-visible');
             }, 2400);
         }
 
         /* ---------- Filters ---------- */
-        const tabs = document.querySelectorAll('.pay-tab');
-        const cards = document.querySelectorAll('.pay-card');
+        var tabs = document.querySelectorAll('.pay-tab');
+        var cards = document.querySelectorAll('.pay-card');
 
-        tabs.forEach(tab => {
+        tabs.forEach(function (tab) {
             tab.addEventListener('click', function () {
-                const filter = this.dataset.filter;
+                var filter = this.dataset.filter;
 
-                tabs.forEach(t => t.classList.toggle('is-active', t === this));
+                tabs.forEach(function (t) {
+                    t.classList.toggle('is-active', t === tab);
+                });
 
-                cards.forEach(card => {
-                    if (filter === 'all' || card.dataset.category === filter) {
-                        card.hidden = false;
-                    } else {
-                        card.hidden = true;
-                    }
+                cards.forEach(function (card) {
+                    card.hidden = !(filter === 'all' || card.dataset.category === filter);
                 });
             });
         });
 
+        /* ---------- QR rendering using qrcodejs ---------- */
+        function renderQR(link) {
+            /* Clear previous QR */
+            qrContainer.innerHTML = '';
+
+            if (typeof QRCode === 'undefined') {
+                qrContainer.innerHTML = '<p style="color:#666;font-size:13px;text-align:center;padding:20px;">QR library not loaded</p>';
+                return;
+            }
+
+            try {
+                /* qrcodejs API */
+                new QRCode(qrContainer, {
+                    text: link,
+                    width: 240,
+                    height: 240,
+                    colorDark: '#0E0E10',
+                    colorLight: '#FFFFFF',
+                    correctLevel: QRCode.CorrectLevel.M
+                });
+            } catch (err) {
+                console.error('QR render error:', err);
+                qrContainer.innerHTML = '<p style="color:#666;font-size:13px;text-align:center;padding:20px;">Could not generate QR</p>';
+            }
+        }
+
         /* ---------- Open modal ---------- */
         function openModal(program, amount, note) {
-            const hasAmount = amount && parseFloat(amount) > 0;
+            var hasAmount = amount && parseFloat(amount) > 0;
 
             eyebrow.textContent = program || 'TSF Payment';
             title.textContent = hasAmount
                 ? 'Pay \u20B9' + parseFloat(amount).toLocaleString('en-IN')
                 : 'Enter amount in UPI app';
             desc.textContent = hasAmount
-                ? 'Scan the QR with any UPI app to pay, or tap the button below.'
+                ? 'Scan the QR below, or tap "Open in UPI app" to pay.'
                 : 'Scan the QR and enter the amount in your UPI app.';
 
-            activeLink = buildUpiLink(hasAmount ? amount : '', note);
-            appBtn.href = activeLink;
+            /* Two different links:
+               — QR gets the amount (scanning handles it fine)
+               — App button gets NO amount (avoids risk-policy block) */
+            activeQrLink = buildUpiLink(amount, note, true);
+            activeAppLink = buildUpiLink(amount, note, false);
 
-            /* Show modal first */
+            appBtn.href = activeAppLink;
+
+            /* Show modal */
             modal.classList.add('is-open');
             modal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
 
-            /* Generate QR AFTER modal is visible so canvas is sized */
-            requestAnimationFrame(() => {
-                if (typeof QRCode === 'undefined' || !QRCode.toCanvas) {
-                    console.warn('QRCode library not loaded');
-                    showToast('QR library is still loading. Please wait a moment and try again.');
-                    return;
-                }
-
-                QRCode.toCanvas(canvas, activeLink, {
-                    width: 512,
-                    margin: 1,
-                    errorCorrectionLevel: 'M',
-                    color: {
-                        dark: '#0E0E10',
-                        light: '#FFFFFF'
-                    }
-                }, function (err) {
-                    if (err) {
-                        console.error('QR generation error:', err);
-                        showToast('Could not generate QR. Please refresh.');
-                    }
-                });
+            /* Render QR after modal is visible */
+            requestAnimationFrame(function () {
+                renderQR(activeQrLink);
             });
         }
 
@@ -898,55 +911,39 @@
             modal.classList.remove('is-open');
             modal.setAttribute('aria-hidden', 'true');
             document.body.style.overflow = '';
-            activeLink = '';
+            activeQrLink = '';
+            activeAppLink = '';
         }
 
         /* ---------- Wire up card clicks ---------- */
-        document.querySelectorAll('.pay-card').forEach(card => {
-            card.addEventListener('click', () => {
-                const program = card.dataset.program || 'TSF Payment';
-                const amount = card.dataset.amount || '';
-                const note = card.dataset.note || program;
+        document.querySelectorAll('.pay-card').forEach(function (card) {
+            card.addEventListener('click', function () {
+                var program = card.dataset.program || 'TSF Payment';
+                var amount = card.dataset.amount || '';
+                var note = card.dataset.note || program;
                 openModal(program, amount, note);
             });
         });
 
         /* ---------- Custom QR trigger ---------- */
-        const customBtn = document.querySelector('.pay-custom-btn');
+        var customBtn = document.querySelector('.pay-custom-btn');
         if (customBtn) {
-            customBtn.addEventListener('click', () => {
+            customBtn.addEventListener('click', function () {
                 openModal('Custom amount', '', 'TSF Fitness Studio Payment');
             });
         }
 
         /* ---------- Close handlers ---------- */
-        modal.querySelectorAll('[data-close-modal]').forEach(el => {
+        modal.querySelectorAll('[data-close-modal]').forEach(function (el) {
             el.addEventListener('click', closeModal);
         });
 
-        document.addEventListener('keydown', (e) => {
+        document.addEventListener('keydown', function (e) {
             if (e.key === 'Escape' && modal.classList.contains('is-open')) {
                 closeModal();
             }
         });
-
-        /* ---------- "Open in UPI app" button ---------- */
-        if (appBtn) {
-            appBtn.addEventListener('click', function (e) {
-                if (!activeLink) return;
-
-                /* On desktop browsers this link can't open a UPI app.
-                   Let the default behaviour try; on mobile it fires. */
-                /* Using window.location for mobile deep link reliability */
-                if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
-                    e.preventDefault();
-                    window.location.href = activeLink;
-                }
-            });
-        }
     }
-
-
 
     /* ============================================================
        7. BOOT

@@ -3917,249 +3917,9 @@ html, body {
 
 
 /* ============================================================
-   PAYMENT PAGE
+   PAYMENT MODAL — ENHANCED STYLING
+   Fixes for proper spacing and text display
    ============================================================ */
-
-.pay-section {
-    padding: var(--space-7) 0 var(--space-10);
-    border-top: 0;
-}
-
-/* --- Filter tabs --- */
-.pay-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: var(--space-2);
-    margin-bottom: var(--space-6);
-}
-
-.pay-tab {
-    padding: 9px 18px;
-    font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-secondary);
-    background: transparent;
-    border: 1px solid var(--line-default);
-    border-radius: var(--radius-full);
-    cursor: pointer;
-    transition: all var(--dur-fast) var(--ease-out);
-    -webkit-tap-highlight-color: transparent;
-}
-
-.pay-tab:hover {
-    color: var(--text-primary);
-    border-color: var(--line-strong);
-}
-
-.pay-tab.is-active {
-    color: var(--text-primary);
-    background: var(--bg-surface);
-    border-color: var(--text-primary);
-}
-
-/* --- Card grid --- */
-.pay-grid {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: var(--space-4);
-}
-
-@media (min-width: 640px) {
-    .pay-grid {
-        grid-template-columns: repeat(2, 1fr);
-        gap: var(--space-5);
-    }
-}
-
-@media (min-width: 900px) {
-    .pay-grid {
-        grid-template-columns: repeat(3, 1fr);
-    }
-}
-
-/* --- Card: whole thing is a button --- */
-.pay-card {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    gap: var(--space-5);
-    width: 100%;
-    padding: var(--space-5);
-    text-align: left;
-    background: var(--bg-surface);
-    border: 1px solid var(--line-subtle);
-    border-radius: var(--radius-lg);
-    cursor: pointer;
-    font: inherit;
-    color: inherit;
-    transition: border-color var(--dur-base) var(--ease-out),
-                transform var(--dur-base) var(--ease-out),
-                box-shadow var(--dur-base) var(--ease-out);
-    -webkit-tap-highlight-color: transparent;
-    min-height: 200px;
-}
-
-.pay-card:hover {
-    border-color: var(--red-line);
-    transform: translateY(-2px);
-    box-shadow: var(--shadow-sm);
-}
-
-.pay-card:active {
-    transform: translateY(0);
-}
-
-.pay-card:focus-visible {
-    outline: 2px solid var(--red-core);
-    outline-offset: 3px;
-}
-
-.pay-card-head {
-    display: flex;
-    flex-direction: column;
-    gap: var(--space-2);
-}
-
-.pay-card-head .mono {
-    color: var(--red-core);
-    font-size: 0.5625rem;
-}
-
-.pay-card-title {
-    font-family: var(--font-display);
-    font-size: 1.5rem;
-    font-weight: 400;
-    line-height: 1.15;
-    letter-spacing: -0.015em;
-    color: var(--text-primary);
-    margin: 0;
-}
-
-.pay-card-fee {
-    font-family: var(--font-sans);
-    font-size: 0.9375rem;
-    font-weight: 600;
-    color: var(--text-primary);
-    margin: 0;
-}
-
-.pay-card-fee span {
-    font-weight: 400;
-    color: var(--text-muted);
-    font-size: 0.8125rem;
-}
-
-.pay-card-fee-enquire {
-    font-family: var(--font-mono);
-    font-size: 0.625rem;
-    font-weight: 500;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-}
-
-.pay-card-cta {
-    display: inline-flex;
-    align-items: center;
-    gap: var(--space-2);
-    padding-top: var(--space-4);
-    border-top: 1px solid var(--line-subtle);
-    font-family: var(--font-mono);
-    font-size: 0.625rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--red-core);
-}
-
-.pay-card-cta .arrow {
-    transition: transform var(--dur-fast) var(--ease-out);
-}
-
-.pay-card:hover .pay-card-cta .arrow {
-    transform: translateX(3px);
-}
-
-/* --- Hidden state (used by filter) --- */
-.pay-card[hidden] {
-    display: none !important;
-}
-
-/* --- Custom amount trigger --- */
-.pay-custom {
-    display: flex;
-    justify-content: center;
-    margin-top: var(--space-8);
-    padding-top: var(--space-7);
-    border-top: 1px solid var(--line-subtle);
-}
-
-.pay-custom-btn {
-    display: inline-flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 4px;
-    padding: var(--space-4) var(--space-6);
-    font-family: var(--font-sans);
-    font-size: 0.875rem;
-    color: var(--text-muted);
-    background: transparent;
-    border: 1px dashed var(--line-default);
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: all var(--dur-fast) var(--ease-out);
-    -webkit-tap-highlight-color: transparent;
-    max-width: 400px;
-}
-
-.pay-custom-btn:hover {
-    color: var(--text-secondary);
-    border-color: var(--line-strong);
-}
-
-.pay-custom-link {
-    font-family: var(--font-mono);
-    font-size: 0.625rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--red-core);
-    margin-top: 4px;
-}
-
-/* ============================================================
-   MODAL
-   ============================================================ */
-.pay-modal {
-    position: fixed;
-    inset: 0;
-    z-index: 9995;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    padding: var(--space-4);
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity var(--dur-base) var(--ease-out),
-                visibility var(--dur-base) var(--ease-out);
-}
-
-.pay-modal.is-open {
-    opacity: 1;
-    visibility: visible;
-}
-
-.pay-modal-backdrop {
-    position: absolute;
-    inset: 0;
-    background: rgba(10, 10, 10, 0.85);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
-    cursor: pointer;
-}
 
 .pay-modal-inner {
     position: relative;
@@ -4168,7 +3928,7 @@ html, body {
     align-items: center;
     gap: var(--space-4);
     width: 100%;
-    max-width: 400px;
+    max-width: 420px;
     max-height: calc(100vh - 32px);
     overflow-y: auto;
     padding: var(--space-7) var(--space-6) var(--space-6);
@@ -4181,10 +3941,158 @@ html, body {
     transition: transform var(--dur-base) var(--ease-out);
 }
 
-.pay-modal.is-open .pay-modal-inner {
-    transform: translateY(0);
+/* Eyebrow label */
+.pay-modal-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red-core);
+    margin: 0;
+    margin-top: var(--space-2);
 }
 
+/* Title: explicit color + line-height + numeric font */
+.pay-modal-title {
+    font-family: var(--font-display);
+    font-size: clamp(1.75rem, 6vw, 2.25rem) !important;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--red-core) !important;
+    margin: 0;
+    margin-bottom: var(--space-1);
+    font-variant-numeric: tabular-nums;
+    text-wrap: balance;
+}
+
+/* Description text */
+.pay-modal-desc {
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: var(--text-secondary);
+    max-width: 300px;
+    margin: 0;
+    margin-bottom: var(--space-2);
+}
+
+/* QR Container — full width, proper aspect */
+.pay-modal-qr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    aspect-ratio: 1 / 1;
+    max-width: 260px;
+    padding: 14px;
+    background: #FFFFFF;
+    border-radius: var(--radius-md);
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    margin: var(--space-2) 0;
+}
+
+.pay-qr-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* QR canvas/image sizing */
+.pay-qr-container canvas,
+.pay-qr-container img {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+}
+
+/* Download button */
+.pay-modal-download {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    width: 100%;
+    max-width: 320px;
+    padding: 14px 20px;
+    margin-top: var(--space-2);
+    margin-bottom: var(--space-2);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    color: #FFFFFF;
+    background: var(--red-core);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color var(--dur-fast) var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.pay-modal-download:hover {
+    background: var(--red-hover);
+}
+
+/* Bottom note text */
+.pay-modal-note {
+    font-size: 0.75rem;
+    line-height: 1.55;
+    color: var(--text-muted);
+    max-width: 300px;
+    margin: 0;
+    padding-top: var(--space-3);
+    border-top: 1px solid var(--line-subtle);
+    text-align: center;
+}
+
+/* Mobile optimization */
+@media (max-width: 640px) {
+    .pay-modal-inner {
+        max-width: calc(100vw - 32px);
+        gap: var(--space-3);
+        padding: var(--space-5) var(--space-4) var(--space-4);
+    }
+
+    .pay-modal-title {
+        font-size: clamp(1.5rem, 8vw, 2rem);
+        margin-bottom: 0;
+    }
+
+    .pay-modal-desc {
+        font-size: 0.75rem;
+        margin-bottom: var(--space-1);
+    }
+
+    .pay-modal-qr {
+        max-width: 240px;
+        padding: 12px;
+        margin: var(--space-1) 0;
+    }
+
+    .pay-modal-download {
+        max-width: 100%;
+        padding: 12px 16px;
+        font-size: 0.875rem;
+        margin-top: var(--space-1);
+        margin-bottom: var(--space-1);
+    }
+
+    .pay-modal-note {
+        font-size: 0.6875rem;
+        max-width: 100%;
+        padding-top: var(--space-2);
+    }
+}
+
+/* Close button positioning */
 .pay-modal-close {
     position: absolute;
     top: var(--space-4);
@@ -4200,131 +4108,19 @@ html, body {
     border-radius: var(--radius-sm);
     cursor: pointer;
     transition: color var(--dur-fast) var(--ease-out);
+    z-index: 10;
 }
 
 .pay-modal-close:hover {
     color: var(--text-primary);
 }
 
-.pay-modal-eyebrow {
-    font-family: var(--font-mono);
-    font-size: 0.625rem;
-    font-weight: 500;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--red-core);
-    margin: 0;
-}
-
-.pay-modal-title {
-    font-family: var(--font-display);
-    font-size: clamp(1.5rem, 5vw, 1.875rem);
-    font-weight: 400;
-    line-height: 1.15;
-    letter-spacing: -0.015em;
-    color: var(--text-primary);
-    margin: 0;
-}
-
-.pay-modal-desc {
-    font-size: 0.8125rem;
-    line-height: 1.55;
-    color: var(--text-secondary);
-    max-width: 300px;
-    margin: 0;
-}
-
-/* --- QR display --- */
-.pay-modal-qr {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 260px;
-    height: 260px;
-    max-width: 100%;
-    padding: 14px;
-    background: #FFFFFF;
-    border-radius: var(--radius-md);
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
-    overflow: hidden;
-}
-
-.pay-qr-container {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.pay-qr-container canvas,
-.pay-qr-container img {
-    display: block !important;
-    width: 100% !important;
-    height: 100% !important;
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-}
-
-/* --- Download button --- */
-.pay-modal-download {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2);
-    width: 100%;
-    padding: 14px 20px;
-    margin-top: var(--space-2);
-    font-family: var(--font-sans);
-    font-size: 0.9375rem;
-    font-weight: 600;
-    letter-spacing: -0.005em;
-    color: #FFFFFF;
-    background: var(--red-core);
-    border: none;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    text-decoration: none;
-    transition: background-color var(--dur-fast) var(--ease-out);
-}
-
-.pay-modal-download:hover {
-    background: var(--red-hover);
-}
-
-/* --- Toast --- */
-.pay-toast {
-    position: fixed;
-    bottom: 24px;
-    left: 50%;
-    transform: translateX(-50%) translateY(20px);
-    z-index: 9999;
-    padding: 12px 22px;
-    font-size: 0.8125rem;
-    font-weight: 500;
-    color: var(--text-primary);
-    background: var(--bg-surface);
-    border: 1px solid var(--line-strong);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-md);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity var(--dur-base) var(--ease-out),
-                transform var(--dur-base) var(--ease-out);
-    max-width: calc(100vw - 32px);
-    text-align: center;
-}
-
-.pay-toast.is-visible {
+/* Open state */
+.pay-modal.is-open {
     opacity: 1;
-    transform: translateX(-50%) translateY(0);
+    visibility: visible;
 }
 
-
-/* --- Amount prompt in the modal --- */
-.pay-modal-title {
-    font-size: clamp(1.75rem, 6vw, 2.25rem) !important;
-    color: var(--red-core) !important;
-    font-variant-numeric: tabular-nums;
+.pay-modal.is-open .pay-modal-inner {
+    transform: translateY(0);
 }

@@ -788,13 +788,12 @@
         currency: 'INR'
     };
 
-    function buildUpiLink(amount, note) {
+       function buildUpiLink(amount, note) {
+        /* Amount intentionally NOT included — NPCI blocks pre-filled
+           amounts on personal UPI IDs. Payer enters it manually. */
         var link = 'upi://pay?pa=' + encodeURIComponent(UPI_CONFIG.pa)
                  + '&pn=' + encodeURIComponent(UPI_CONFIG.pn)
                  + '&cu=' + UPI_CONFIG.currency;
-        if (amount && parseFloat(amount) > 0) {
-            link += '&am=' + parseFloat(amount).toFixed(2);
-        }
         if (note) {
             link += '&tn=' + encodeURIComponent(note);
         }
@@ -883,7 +882,7 @@
         });
 
         /* ---------- Open modal ---------- */
-        function openModal(program, amount, note) {
+               function openModal(program, amount, note) {
             var hasAmount = amount && parseFloat(amount) > 0;
 
             eyebrow.textContent = program || 'TSF Payment';
@@ -891,17 +890,15 @@
                 ? 'Pay \u20B9' + parseFloat(amount).toLocaleString('en-IN')
                 : 'Pay any amount';
             desc.textContent = hasAmount
-                ? 'Scan the QR with any UPI app to pay.'
-                : 'Scan the QR and enter the amount in your UPI app.';
+                ? 'Enter \u20B9' + parseFloat(amount).toLocaleString('en-IN') + ' in your UPI app after scanning.'
+                : 'Enter the amount in your UPI app after scanning.';
 
             activeLink = buildUpiLink(hasAmount ? amount : '', note);
 
-            /* Show modal */
             modal.classList.add('is-open');
             modal.setAttribute('aria-hidden', 'false');
             document.body.style.overflow = 'hidden';
 
-            /* Render QR after the modal is visible */
             requestAnimationFrame(function () {
                 renderQRInto(qrContainer, activeLink);
             });

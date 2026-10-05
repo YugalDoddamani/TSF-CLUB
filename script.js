@@ -778,6 +778,164 @@
 
 
 
+
+     /* ============================================================
+       13. PAYMENT QR — custom UPI generation
+       ============================================================ */
+
+    const UPI_CONFIG = {
+        pa: 'sureshitf5@okhdfcbank',
+        pn: 'TSF Fitness Studio',
+        currency: 'INR'
+    };
+
+    function buildUpiLink(amount, note) {
+        let link = 'upi://pay?pa=' + encodeURIComponent(UPI_CONFIG.pa)
+                 + '&pn=' + encodeURIComponent(UPI_CONFIG.pn)
+                 + '&cu=' + UPI_CONFIG.currency;
+
+        if (amount && parseFloat(amount) > 0) {
+            link += '&am=' + parseFloat(amount).toFixed(2);
+        }
+        if (note) {
+            link += '&tn=' + encodeURIComponent(note);
+        }
+        return link;
+    }
+
+    function initPaymentQR() {
+        const modal = document.getElementById('payModal');
+        if (!modal) return;
+
+        const canvas = document.getElementById('payQrCanvas');
+        const eyebrow = document.getElementById('payModalEyebrow');
+        const title = document.getElementById('payModalTitle');
+        const desc = document.getElementById('payModalDesc');
+        const appBtn = document.getElementById('payAppBtn');
+        const copyBtn = document.getElementById('payCopyLink');
+        const toast = document.getElementById('payToast');
+
+        let activeLink = '';
+
+        let toastTimer = null;
+        function showToast(msg) {
+            if (!toast) return;
+            toast.textContent = msg;
+            toast.classList.add('is-visible');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => {
+                toast.classList.remove('is-visible');
+            }, 2400);
+        }
+
+        function copyText(text) {
+            if (navigator.clipboard && window.isSecureContext) {
+                return navigator.clipboard.writeText(text);
+            }
+            return new Promise((resolve) => {
+                const ta = document.createElement('textarea');
+                ta.value = text;
+                ta.style.position = 'fixed';
+                ta.style.opacity = '0';
+                document.body.appendChild(ta);
+                ta.select();
+                try { document.execCommand('copy'); } catch (e) {}
+                document.body.removeChild(ta);
+                resolve();
+            });
+        }
+
+        function openModal(program, amount, note) {
+            const hasAmount = amount && parseFloat(amount) > 0;
+
+            eyebrow.textContent = program || 'TSF Payment';
+            title.textContent = hasAmount
+                ? 'Pay \u20B9' + parseFloat(amount).toLocaleString('en-IN')
+                : 'Enter amount in UPI app';
+            desc.textContent = hasAmount
+                ? 'Scan the QR with any UPI app, or tap the button below.'
+                : 'Scan the QR and enter the amount manually in your UPI app.';
+
+            activeLink = buildUpiLink(hasAmount ? amount : '', note);
+
+            if (typeof QRCode !== 'undefined' && QRCode.toCanvas) {
+                QRCode.toCanvas(canvas, activeLink, {
+                    width: 512,
+                    margin: 1,
+                    errorCorrectionLevel: 'M',
+                    color: {
+                        dark: '#0E0E10',
+                        light: '#FFFFFF'
+                    }
+                }, function (err) {
+                    if (err) {
+                        console.error('QR generation failed:', err);
+                        showToast('Could not generate QR');
+                    }
+                });
+            } else {
+                console.warn('QRCode library not loaded');
+                showToast('QR library still loading, try again');
+            }
+
+            appBtn.href = activeLink;
+
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            modal.classList.remove('is-open');
+            modal.setAttribute('aria-hidden', 'true');
+            document.body.style.overflow = '';
+            activeLink = '';
+        }
+
+        /* Wire up card buttons */
+        document.querySelectorAll('[data-open-payment]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const isCustom = btn.dataset.custom === 'true';
+
+                if (isCustom) {
+                    openModal('Custom amount', '', 'TSF Fitness Studio Payment');
+                    return;
+                }
+
+                const card = btn.closest('.pay-card');
+                if (!card) return;
+
+                const program = card.dataset.program || 'TSF Payment';
+                const amount = card.dataset.amount || '';
+                const note = card.dataset.note || program;
+
+                openModal(program, amount, note);
+            });
+        });
+
+        modal.querySelectorAll('[data-close-modal]').forEach(el => {
+            el.addEventListener('click', closeModal);
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && modal.classList.contains('is-open')) {
+                closeModal();
+            }
+        });
+
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                if (!activeLink) return;
+                copyText(activeLink).then(() => {
+                    showToast('Payment link copied — paste in WhatsApp');
+                });
+            });
+        }
+    }
+
+
+
+
     /* ============================================================
        7. BOOT
        ============================================================ */
@@ -790,7 +948,8 @@
          initProgramAccordion();
         initTouchFeedback();
         initPageTransition(); 
-        initMacroCalculator();   
+        initMacroCalculator(); 
+        initPaymentQR();  
 
         console.log('TSF Engine loaded — Caranzalem, Goa.');
     });

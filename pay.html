@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Payments — TSF Fitness Studio</title>
+
+    <meta name="description" content="Pay your TSF membership, program fees, or custom amount. Secure UPI payments." />
+
+    <link rel="icon" href="assets/TSF STAMP R.png" type="image/png" />
+    <link rel="apple-touch-icon" href="assets/TSF STAMP R.png" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter+Tight:wght@400;500;600;700&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body class="page-pay">
+
+    <!-- ============================================================
+    HEADER — Floating pill
+    ============================================================ -->
+    <header class="site-header" id="siteHeader">
+        <div class="header-pill">
+
+            <a href="index.html" class="brand" aria-label="TSF Fitness Studio Home">
+                <img src="assets/TSF®.png" alt="TSF Fitness Studio" class="brand-mark" />
+            </a>
+
+            <nav class="primary-nav" aria-label="Primary">
+                <a href="index.html">Home</a>
+                <a href="programs.html">Programs</a>
+                <a href="founder.html">Founder</a>
+                <a href="macro-calculator.html">Calculator</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+            <div class="header-actions">
+                <label class="theme-switch header-theme" aria-label="Toggle theme">
+                    <input type="checkbox" id="themeCheckbox" />
+                    <span class="theme-track">
+                        <span class="theme-thumb"></span>
+                    </span>
+                </label>
+
+                <a href="https://wa.me/919545937344?text=Hi%20TSF%20Team%2C%20I%20need%20help%20with%20a%20payment."
+                   target="_blank" rel="noopener"
+                   class="btn btn-primary btn-sm header-cta">Need help?</a>
+            </div>
+
+            <button class="menu-toggle" id="menuToggle" aria-label="Open menu" aria-expanded="false">
+                <span></span>
+                <span></span>
+            </button>
+
+        </div>
+    </header>
+
+    <!-- Mobile menu -->
+    <div class="mobile-menu" id="mobileMenu" aria-hidden="true">
+        <div class="mobile-menu-inner">
+            <nav class="mobile-nav" aria-label="Mobile">
+                <a href="index.html">Home</a>
+                <a href="programs.html">Programs</a>
+                <a href="founder.html">Founder</a>
+                <a href="macro-calculator.html">Macro Calculator</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+
+            <div class="mobile-menu-meta">
+                <div class="mobile-theme-row">
+                    <span>Appearance</span>
+                    <label class="theme-switch" aria-label="Toggle theme">
+                        <input type="checkbox" id="mobileThemeCheckbox" />
+                        <span class="theme-track">
+                            <span class="theme-thumb"></span>
+                        </span>
+                    </label>
+                </div>
+                <p>Caranzalem, Goa 403002</p>
+                <a href="tel:+919545937344">+91 95459 37344</a>
+                <a href="https://wa.me/919545937344?text=Hi%20TSF%20Team%2C%20I%20need%20help%20with%20a%20payment."
+                   target="_blank" rel="noopener"
+                   class="btn btn-primary btn-block">Message us</a>
+            </div>
+        </div>
+    </div>
+
+    <main id="top">
+
+        <!-- ============================================================
+        PAGE HERO
+        ============================================================ -->
+        <section class="page-hero">
+            <div class="container">
+                <p class="eyebrow">
+                    <span class="eyebrow-dot"></span>
+                    Payments
+                </p>
+                <h1 class="page-hero-title">Pay for your program.</h1>
+                <p class="page-hero-lede">
+                    Tap any program to open a UPI payment QR with the amount
+                    pre-filled. Scan with GPay, PhonePe, or Paytm to pay
+                    instantly. For custom amounts, use the button at the bottom.
+                </p>
+            </div>
+        </section>
+
+        <!-- ============================================================
+        PAYMENT CARDS
+        ============================================================ -->
+        <section class="pay-section" id="payments">
+            <div class="container">
+
+                <div class="pay-tabs" role="tablist" aria-label="Filter programs">
+                    <button type="button" class="pay-tab is-active" data-filter="all">All programs</button>
+                    <button type="button" class="pay-tab" data-filter="adults">Adults</button>
+                    <button type="button" class="pay-tab" data-filter="kids">Kids</button>
+                </div>
+
+                <div class="pay-grid">
+
+                    <!-- 01 · Kickboxing & MMA -->
+                    <article class="pay-card"
+                             data-category="adults"
+                             data-program="Kickboxing &amp; MMA"
+                             data-amount="3000"
+                             data-note="Kickboxing &amp; MMA Monthly Fee">
+                        <header class="pay-card-head">
+                            <span class="mono">Adults · Combat</span>
+                            <h3 class="pay-card-title">Kickboxing &amp; MMA</h3>
+                            <p class="pay-card-fee">₹3,000 <span>/ month</span></p>
+                        </header>
+                        <div class="pay-card-qr" aria-hidden="true">
+                            <div class="pay-qr-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+                                    <rect x="3" y="3" width="7" height="7" />
+                                    <rect x="14" y="3" width="7" height="7" />
+                                    <rect x="3" y="14" width="7" height="7" />
+                                    <path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1" />
+                                </svg>
+                            </div>
+                        </div>
+                        <footer class="pay-card-actions">
+                            <button type="button" class="pay-card-btn" data-open-payment>
+                                Show QR / Pay
+                                <span class="arrow">→</span>
+                            </button>
+                        </footer>
+                    </article>
+
+                    <!-- 02 · CrossFit -->
+                    <article class="pay-card"
+                             data-category="adults"
+                             data-program="CrossFit Training"
+                             data-amount="3000"
+                             data-note="CrossFit Monthly Fee">
+                        <header class="pay-card-head">
+                            <span class="mono">Adults · Conditioning</span>
+                            <h3 class="pay-card-title">CrossFit Training</h3>
+                            <p class="pay-card-fee">₹3,000 <span>/ month</span></p>
+                        </header>
+                        <div class="pay-card-qr" aria-hidden="true">
+                            <div class="pay-qr-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+                                    <rect x="3" y="3" width="7" height="7" />
+                                    <rect x="14" y="3" width="7" height="7" />
+                                    <rect x="3" y="14" width="7" height="7" />
+                                    <path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1" />
+                                </svg>
+                            </div>
+                        </div>
+                        <footer class="pay-card-actions">
+                            <button type="button" class="pay-card-btn" data-open-payment>
+                                Show QR / Pay
+                                <span class="arrow">→</span>
+                            </button>
+                        </footer>
+                    </article>
+
+                    <!-- 03 · Calisthenics (Adults) -->
+                    <article class="pay-card"
+                             data-category="adults"
+                             data-program="Calisthenics"
+                             data-amount="3000"
+                             data-note="Calisthenics Monthly Fee">
+                        <header class="pay-card-head">
+                            <span class="mono">Adults · Bodyweight</span>
+                            <h3 class="pay-card-title">Calisthenics</h3>
+                            <p class="pay-card-fee">₹3,000 <span>/ month</span></p>
+                        </header>
+                        <div class="pay-card-qr" aria-hidden="true">
+                            <div class="pay-qr-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+                                    <rect x="3" y="3" width="7" height="7" />
+                                    <rect x="14" y="3" width="7" height="7" />
+                                    <rect x="3" y="14" width="7" height="7" />
+                                    <path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1" />
+                                </svg>
+                            </div>
+                        </div>
+                        <footer class="pay-card-actions">
+                            <button type="button" class="pay-card-btn" data-open-payment>
+                                Show QR / Pay
+                                <span class="arrow">→</span>
+                            </button>
+                        </footer>
+                    </article>
+
+                    <!-- 04 · Yoga (Adults) -->
+                    <article class="pay-card"
+                             data-category="adults"
+                             data-program="Yoga"
+                             data-amount="3000"
+                             data-note="Yoga Monthly Fee">
+                        <header class="pay-card-head">
+                            <span class="mono">Adults · Mobility</span>
+                            <h3 class="pay-card-title">Yoga</h3>
+                            <p class="pay-card-fee">₹3,000 <span>/ month</span></p>
+                        </header>
+                        <div class="pay-card-qr" aria-hidden="true">
+                            <div class="pay-qr-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+                                    <rect x="3" y="3" width="7" height="7" />
+                                    <rect x="14" y="3" width="7" height="7" />
+                                    <rect x="3" y="14" width="7" height="7" />
+                                    <path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1" />
+                                </svg>
+                            </div>
+                        </div>
+                        <footer class="pay-card-actions">
+                            <button type="button" class="pay-card-btn" data-open-payment>
+                                Show QR / Pay
+                                <span class="arrow">→</span>
+                            </button>
+                        </footer>
+                    </article>
+
+                    <!-- 05 · Personal Training — custom amount -->
+                    <article class="pay-card"
+                             data-category="adults"
+                             data-program="Personal Training"
+                             data-amount=""
+                             data-note="Personal Training Session">
+                        <header class="pay-card-head">
+                            <span class="mono">Adults · One-on-one</span>
+                            <h3 class="pay-card-title">Personal Training</h3>
+                            <p class="pay-card-fee pay-card-fee-enquire">Enter amount after enquiry</p>
+                        </header>
+                        <div class="pay-card-qr" aria-hidden="true">
+                            <div class="pay-qr-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+                                    <rect x="3" y="3" width="7" height="7" />
+                                    <rect x="14" y="3" width="7" height="7" />
+                                    <rect x="3" y="14" width="7" height="7" />
+                                    <path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1" />
+                                </svg>
+                            </div>
+                        </div>
+                        <footer class="pay-card-actions">
+                            <button type="button" class="pay-card-btn" data-open-payment>
+                                Show QR / Pay
+                                <span class="arrow">→</span>
+                            </button>
+                        </footer>
+                    </article>
+
+                    <!-- 06 · Kids Kickboxing -->
+                    <article class="pay-card"
+                             data-category="kids"
+                             data-program="Kids Kickboxing"
+                             data-amount="3000"
+                             data-note="Kids Kickboxing Monthly Fee">
+                        <header class="pay-card-head">
+                            <span class="mono">Kids · Combat</span>
+                            <h3 class="pay-card-title">Kickboxing</h3>
+                            <p class="pay-card-fee">₹3,000 <span>/ month</span></p>
+                        </header>
+                        <div class="pay-card-qr" aria-hidden="true">
+                            <div class="pay-qr-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+                                    <rect x="3" y="3" width="7" height="7" />
+                                    <rect x="14" y="3" width="7" height="7" />
+                                    <rect x="3" y="14" width="7" height="7" />
+                                    <path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1" />
+                                </svg>
+                            </div>
+                        </div>
+                        <footer class="pay-card-actions">
+                            <button type="button" class="pay-card-btn" data-open-payment>
+                                Show QR / Pay
+                                <span class="arrow">→</span>
+                            </button>
+                        </footer>
+                    </article>
+
+                    <!-- 07 · Kids Taekwondo -->
+                    <article class="pay-card"
+                             data-category="kids"
+                             data-program="Kids Taekwondo"
+                             data-amount="2500"
+                             data-note="Kids Taekwondo Monthly Fee">
+                        <header class="pay-card-head">
+                            <span class="mono">Kids · Traditional</span>
+                            <h3 class="pay-card-title">Taekwondo</h3>
+                            <p class="pay-card-fee">₹2,500 <span>/ month</span></p>
+                        </header>
+                        <div class="pay-card-qr" aria-hidden="true">
+                            <div class="pay-qr-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+                                    <rect x="3" y="3" width="7" height="7" />
+                                    <rect x="14" y="3" width="7" height="7" />
+                                    <rect x="3" y="14" width="7" height="7" />
+                                    <path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1" />
+                                </svg>
+                            </div>
+                        </div>
+                        <footer class="pay-card-actions">
+                            <button type="button" class="pay-card-btn" data-open-payment>
+                                Show QR / Pay
+                                <span class="arrow">→</span>
+                            </button>
+                        </footer>
+                    </article>
+
+                    <!-- 08 · Kids Yoga -->
+                    <article class="pay-card"
+                             data-category="kids"
+                             data-program="Kids Yoga"
+                             data-amount="3000"
+                             data-note="Kids Yoga Monthly Fee">
+                        <header class="pay-card-head">
+                            <span class="mono">Kids · Mobility</span>
+                            <h3 class="pay-card-title">Yoga</h3>
+                            <p class="pay-card-fee">₹3,000 <span>/ month</span></p>
+                        </header>
+                        <div class="pay-card-qr" aria-hidden="true">
+                            <div class="pay-qr-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+                                    <rect x="3" y="3" width="7" height="7" />
+                                    <rect x="14" y="3" width="7" height="7" />
+                                    <rect x="3" y="14" width="7" height="7" />
+                                    <path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1" />
+                                </svg>
+                            </div>
+                        </div>
+                        <footer class="pay-card-actions">
+                            <button type="button" class="pay-card-btn" data-open-payment>
+                                Show QR / Pay
+                                <span class="arrow">→</span>
+                            </button>
+                        </footer>
+                    </article>
+
+                    <!-- 09 · Kids Gymnastics -->
+                    <article class="pay-card"
+                             data-category="kids"
+                             data-program="Kids Gymnastics"
+                             data-amount="3000"
+                             data-note="Kids Gymnastics Monthly Fee">
+                        <header class="pay-card-head">
+                            <span class="mono">Kids · Movement</span>
+                            <h3 class="pay-card-title">Gymnastics</h3>
+                            <p class="pay-card-fee">₹3,000 <span>/ month</span></p>
+                        </header>
+                        <div class="pay-card-qr" aria-hidden="true">
+                            <div class="pay-qr-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+                                    <rect x="3" y="3" width="7" height="7" />
+                                    <rect x="14" y="3" width="7" height="7" />
+                                    <rect x="3" y="14" width="7" height="7" />
+                                    <path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1" />
+                                </svg>
+                            </div>
+                        </div>
+                        <footer class="pay-card-actions">
+                            <button type="button" class="pay-card-btn" data-open-payment>
+                                Show QR / Pay
+                                <span class="arrow">→</span>
+                            </button>
+                        </footer>
+                    </article>
+
+                    <!-- 10 · Kids Calisthenics -->
+                    <article class="pay-card"
+                             data-category="kids"
+                             data-program="Kids Calisthenics"
+                             data-amount="3000"
+                             data-note="Kids Calisthenics Monthly Fee">
+                        <header class="pay-card-head">
+                            <span class="mono">Kids · Bodyweight</span>
+                            <h3 class="pay-card-title">Calisthenics</h3>
+                            <p class="pay-card-fee">₹3,000 <span>/ month</span></p>
+                        </header>
+                        <div class="pay-card-qr" aria-hidden="true">
+                            <div class="pay-qr-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+                                    <rect x="3" y="3" width="7" height="7" />
+                                    <rect x="14" y="3" width="7" height="7" />
+                                    <rect x="3" y="14" width="7" height="7" />
+                                    <path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1" />
+                                </svg>
+                            </div>
+                        </div>
+                        <footer class="pay-card-actions">
+                            <button type="button" class="pay-card-btn" data-open-payment>
+                                Show QR / Pay
+                                <span class="arrow">→</span>
+                            </button>
+                        </footer>
+                    </article>
+
+                    <!-- 11 · Kids Dance — custom amount -->
+                    <article class="pay-card"
+                             data-category="kids"
+                             data-program="Kids Dance"
+                             data-amount=""
+                             data-note="Kids Dance Fee">
+                        <header class="pay-card-head">
+                            <span class="mono">Kids · Movement</span>
+                            <h3 class="pay-card-title">Dance</h3>
+                            <p class="pay-card-fee pay-card-fee-enquire">Enter amount after enquiry</p>
+                        </header>
+                        <div class="pay-card-qr" aria-hidden="true">
+                            <div class="pay-qr-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
+                                    <rect x="3" y="3" width="7" height="7" />
+                                    <rect x="14" y="3" width="7" height="7" />
+                                    <rect x="3" y="14" width="7" height="7" />
+                                    <path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1" />
+                                </svg>
+                            </div>
+                        </div>
+                        <footer class="pay-card-actions">
+                            <button type="button" class="pay-card-btn" data-open-payment>
+                                Show QR / Pay
+                                <span class="arrow">→</span>
+                            </button>
+                        </footer>
+                    </article>
+
+                </div>
+
+                <div class="pay-custom">
+                    <button type="button" class="pay-custom-btn" data-open-payment data-custom="true">
+                        <span>Need to collect a custom amount?</span>
+                        <span class="pay-custom-link">Show generic QR</span>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- ============================================================
+    MODAL — Payment QR
+    ============================================================ -->
+    <div class="pay-modal" id="payModal" aria-hidden="true" role="dialog" aria-modal="true">
+        <div class="pay-modal-backdrop" data-close-modal></div>
+        <div class="pay-modal-inner">
+
+            <button type="button" class="pay-modal-close" data-close-modal aria-label="Close">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                    <line x1="18" y1="6" x2="6" y2="18" />
+                    <line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+            </button>
+
+            <p class="pay-modal-eyebrow" id="payModalEyebrow">Program</p>
+            <h2 class="pay-modal-title" id="payModalTitle">Pay</h2>
+            <p class="pay-modal-desc" id="payModalDesc">
+                Scan the QR with any UPI app, or tap the button below.
+            </p>
+
+            <div class="pay-modal-qr">
+                <canvas id="payQrCanvas" aria-label="Payment QR code"></canvas>
+            </div>
+
+            <div class="pay-modal-actions">
+                <a href="#" class="pay-modal-app-btn" id="payAppBtn" rel="noopener">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    Open in UPI app
+                </a>
+                <button type="button" class="pay-modal-copy" id="payCopyLink">
+                    Copy payment link
+                </button>
+            </div>
+
+            <p class="pay-modal-note">
+                <strong>In person:</strong> show this QR to the client.<br />
+                <strong>Remote:</strong> copy the link and send via WhatsApp.
+            </p>
+
+        </div>
+    </div>
+
+    <!-- Toast -->
+    <div class="pay-toast" id="payToast" role="status" aria-live="polite"></div>
+
+    <!-- ============================================================
+    FOOTER
+    ============================================================ -->
+    <footer class="site-footer">
+        <div class="container">
+
+            <div class="footer-grid">
+
+                <div class="footer-col footer-col-brand">
+                    <img src="assets/TSF®.png" alt="TSF Fitness Studio" class="footer-mark" />
+                    <p class="footer-tagline">
+                        Combat sports and fitness studio in Caranzalem, Goa.
+                        Training fighters and everyday athletes since 2018.
+                    </p>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Pages</h4>
+                    <ul class="footer-list">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="programs.html">Programs</a></li>
+                        <li><a href="founder.html">Founder</a></li>
+                        <li><a href="macro-calculator.html">Macro Calculator</a></li>
+                        <li><a href="contact.html">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-col">
+                    <h4 class="footer-heading">Reach us</h4>
+                    <ul class="footer-list">
+                        <li><a href="tel:+919545937344">+91 95459 37344</a></li>
+                        <li><a href="mailto:TSFLIVESTRONG@GMAIL.COM">tsflivestrong@gmail.com</a></li>
+                    </ul>
+                    <div class="footer-social">
+                        <a href="https://www.instagram.com/tsflivestrong/" target="_blank" rel="noopener" aria-label="Instagram">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+                        </a>
+                        <a href="https://wa.me/919545937344" target="_blank" rel="noopener" aria-label="WhatsApp">
+                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5A8.5 8.5 0 1 1 11.5 3a8.4 8.4 0 0 1 8.4 8.5z"/><path d="M4 20l1.3-4"/></svg>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="footer-bottom">
+                <span>© 2026 Team Suresh Fitness. All rights reserved.</span>
+                <span class="footer-credit">
+                    Designed &amp; developed by
+                    <a href="https://yugaldoddamani.pages.dev/" target="_blank" rel="noopener">Yugal Doddamani</a>
+                </span>
+            </div>
+
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

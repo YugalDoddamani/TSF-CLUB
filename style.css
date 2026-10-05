@@ -3914,3 +3914,479 @@ html, body {
         gap: var(--space-5);
     }
 }
+
+
+/* ============================================================
+   PAYMENT PAGE
+   ============================================================ */
+
+/* --- Section --- */
+.pay-section {
+    padding: var(--space-7) 0 var(--space-10);
+    border-top: 0;
+}
+
+/* --- Filter tabs --- */
+.pay-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-2);
+    margin-bottom: var(--space-6);
+}
+
+.pay-tab {
+    padding: 9px 18px;
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    background: transparent;
+    border: 1px solid var(--line-default);
+    border-radius: var(--radius-full);
+    cursor: pointer;
+    transition: all var(--dur-fast) var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.pay-tab:hover {
+    color: var(--text-primary);
+    border-color: var(--line-strong);
+}
+
+.pay-tab.is-active {
+    color: var(--text-primary);
+    background: var(--bg-surface);
+    border-color: var(--text-primary);
+}
+
+/* --- Card grid --- */
+.pay-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: var(--space-4);
+}
+
+@media (min-width: 640px) {
+    .pay-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: var(--space-5);
+    }
+}
+
+@media (min-width: 900px) {
+    .pay-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* --- Individual card --- */
+.pay-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    padding: var(--space-5);
+    background: var(--bg-surface);
+    border: 1px solid var(--line-subtle);
+    border-radius: var(--radius-lg);
+    transition: border-color var(--dur-base) var(--ease-out);
+}
+
+.pay-card:hover {
+    border-color: var(--line-strong);
+}
+
+.pay-card[hidden] {
+    display: none;
+}
+
+.pay-card-head {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-2);
+}
+
+.pay-card-head .mono {
+    color: var(--red-core);
+    font-size: 0.5625rem;
+}
+
+.pay-card-title {
+    font-family: var(--font-display);
+    font-size: 1.375rem;
+    font-weight: 400;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.pay-card-fee {
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.pay-card-fee span {
+    font-weight: 400;
+    color: var(--text-muted);
+    font-size: 0.8125rem;
+}
+
+.pay-card-fee-enquire {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+/* --- QR area --- */
+.pay-card-qr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    aspect-ratio: 1 / 1;
+    background: var(--bg-page);
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-md);
+    padding: var(--space-4);
+    overflow: hidden;
+}
+
+.pay-card-qr img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.pay-card-qr-disabled {
+    opacity: 0.5;
+}
+
+/* Placeholder styling */
+.pay-qr-placeholder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    text-align: center;
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    text-transform: uppercase;
+    letter-spacing: 0.14em;
+}
+
+.pay-qr-placeholder span {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+
+.pay-qr-placeholder small {
+    font-size: 0.5625rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    max-width: 140px;
+    line-height: 1.5;
+}
+
+.pay-qr-placeholder-lg span {
+    font-size: 1.75rem;
+}
+
+.pay-qr-placeholder-lg small {
+    font-size: 0.625rem;
+    max-width: 200px;
+}
+
+/* --- Card actions --- */
+.pay-card-actions {
+    display: flex;
+    margin-top: auto;
+}
+
+.pay-card-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: var(--space-2);
+    width: 100%;
+    padding: 12px 20px;
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    color: #FFFFFF;
+    background: var(--red-core);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: background-color var(--dur-fast) var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.pay-card-btn:hover:not(:disabled) {
+    background: var(--red-hover);
+}
+
+.pay-card-btn:disabled {
+    background: var(--bg-surface-2);
+    color: var(--text-muted);
+    cursor: not-allowed;
+}
+
+.pay-card-btn .arrow {
+    transition: transform var(--dur-fast) var(--ease-out);
+}
+
+.pay-card-btn:hover:not(:disabled) .arrow {
+    transform: translateX(3px);
+}
+
+/* --- Custom / generic QR trigger --- */
+.pay-custom {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--space-8);
+    padding-top: var(--space-7);
+    border-top: 1px solid var(--line-subtle);
+}
+
+.pay-custom-btn {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: var(--space-4) var(--space-6);
+    font-family: var(--font-sans);
+    font-size: 0.875rem;
+    color: var(--text-muted);
+    background: transparent;
+    border: 1px dashed var(--line-default);
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    transition: all var(--dur-fast) var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+    max-width: 400px;
+}
+
+.pay-custom-btn:hover {
+    color: var(--text-secondary);
+    border-color: var(--line-strong);
+}
+
+.pay-custom-link {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red-core);
+    margin-top: 4px;
+}
+
+/* --- Modal --- */
+.pay-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9995;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--space-4);
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity var(--dur-base) var(--ease-out),
+                visibility var(--dur-base) var(--ease-out);
+}
+
+.pay-modal.is-open {
+    opacity: 1;
+    visibility: visible;
+}
+
+.pay-modal-backdrop {
+    position: absolute;
+    inset: 0;
+    background: rgba(10, 10, 10, 0.85);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    cursor: pointer;
+}
+
+.pay-modal-inner {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-5);
+    width: 100%;
+    max-width: 420px;
+    padding: var(--space-7) var(--space-6);
+    background: var(--bg-surface);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+    text-align: center;
+    transform: translateY(12px);
+    transition: transform var(--dur-base) var(--ease-out);
+}
+
+.pay-modal.is-open .pay-modal-inner {
+    transform: translateY(0);
+}
+
+.pay-modal-close {
+    position: absolute;
+    top: var(--space-4);
+    right: var(--space-4);
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    background: transparent;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: color var(--dur-fast) var(--ease-out);
+}
+
+.pay-modal-close:hover {
+    color: var(--text-primary);
+}
+
+.pay-modal-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red-core);
+    margin: 0;
+}
+
+.pay-modal-title {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+    color: var(--text-primary);
+    margin: 0;
+}
+
+.pay-modal-desc {
+    font-size: 0.8125rem;
+    line-height: 1.55;
+    color: var(--text-secondary);
+    max-width: 320px;
+    margin: 0;
+}
+
+.pay-modal-qr {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    max-width: 260px;
+    aspect-ratio: 1 / 1;
+    padding: var(--space-4);
+    background: var(--bg-page);
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius-md);
+    overflow: hidden;
+}
+
+.pay-modal-qr img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: block;
+}
+
+.pay-modal-upi {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--space-2);
+    width: 100%;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line-subtle);
+}
+
+.pay-modal-upi .mono {
+    font-size: 0.625rem;
+}
+
+.pay-modal-upi-row {
+    display: flex;
+    align-items: center;
+    gap: var(--space-3);
+}
+
+.pay-modal-upi-value {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    letter-spacing: 0.02em;
+}
+
+.pay-modal-copy {
+    padding: 6px 14px;
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--red-core);
+    background: transparent;
+    border: 1px solid var(--red-line);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all var(--dur-fast) var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+}
+
+.pay-modal-copy:hover {
+    background: var(--red-core);
+    color: #FFFFFF;
+    border-color: var(--red-core);
+}
+
+/* --- Toast --- */
+.pay-toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(20px);
+    z-index: 9999;
+    padding: 12px 22px;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--text-primary);
+    background: var(--bg-surface);
+    border: 1px solid var(--line-strong);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-md);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity var(--dur-base) var(--ease-out),
+                transform var(--dur-base) var(--ease-out);
+    max-width: calc(100vw - 32px);
+    text-align: center;
+}
+
+.pay-toast.is-visible {
+    opacity: 1;
+    transform: translateX(-50%) translateY(0);
+}

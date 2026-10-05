@@ -779,8 +779,8 @@
 
 
 
-     /* ============================================================
-       13. PAYMENT QR — custom UPI generation
+    /* ============================================================
+       13. PAYMENT PAGE — filters + QR modal
        ============================================================ */
 
     const UPI_CONFIG = {
@@ -793,7 +793,6 @@
         let link = 'upi://pay?pa=' + encodeURIComponent(UPI_CONFIG.pa)
                  + '&pn=' + encodeURIComponent(UPI_CONFIG.pn)
                  + '&cu=' + UPI_CONFIG.currency;
-
         if (amount && parseFloat(amount) > 0) {
             link += '&am=' + parseFloat(amount).toFixed(2);
         }
@@ -804,19 +803,20 @@
     }
 
     function initPaymentQR() {
-        const modal = document.getElementById('payModal');
-        if (!modal) return;
+        const grid = document.getElementById('payGrid');
+        if (!grid) return;
 
+        const modal = document.getElementById('payModal');
         const canvas = document.getElementById('payQrCanvas');
         const eyebrow = document.getElementById('payModalEyebrow');
         const title = document.getElementById('payModalTitle');
         const desc = document.getElementById('payModalDesc');
         const appBtn = document.getElementById('payAppBtn');
-        const copyBtn = document.getElementById('payCopyLink');
         const toast = document.getElementById('payToast');
 
         let activeLink = '';
 
+        /* ---------- Toast ---------- */
         let toastTimer = null;
         function showToast(msg) {
             if (!toast) return;
@@ -828,23 +828,27 @@
             }, 2400);
         }
 
-        function copyText(text) {
-            if (navigator.clipboard && window.isSecureContext) {
-                return navigator.clipboard.writeText(text);
-            }
-            return new Promise((resolve) => {
-                const ta = document.createElement('textarea');
-                ta.value = text;
-                ta.style.position = 'fixed';
-                ta.style.opacity = '0';
-                document.body.appendChild(ta);
-                ta.select();
-                try { document.execCommand('copy'); } catch (e) {}
-                document.body.removeChild(ta);
-                resolve();
-            });
-        }
+        /* ---------- Filters ---------- */
+        const tabs = document.querySelectorAll('.pay-tab');
+        const cards = document.querySelectorAll('.pay-card');
 
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function () {
+                const filter = this.dataset.filter;
+
+                tabs.forEach(t => t.classList.toggle('is-active', t === this));
+
+                cards.forEach(card => {
+                    if (filter === 'all' || card.dataset.category === filter) {
+                        card.hidden = false;
+                    } else {
+                        card.hidden = true;
+                    }
+                });
+            });
+        });
+
+        /* ---------- Open modal ---------- */
         function openModal(program, amount, note) {
             const hasAmount = amount && parseFloat(amount) > 0;
 
@@ -853,12 +857,25 @@
                 ? 'Pay \u20B9' + parseFloat(amount).toLocaleString('en-IN')
                 : 'Enter amount in UPI app';
             desc.textContent = hasAmount
-                ? 'Scan the QR with any UPI app, or tap the button below.'
-                : 'Scan the QR and enter the amount manually in your UPI app.';
+                ? 'Scan the QR with any UPI app to pay, or tap the button below.'
+                : 'Scan the QR and enter the amount in your UPI app.';
 
             activeLink = buildUpiLink(hasAmount ? amount : '', note);
+            appBtn.href = activeLink;
 
-            if (typeof QRCode !== 'undefined' && QRCode.toCanvas) {
+            /* Show modal first */
+            modal.classList.add('is-open');
+            modal.setAttribute('aria-hidden', 'false');
+            document.body.style.overflow = 'hidden';
+
+            /* Generate QR AFTER modal is visible so canvas is sized */
+            requestAnimationFrame(() => {
+                if (typeof QRCode === 'undefined' || !QRCode.toCanvas) {
+                    console.warn('QRCode library not loaded');
+                    showToast('QR library is still loading. Please wait a moment and try again.');
+                    return;
+                }
+
                 QRCode.toCanvas(canvas, activeLink, {
                     width: 512,
                     margin: 1,
@@ -869,22 +886,14 @@
                     }
                 }, function (err) {
                     if (err) {
-                        console.error('QR generation failed:', err);
-                        showToast('Could not generate QR');
+                        console.error('QR generation error:', err);
+                        showToast('Could not generate QR. Please refresh.');
                     }
                 });
-            } else {
-                console.warn('QRCode library not loaded');
-                showToast('QR library still loading, try again');
-            }
-
-            appBtn.href = activeLink;
-
-            modal.classList.add('is-open');
-            modal.setAttribute('aria-hidden', 'false');
-            document.body.style.overflow = 'hidden';
+            });
         }
 
+        /* ---------- Close modal ---------- */
         function closeModal() {
             modal.classList.remove('is-open');
             modal.setAttribute('aria-hidden', 'true');
@@ -892,27 +901,25 @@
             activeLink = '';
         }
 
-        /* Wire up card buttons */
-        document.querySelectorAll('[data-open-payment]').forEach(btn => {
-            btn.addEventListener('click', () => {
-                const isCustom = btn.dataset.custom === 'true';
-
-                if (isCustom) {
-                    openModal('Custom amount', '', 'TSF Fitness Studio Payment');
-                    return;
-                }
-
-                const card = btn.closest('.pay-card');
-                if (!card) return;
-
+        /* ---------- Wire up card clicks ---------- */
+        document.querySelectorAll('.pay-card').forEach(card => {
+            card.addEventListener('click', () => {
                 const program = card.dataset.program || 'TSF Payment';
                 const amount = card.dataset.amount || '';
                 const note = card.dataset.note || program;
-
                 openModal(program, amount, note);
             });
         });
 
+        /* ---------- Custom QR trigger ---------- */
+        const customBtn = document.querySelector('.pay-custom-btn');
+        if (customBtn) {
+            customBtn.addEventListener('click', () => {
+                openModal('Custom amount', '', 'TSF Fitness Studio Payment');
+            });
+        }
+
+        /* ---------- Close handlers ---------- */
         modal.querySelectorAll('[data-close-modal]').forEach(el => {
             el.addEventListener('click', closeModal);
         });
@@ -923,16 +930,21 @@
             }
         });
 
-        if (copyBtn) {
-            copyBtn.addEventListener('click', () => {
+        /* ---------- "Open in UPI app" button ---------- */
+        if (appBtn) {
+            appBtn.addEventListener('click', function (e) {
                 if (!activeLink) return;
-                copyText(activeLink).then(() => {
-                    showToast('Payment link copied — paste in WhatsApp');
-                });
+
+                /* On desktop browsers this link can't open a UPI app.
+                   Let the default behaviour try; on mobile it fires. */
+                /* Using window.location for mobile deep link reliability */
+                if (/Mobi|Android|iPhone|iPad|iPod/i.test(navigator.userAgent)) {
+                    e.preventDefault();
+                    window.location.href = activeLink;
+                }
             });
         }
     }
-
 
 
 

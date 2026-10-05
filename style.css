@@ -3920,7 +3920,6 @@ html, body {
    PAYMENT PAGE
    ============================================================ */
 
-/* --- Section --- */
 .pay-section {
     padding: var(--space-7) 0 var(--space-10);
     border-top: 0;
@@ -3981,24 +3980,41 @@ html, body {
     }
 }
 
-/* --- Individual card --- */
+/* --- Card: whole thing is a button --- */
 .pay-card {
     display: flex;
     flex-direction: column;
-    gap: var(--space-4);
+    justify-content: space-between;
+    gap: var(--space-5);
+    width: 100%;
     padding: var(--space-5);
+    text-align: left;
     background: var(--bg-surface);
     border: 1px solid var(--line-subtle);
     border-radius: var(--radius-lg);
-    transition: border-color var(--dur-base) var(--ease-out);
+    cursor: pointer;
+    font: inherit;
+    color: inherit;
+    transition: border-color var(--dur-base) var(--ease-out),
+                transform var(--dur-base) var(--ease-out),
+                box-shadow var(--dur-base) var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+    min-height: 200px;
 }
 
 .pay-card:hover {
-    border-color: var(--line-strong);
+    border-color: var(--red-line);
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-sm);
 }
 
-.pay-card[hidden] {
-    display: none;
+.pay-card:active {
+    transform: translateY(0);
+}
+
+.pay-card:focus-visible {
+    outline: 2px solid var(--red-core);
+    outline-offset: 3px;
 }
 
 .pay-card-head {
@@ -4014,7 +4030,7 @@ html, body {
 
 .pay-card-title {
     font-family: var(--font-display);
-    font-size: 1.375rem;
+    font-size: 1.5rem;
     font-weight: 400;
     line-height: 1.15;
     letter-spacing: -0.015em;
@@ -4038,119 +4054,41 @@ html, body {
 
 .pay-card-fee-enquire {
     font-family: var(--font-mono);
-    font-size: 0.6875rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--text-muted);
-}
-
-/* --- QR area --- */
-.pay-card-qr {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    aspect-ratio: 1 / 1;
-    background: var(--bg-page);
-    border: 1px dashed var(--line-strong);
-    border-radius: var(--radius-md);
-    padding: var(--space-4);
-    overflow: hidden;
-}
-
-.pay-card-qr img {
-    width: 100%;
-    height: 100%;
-    object-fit: contain;
-    display: block;
-}
-
-.pay-card-qr-disabled {
-    opacity: 0.5;
-}
-
-/* Placeholder styling */
-.pay-qr-placeholder {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: var(--space-2);
-    text-align: center;
-    color: var(--text-muted);
-    font-family: var(--font-mono);
-    text-transform: uppercase;
-    letter-spacing: 0.14em;
-}
-
-.pay-qr-placeholder span {
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: var(--text-secondary);
-}
-
-.pay-qr-placeholder small {
-    font-size: 0.5625rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    max-width: 140px;
-    line-height: 1.5;
-}
-
-.pay-qr-placeholder-lg span {
-    font-size: 1.75rem;
-}
-
-.pay-qr-placeholder-lg small {
     font-size: 0.625rem;
-    max-width: 200px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--text-muted);
 }
 
-/* --- Card actions --- */
-.pay-card-actions {
-    display: flex;
-    margin-top: auto;
-}
-
-.pay-card-btn {
+.pay-card-cta {
     display: inline-flex;
     align-items: center;
-    justify-content: center;
     gap: var(--space-2);
-    width: 100%;
-    padding: 12px 20px;
-    font-family: var(--font-sans);
-    font-size: 0.875rem;
-    font-weight: 600;
-    letter-spacing: -0.005em;
-    color: #FFFFFF;
-    background: var(--red-core);
-    border: none;
-    border-radius: var(--radius-md);
-    cursor: pointer;
-    transition: background-color var(--dur-fast) var(--ease-out);
-    -webkit-tap-highlight-color: transparent;
+    padding-top: var(--space-4);
+    border-top: 1px solid var(--line-subtle);
+    font-family: var(--font-mono);
+    font-size: 0.625rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--red-core);
 }
 
-.pay-card-btn:hover:not(:disabled) {
-    background: var(--red-hover);
-}
-
-.pay-card-btn:disabled {
-    background: var(--bg-surface-2);
-    color: var(--text-muted);
-    cursor: not-allowed;
-}
-
-.pay-card-btn .arrow {
+.pay-card-cta .arrow {
     transition: transform var(--dur-fast) var(--ease-out);
 }
 
-.pay-card-btn:hover:not(:disabled) .arrow {
+.pay-card:hover .pay-card-cta .arrow {
     transform: translateX(3px);
 }
 
-/* --- Custom / generic QR trigger --- */
+/* --- Hidden state (used by filter) --- */
+.pay-card[hidden] {
+    display: none !important;
+}
+
+/* --- Custom amount trigger --- */
 .pay-custom {
     display: flex;
     justify-content: center;
@@ -4192,7 +4130,9 @@ html, body {
     margin-top: 4px;
 }
 
-/* --- Modal --- */
+/* ============================================================
+   MODAL
+   ============================================================ */
 .pay-modal {
     position: fixed;
     inset: 0;
@@ -4226,10 +4166,12 @@ html, body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: var(--space-5);
+    gap: var(--space-4);
     width: 100%;
-    max-width: 420px;
-    padding: var(--space-7) var(--space-6);
+    max-width: 400px;
+    max-height: calc(100vh - 32px);
+    overflow-y: auto;
+    padding: var(--space-7) var(--space-6) var(--space-6);
     background: var(--bg-surface);
     border: 1px solid var(--line-strong);
     border-radius: var(--radius-lg);
@@ -4276,9 +4218,9 @@ html, body {
 
 .pay-modal-title {
     font-family: var(--font-display);
-    font-size: 1.5rem;
+    font-size: clamp(1.5rem, 5vw, 1.875rem);
     font-weight: 400;
-    line-height: 1.2;
+    line-height: 1.15;
     letter-spacing: -0.015em;
     color: var(--text-primary);
     margin: 0;
@@ -4288,79 +4230,63 @@ html, body {
     font-size: 0.8125rem;
     line-height: 1.55;
     color: var(--text-secondary);
-    max-width: 320px;
+    max-width: 300px;
     margin: 0;
 }
 
+/* QR: explicit size + white background always */
 .pay-modal-qr {
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 100%;
-    max-width: 260px;
-    aspect-ratio: 1 / 1;
-    padding: var(--space-4);
-    background: var(--bg-page);
-    border: 1px dashed var(--line-strong);
+    width: 260px;
+    height: 260px;
+    max-width: 100%;
+    padding: 14px;
+    background: #FFFFFF;
     border-radius: var(--radius-md);
-    overflow: hidden;
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.15);
 }
 
-.pay-modal-qr img {
+.pay-modal-qr canvas {
+    display: block;
     width: 100%;
     height: 100%;
-    object-fit: contain;
-    display: block;
 }
 
-.pay-modal-upi {
-    display: flex;
-    flex-direction: column;
+.pay-modal-app-btn {
+    display: inline-flex;
     align-items: center;
+    justify-content: center;
     gap: var(--space-2);
     width: 100%;
+    padding: 14px 20px;
+    margin-top: var(--space-2);
+    font-family: var(--font-sans);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    letter-spacing: -0.005em;
+    color: #FFFFFF;
+    background: var(--red-core);
+    border: none;
+    border-radius: var(--radius-md);
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color var(--dur-fast) var(--ease-out);
+}
+
+.pay-modal-app-btn:hover {
+    background: var(--red-hover);
+}
+
+.pay-modal-note {
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: var(--text-muted);
+    margin: var(--space-2) 0 0;
     padding-top: var(--space-4);
     border-top: 1px solid var(--line-subtle);
-}
-
-.pay-modal-upi .mono {
-    font-size: 0.625rem;
-}
-
-.pay-modal-upi-row {
-    display: flex;
-    align-items: center;
-    gap: var(--space-3);
-}
-
-.pay-modal-upi-value {
-    font-family: var(--font-mono);
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--text-primary);
-    letter-spacing: 0.02em;
-}
-
-.pay-modal-copy {
-    padding: 6px 14px;
-    font-family: var(--font-mono);
-    font-size: 0.625rem;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--red-core);
-    background: transparent;
-    border: 1px solid var(--red-line);
-    border-radius: var(--radius-sm);
-    cursor: pointer;
-    transition: all var(--dur-fast) var(--ease-out);
-    -webkit-tap-highlight-color: transparent;
-}
-
-.pay-modal-copy:hover {
-    background: var(--red-core);
-    color: #FFFFFF;
-    border-color: var(--red-core);
+    max-width: 300px;
 }
 
 /* --- Toast --- */

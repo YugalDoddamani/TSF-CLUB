@@ -1,0 +1,1245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>TSF Digital Platform — Invoice 01</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0E0E10;
+  --surface: #17171A;
+  --surface-2: #1E1E22;
+  --text: #F5F4F1;
+  --soft: #A6A5A1;
+  --mute: #6B6A67;
+  --red: #C81E1E;
+  --red-soft: rgba(200, 30, 30, 0.10);
+  --green: #4FA968;
+  --green-soft: rgba(79, 169, 104, 0.10);
+  --amber: #C79A3C;
+  --amber-soft: rgba(199, 154, 60, 0.10);
+  --line: rgba(245, 244, 241, 0.08);
+  --line-strong: rgba(245, 244, 241, 0.16);
+  --serif: 'Instrument Serif', Georgia, serif;
+  --sans: 'Inter Tight', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  --r: 10px;
+  --r-lg: 14px;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+
+body {
+  font-family: var(--sans);
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--text);
+  background: var(--bg);
+  padding: 0;
+}
+
+.wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 60px 32px 100px;
+}
+
+/* --- Cover --- */
+.cover {
+  border-bottom: 1px solid var(--line);
+  padding-bottom: 48px;
+  margin-bottom: 60px;
+}
+
+.brand-line {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 32px;
+}
+
+.brand-mark {
+  font-family: var(--serif);
+  font-size: 32px;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.brand-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--line-strong);
+}
+
+.brand-tag {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.cover h1 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(40px, 6vw, 64px);
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  margin-bottom: 20px;
+  text-wrap: balance;
+}
+
+.cover h1 em {
+  font-style: italic;
+  color: var(--red);
+}
+
+.cover p {
+  font-size: 18px;
+  line-height: 1.6;
+  color: var(--soft);
+  max-width: 640px;
+}
+
+.cover-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 24px;
+  margin-top: 40px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+}
+
+.meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.meta-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.meta-value {
+  font-family: var(--serif);
+  font-size: 20px;
+  color: var(--text);
+}
+
+/* --- Sections --- */
+section {
+  margin-bottom: 56px;
+  padding-bottom: 56px;
+  border-bottom: 1px solid var(--line);
+}
+
+section:last-child {
+  border-bottom: 0;
+  padding-bottom: 0;
+}
+
+.sec-num {
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  color: var(--red);
+  margin-bottom: 12px;
+}
+
+h2 {
+  font-family: var(--serif);
+  font-weight: 400;
+  font-size: clamp(28px, 4vw, 42px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 20px;
+  text-wrap: balance;
+}
+
+h3 {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 18px;
+  line-height: 1.35;
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+h4 {
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+  margin-bottom: 14px;
+}
+
+p {
+  font-size: 15.5px;
+  line-height: 1.7;
+  color: var(--soft);
+  margin-bottom: 16px;
+}
+
+p strong { color: var(--text); font-weight: 600; }
+
+/* --- Two-column card grid --- */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin: 28px 0;
+}
+
+@media (min-width: 700px) {
+  .grid-2 { grid-template-columns: 1fr 1fr; }
+}
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 24px 22px;
+}
+
+.card h3 {
+  margin-bottom: 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+
+.card.accent {
+  border-color: var(--red);
+  background: linear-gradient(180deg, var(--red-soft) 0%, var(--surface) 60%);
+}
+
+/* --- Feature list --- */
+.feature-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feature-list li {
+  position: relative;
+  padding-left: 26px;
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--soft);
+}
+
+.feature-list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 6px;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: var(--green-soft);
+  border: 1.5px solid var(--green);
+}
+
+.feature-list li.done::before {
+  background: var(--green);
+  border-color: var(--green);
+}
+
+.feature-list li.pending::before {
+  background: transparent;
+  border-color: var(--mute);
+}
+
+.feature-list li strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+/* --- Check/pending list for progress --- */
+.progress-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.progress-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+}
+
+.progress-icon {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+}
+
+.progress-icon.done {
+  background: var(--green);
+  color: #fff;
+}
+
+.progress-icon.pending {
+  background: transparent;
+  border: 1.5px solid var(--mute);
+}
+
+.progress-icon svg {
+  width: 10px;
+  height: 10px;
+}
+
+.progress-text {
+  color: var(--soft);
+  flex: 1;
+}
+
+.progress-text strong {
+  color: var(--text);
+  font-weight: 600;
+}
+
+.progress-status {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--green);
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.progress-status.pending {
+  color: var(--mute);
+}
+
+/* --- Table --- */
+.table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--surface);
+  margin: 20px 0;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14.5px;
+}
+
+th, td {
+  text-align: left;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+thead th {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--mute);
+  background: var(--surface-2);
+  font-weight: 500;
+}
+
+tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+td strong { color: var(--text); font-weight: 600; }
+
+td.amount, th.amount {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+tfoot td {
+  border-top: 1px solid var(--line-strong);
+  background: var(--surface-2);
+  font-weight: 600;
+  color: var(--text);
+  font-size: 15px;
+}
+
+tfoot .total-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+tfoot .total-amount {
+  font-family: var(--serif);
+  font-size: 24px;
+  color: var(--red);
+  letter-spacing: -0.01em;
+}
+
+/* --- Investment block --- */
+.investment {
+  background: var(--surface);
+  border: 1px solid var(--red);
+  border-radius: var(--r-lg);
+  padding: 40px 32px;
+  text-align: center;
+  margin: 32px 0;
+}
+
+.investment-amount {
+  font-family: var(--serif);
+  font-size: clamp(56px, 12vw, 88px);
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--red);
+  margin-bottom: 8px;
+  font-variant-numeric: tabular-nums;
+}
+
+.investment-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--soft);
+  margin-bottom: 24px;
+}
+
+.investment-divider {
+  width: 60px;
+  height: 1px;
+  background: var(--line-strong);
+  margin: 24px auto;
+}
+
+.investment-sub {
+  font-family: var(--serif);
+  font-size: 24px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.investment-sub-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+/* --- Callout --- */
+.callout {
+  background: var(--red-soft);
+  border-left: 3px solid var(--red);
+  border-radius: 0 var(--r) var(--r) 0;
+  padding: 18px 22px;
+  margin: 24px 0;
+}
+
+.callout p {
+  margin: 0;
+  font-size: 15px;
+  color: var(--text);
+}
+
+.callout strong { color: var(--red); }
+
+.callout.green {
+  background: var(--green-soft);
+  border-left-color: var(--green);
+}
+
+.callout.green strong { color: var(--green); }
+
+/* --- Progress bar (overall project) --- */
+.overall-progress {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  padding: 32px;
+  margin: 28px 0;
+}
+
+.op-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 20px;
+}
+
+.op-title {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+.op-percent {
+  font-family: var(--serif);
+  font-size: 42px;
+  line-height: 1;
+  color: var(--text);
+  letter-spacing: -0.02em;
+}
+
+.op-bar {
+  width: 100%;
+  height: 8px;
+  background: var(--surface-2);
+  border-radius: 999px;
+  overflow: hidden;
+  margin-bottom: 20px;
+}
+
+.op-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--red) 0%, #E04A4A 100%);
+  border-radius: 999px;
+}
+
+.op-legend {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.op-legend span strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: 20px;
+  font-weight: 400;
+  color: var(--text);
+  letter-spacing: -0.01em;
+  margin-bottom: 2px;
+  text-transform: none;
+}
+
+/* --- Payment plan --- */
+.plan-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin: 24px 0;
+}
+
+@media (min-width: 640px) {
+  .plan-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+.plan-card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  padding: 22px 20px;
+  position: relative;
+}
+
+.plan-card.highlight {
+  border-color: var(--red);
+}
+
+.plan-card.paid {
+  opacity: 0.7;
+}
+
+.plan-stage {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--red);
+  margin-bottom: 8px;
+}
+
+.plan-card.paid .plan-stage {
+  color: var(--green);
+}
+
+.plan-amount {
+  font-family: var(--serif);
+  font-size: 32px;
+  line-height: 1;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.plan-desc {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--soft);
+}
+
+.plan-badge {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green);
+  background: var(--green-soft);
+  border: 1px solid rgba(79, 169, 104, 0.3);
+  padding: 3px 8px;
+  border-radius: 999px;
+}
+
+/* --- Signature --- */
+.signature {
+  margin-top: 48px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 24px;
+}
+
+@media (min-width: 640px) {
+  .signature { grid-template-columns: 1fr 1fr; }
+}
+
+.sig-block {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sig-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--mute);
+}
+
+.sig-line {
+  height: 32px;
+  border-bottom: 1px solid var(--line-strong);
+  margin-bottom: 4px;
+}
+
+.sig-name {
+  font-family: var(--serif);
+  font-size: 16px;
+  color: var(--text);
+}
+
+/* --- Footer --- */
+.doc-footer {
+  margin-top: 80px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  text-align: center;
+}
+
+.doc-footer p {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  color: var(--mute);
+  line-height: 2;
+  margin: 0;
+}
+
+/* --- Print --- */
+@media print {
+  body { background: #fff; color: #111; }
+  :root {
+    --bg: #fff;
+    --surface: #f7f7f7;
+    --surface-2: #eee;
+    --text: #111;
+    --soft: #444;
+    --mute: #777;
+    --line: rgba(0,0,0,0.12);
+    --line-strong: rgba(0,0,0,0.2);
+    --red: #b01818;
+    --red-soft: rgba(200,30,30,0.06);
+    --green: #2d7a44;
+    --green-soft: rgba(79,169,104,0.08);
+  }
+  section { break-inside: avoid-page; }
+  .investment, .card, .plan-card, .overall-progress { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<!-- ============================================================
+     COVER
+     ============================================================ -->
+<header class="cover">
+  <div class="brand-line">
+    <span class="brand-mark">TSF</span>
+    <span class="brand-divider"></span>
+    <span class="brand-tag">Digital Platform · Invoice 01</span>
+  </div>
+
+  <h1>Milestone one.<br /><em>Complete and live.</em></h1>
+  <p>
+    The foundation of the TSF Digital Platform is now live in production.
+    Members can sign in, onboard, track attendance, and see their payment
+    status. The admin panel is fully operational. This invoice covers the
+    work delivered in Milestone 1.
+  </p>
+
+  <div class="cover-meta">
+    <div class="meta-item">
+      <span class="meta-label">Invoice</span>
+      <span class="meta-value">01</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Date</span>
+      <span class="meta-value">7 October 2026</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Client</span>
+      <span class="meta-value">Team Suresh Fitness</span>
+    </div>
+    <div class="meta-item">
+      <span class="meta-label">Amount due</span>
+      <span class="meta-value">₹11,000</span>
+    </div>
+  </div>
+</header>
+
+<!-- ============================================================
+     01 · PROGRESS AGAINST THE SCOPE
+     ============================================================ -->
+<section>
+  <span class="sec-num">01 — Progress</span>
+  <h2>Where we are in the overall build.</h2>
+  <p>
+    The original scope covers eleven major areas. Milestone 1 delivers the
+    infrastructure, authentication, member app, and admin panel — the
+    foundation everything else will build on. The remaining areas are
+    scheduled for the launch milestone.
+  </p>
+
+  <div class="overall-progress">
+    <div class="op-header">
+      <span class="op-title">Overall platform</span>
+      <span class="op-percent">58%</span>
+    </div>
+    <div class="op-bar">
+      <div class="op-fill" style="width: 58%;"></div>
+    </div>
+    <div class="op-legend">
+      <span><strong>7</strong>Areas complete</span>
+      <span><strong>4</strong>Areas pending</span>
+    </div>
+  </div>
+
+  <div class="callout green">
+    <p>
+      <strong>The hardest part is done.</strong> Database, security, authentication,
+      role management, the member experience, and the admin panel are all live
+      and working. What remains is integration with external services — Razorpay,
+      WhatsApp, and email — plus the events and reporting layers.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     02 · WHAT'S LIVE
+     ============================================================ -->
+<section>
+  <span class="sec-num">02 — Delivered</span>
+  <h2>What is live right now.</h2>
+  <p>
+    Everything below has been built, deployed, and is running on
+    <strong>members.tsfclub.com</strong> and <strong>admin.tsfclub.com</strong>.
+  </p>
+
+  <h3 style="margin-top:28px;">Infrastructure &amp; Security</h3>
+  <ul class="progress-list">
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Supabase project</strong> in AWS Mumbai (ap-south-1) — data stays in India as required by the DPDP Act</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Database schema</strong> — members, programs, attendance, and payments tables</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Row-Level Security</strong> on every table — members see only their own data, admins see everything</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Role enforcement trigger</strong> — members cannot alter their own role, expiry date, or amount due</span>
+      <span class="progress-status">Live</span>
+    </li>
+  </ul>
+
+  <h3 style="margin-top:32px;">Authentication</h3>
+  <ul class="progress-list">
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Google sign-in</strong> for members — one-tap login, no passwords to remember</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Email/password sign-in</strong> for admins, on a separate domain</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Role verification</strong> — admin accounts are checked at login and routed to the admin panel</span>
+      <span class="progress-status">Live</span>
+    </li>
+  </ul>
+
+  <h3 style="margin-top:32px;">Member Onboarding</h3>
+  <ul class="progress-list">
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Full onboarding form</strong> — name, WhatsApp, program, joining date, height, weight, blood group, emergency contact</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>All 11 programs</strong> pulled from the live website — Adults and Kids grouped</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Phone auto-formatting</strong> — paste any Indian number, it formats to +91 XXXXX XXXXX</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Preference pills</strong> — Fighter, Fitness enthusiast, Self-defence, Athletic performance, Beginner</span>
+      <span class="progress-status">Live</span>
+    </li>
+  </ul>
+
+  <h3 style="margin-top:32px;">Member App (members.tsfclub.com)</h3>
+  <ul class="progress-list">
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Dashboard</strong> — progress bar, streak counter, program card, today's session action</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Attendance calendar</strong> — mark or unmark any past day, keyboard accessible</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Profile page</strong> — personal details, physical metrics, focus areas, membership card</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Payment status display</strong> — paid / due / overdue, computed from expiry and program fee</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Dark and light theme</strong> with a toggle that persists across sessions</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Glass floating navigation</strong>, sticky header, and All Documents link in settings</span>
+      <span class="progress-status">Live</span>
+    </li>
+  </ul>
+
+  <h3 style="margin-top:32px;">Admin Panel (admin.tsfclub.com)</h3>
+  <ul class="progress-list">
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Overview tab</strong> — total members, paid, due, overdue counts and a needs-attention list sorted by urgency</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Members table</strong> — searchable, filterable, sortable, with status pills</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Member drawer</strong> — edit expiry, edit amount due, mark paid, log custom payment, reset onboarding</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Payments ledger</strong> — reverse-chronological table of every payment, with method and notes</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Manual cash / UPI entry</strong> — receptionist records in-person payments with one click</span>
+      <span class="progress-status">Live</span>
+    </li>
+  </ul>
+
+  <h3 style="margin-top:32px;">Deployment</h3>
+  <ul class="progress-list">
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>members.tsfclub.com</strong> — Cloudflare Pages project with custom domain and SSL</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>admin.tsfclub.com</strong> — separate Cloudflare Pages project with custom domain and SSL</span>
+      <span class="progress-status">Live</span>
+    </li>
+    <li>
+      <span class="progress-icon done">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+      </span>
+      <span class="progress-text"><strong>Wix CNAME records</strong> for both subdomains, automatic deployment on every push</span>
+      <span class="progress-status">Live</span>
+    </li>
+  </ul>
+</section>
+
+<!-- ============================================================
+     03 · WHAT REMAINS
+     ============================================================ -->
+<section>
+  <span class="sec-num">03 — Pending</span>
+  <h2>What remains for the launch milestone.</h2>
+  <p>
+    These are the items from the original scope that are not yet built.
+    They are scheduled for the launch milestone and require external
+    accounts and approvals that take time to set up.
+  </p>
+
+  <ul class="progress-list">
+    <li>
+      <span class="progress-icon pending"></span>
+      <span class="progress-text"><strong>Razorpay integration</strong> — live keys, checkout flow, webhooks, automated receipts, and UPI Autopay for recurring memberships</span>
+      <span class="progress-status pending">Pending</span>
+    </li>
+    <li>
+      <span class="progress-icon pending"></span>
+      <span class="progress-text"><strong>WhatsApp Business API</strong> — business verification, phone number approval, message templates, and all automated triggers (fee reminders, welcome messages, event notifications)</span>
+      <span class="progress-status pending">Pending</span>
+    </li>
+    <li>
+      <span class="progress-icon pending"></span>
+      <span class="progress-text"><strong>Email on the domain</strong> — hello@tsfclub.com, privacy@tsfclub.com, and transactional email via Resend for receipts and monthly summaries</span>
+      <span class="progress-status pending">Pending</span>
+    </li>
+    <li>
+      <span class="progress-icon pending"></span>
+      <span class="progress-text"><strong>Events management</strong> — create and publish events, member interest tracking, reminder broadcasts, event archive</span>
+      <span class="progress-status pending">Pending</span>
+    </li>
+    <li>
+      <span class="progress-icon pending"></span>
+      <span class="progress-text"><strong>Reports &amp; insights</strong> — monthly revenue, member growth, program breakdown, dues report, CSV / Excel export</span>
+      <span class="progress-status pending">Pending</span>
+    </li>
+    <li>
+      <span class="progress-icon pending"></span>
+      <span class="progress-text"><strong>Notification centre in member app</strong> — a log of every WhatsApp message and email sent to the member</span>
+      <span class="progress-status pending">Pending</span>
+    </li>
+    <li>
+      <span class="progress-icon pending"></span>
+      <span class="progress-text"><strong>Coach role UI</strong> — the RLS policies are already in place; the interface for coaches to mark attendance and view their assigned members is not yet built</span>
+      <span class="progress-status pending">Pending</span>
+    </li>
+    <li>
+      <span class="progress-icon pending"></span>
+      <span class="progress-text"><strong>Downloadable payment receipts</strong> — branded PDF receipts delivered by email and WhatsApp</span>
+      <span class="progress-status pending">Pending</span>
+    </li>
+    <li>
+      <span class="progress-icon pending"></span>
+      <span class="progress-text"><strong>Privacy Policy and Terms of Service pages</strong> — written, published, and linked from the app</span>
+      <span class="progress-status pending">Pending</span>
+    </li>
+    <li>
+      <span class="progress-icon pending"></span>
+      <span class="progress-text"><strong>Handover session</strong> — a walkthrough for the owner and receptionist on how to use the admin panel day to day</span>
+      <span class="progress-status pending">Pending</span>
+    </li>
+  </ul>
+
+  <div class="callout">
+    <p>
+      <strong>Timeline note.</strong> WhatsApp Business API approval typically takes
+      one to two weeks from Meta. To keep the project on schedule, that
+      application should be submitted as soon as Milestone 1 is approved.
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     04 · MILESTONE 1 INVOICE
+     ============================================================ -->
+<section>
+  <span class="sec-num">04 — Invoice</span>
+  <h2>Milestone 1 breakdown.</h2>
+  <p>
+    The work delivered so far is billed at <strong>₹11,000</strong>, split across
+    the seven segments of the platform foundation.
+  </p>
+
+  <div class="table-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 40px;">#</th>
+          <th>Segment</th>
+          <th>Description</th>
+          <th class="amount">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>1</strong></td>
+          <td><strong>Database architecture &amp; security</strong></td>
+          <td>Supabase Mumbai project, 4-table schema, RLS policies on all tables, <code style="font-family: var(--mono); font-size: 12px; color: var(--soft);">is_admin()</code> security function, field-protection trigger, recursion fix, program population</td>
+          <td class="amount"><strong>₹1,500</strong></td>
+        </tr>
+        <tr>
+          <td><strong>2</strong></td>
+          <td><strong>Authentication system</strong></td>
+          <td>Google OAuth for members, email/password for admin, role verification, auth guards on both apps, session management, admin vs member domain split</td>
+          <td class="amount"><strong>₹1,500</strong></td>
+        </tr>
+        <tr>
+          <td><strong>3</strong></td>
+          <td><strong>Member onboarding flow</strong></td>
+          <td>Full onboarding form, phone auto-formatting, program dropdown, joining date picker, blood group, preference pills, emergency contact, expiry computation</td>
+          <td class="amount"><strong>₹1,500</strong></td>
+        </tr>
+        <tr>
+          <td><strong>4</strong></td>
+          <td><strong>Member app — dashboard &amp; profile</strong></td>
+          <td>Home tab with progress bar, streak counter, program card; attendance calendar with navigation and toggle; profile with personal details, physical metrics, focus areas, membership card; paid/due/overdue logic; theme toggle; glass bottom nav; sticky header</td>
+          <td class="amount"><strong>₹2,000</strong></td>
+        </tr>
+        <tr>
+          <td><strong>5</strong></td>
+          <td><strong>Admin panel</strong></td>
+          <td>Separate Cloudflare Pages project at admin.tsfclub.com; admin login with role check; overview stats; needs-attention list; member table with search and filter; member drawer with mark-paid, log-payment, edit expiry, edit amount; payments ledger; reset onboarding</td>
+          <td class="amount"><strong>₹2,500</strong></td>
+        </tr>
+        <tr>
+          <td><strong>6</strong></td>
+          <td><strong>Design system integration</strong></td>
+          <td>Dark/light theme tokens matching tsfclub.com; Instrument Serif, Inter Tight, JetBrains Mono typography; glassmorphism navigation; responsive layouts for mobile member app and desktop admin panel; favicon</td>
+          <td class="amount"><strong>₹1,000</strong></td>
+        </tr>
+        <tr>
+          <td><strong>7</strong></td>
+          <td><strong>Deployment &amp; infrastructure</strong></td>
+          <td>Two Cloudflare Pages projects; Wix CNAME records; SSL provisioning; asset URL encoding; auth redirect URL configuration in Supabase</td>
+          <td class="amount"><strong>₹1,000</strong></td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td colspan="3" class="total-label">Milestone 1 total</td>
+          <td class="amount total-amount">₹11,000</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+</section>
+
+<!-- ============================================================
+     05 · PAYMENT SCHEDULE
+     ============================================================ -->
+<section>
+  <span class="sec-num">05 — Schedule</span>
+  <h2>Payment schedule.</h2>
+  <p>
+    The original scope total is <strong>₹50,000</strong>, split across two milestones
+    and a yearly maintenance fee. This invoice covers Milestone 1.
+  </p>
+
+  <div class="plan-grid">
+    <div class="plan-card highlight">
+      <span class="plan-badge">This invoice</span>
+      <div class="plan-stage">Milestone 1</div>
+      <div class="plan-amount">₹11,000</div>
+      <div class="plan-desc">
+        Paid on approval of this invoice. Covers everything delivered in
+        Milestone 1 — the foundation, member app, and admin panel.
+      </div>
+    </div>
+    <div class="plan-card">
+      <div class="plan-stage">Milestone 2</div>
+      <div class="plan-amount">₹39,000</div>
+      <div class="plan-desc">
+        Paid on launch day. Covers Razorpay integration, WhatsApp Business API,
+        email setup, events, reports, receipts, legal pages, and handover.
+      </div>
+    </div>
+  </div>
+
+  <div class="investment">
+    <div class="investment-amount">₹11,000</div>
+    <div class="investment-label">Amount due on this invoice</div>
+    <div class="investment-divider"></div>
+    <div class="investment-sub">₹39,000</div>
+    <div class="investment-sub-label">Remaining to launch</div>
+  </div>
+</section>
+
+<!-- ============================================================
+     06 · WHAT THE STUDIO OWNS
+     ============================================================ -->
+<section>
+  <span class="sec-num">06 — Ownership</span>
+  <h2>What the studio already owns.</h2>
+  <p>
+    As of today, with Milestone 1 live, the studio owns the following outright.
+    Nothing is rented, nothing is locked in, nothing reverts to the developer.
+  </p>
+
+  <ul class="feature-list">
+    <li class="done"><strong>The complete Supabase database</strong> — every member record, in the studio's own account, in the Mumbai region</li>
+    <li class="done"><strong>Both live apps</strong> — members.tsfclub.com and admin.tsfclub.com, in production, under the studio's Cloudflare account</li>
+    <li class="done"><strong>The full source code</strong> — every HTML, CSS, and JavaScript file in the studio's GitHub repository, with no vendor lock-in</li>
+    <li class="done"><strong>Both Cloudflare Pages projects</strong> — deployment pipelines fully owned by the studio</li>
+    <li class="done"><strong>The domain and all DNS records</strong> — under the studio's Wix account, with subdomains managed freely</li>
+    <li class="done"><strong>The admin panel access</strong> — top-level credentials to Supabase and Cloudflare, held by the studio owner</li>
+  </ul>
+
+  <div class="callout green">
+    <p>
+      <strong>No monthly subscription.</strong> Unlike off-the-shelf gym software,
+      there is no per-user fee, no platform charge, and no lock-in. The only
+      recurring costs are the ₹1,000 yearly maintenance fee and the WhatsApp
+      message costs (approximately ₹200–400/month for a 200-member studio).
+    </p>
+  </div>
+</section>
+
+<!-- ============================================================
+     SIGNATURE
+     ============================================================ -->
+<section>
+  <span class="sec-num">07 — Sign off</span>
+  <h2>Approval.</h2>
+  <p>
+    By paying this invoice, the client confirms that the work described in
+    Section 02 (Delivered) has been reviewed and accepted, and authorises
+    the developer to proceed with Milestone 2.
+  </p>
+
+  <div class="signature">
+    <div class="sig-block">
+      <span class="sig-label">For Team Suresh Fitness</span>
+      <div class="sig-line"></div>
+      <span class="sig-name">Suresh — Owner, TSF</span>
+    </div>
+    <div class="sig-block">
+      <span class="sig-label">For the developer</span>
+      <div class="sig-line"></div>
+      <span class="sig-name">Yugal Doddamani</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================
+     FOOTER
+     ============================================================ -->
+<footer class="doc-footer">
+  <p>TSF Digital Platform · Invoice 01 · Milestone 1</p>
+  <p>Team Suresh Fitness · Caranzalem, Goa</p>
+  <p>Prepared by Yugal Doddamani · 7 October 2026</p>
+</footer>
+
+</div>
+</body>
+</html>

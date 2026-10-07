@@ -1,8 +1,9 @@
 // Replace these with your actual Supabase project credentials
-const SUPABASE_URL = 'YOUR_SUPABASE_URL';
-const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
+const SUPABASE_URL = 'https://wmuttbriuhduzoaejxio.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_CVghIdN9OoY-HMDayZTzyw_1_9ORJPf';
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+// Renamed to supabaseClient to avoid conflict with the global 'supabase' from the CDN
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
 // DOM Elements
 const views = {
@@ -21,7 +22,7 @@ function showView(viewName) {
 
 // 1. Handle Google Sign In
 document.getElementById('google-signin').addEventListener('click', async () => {
-  await supabase.auth.signInWithOAuth({
+  await supabaseClient.auth.signInWithOAuth({
     provider: 'google',
     options: {
       redirectTo: window.location.origin
@@ -31,13 +32,13 @@ document.getElementById('google-signin').addEventListener('click', async () => {
 
 // 2. Handle Sign Out
 document.getElementById('signout-btn').addEventListener('click', async () => {
-  await supabase.auth.signOut();
+  await supabaseClient.auth.signOut();
   showView('login');
 });
 
 // 3. Main initialization logic
 async function init() {
-  const { data: { session }, error } = await supabase.auth.getSession();
+  const { data: { session }, error } = await supabaseClient.auth.getSession();
 
   // Not logged in
   if (!session) {
@@ -46,7 +47,7 @@ async function init() {
   }
 
   // Logged in. Check if they have a member row.
-  const { data: member, error: memberError } = await supabase
+  const { data: member, error: memberError } = await supabaseClient
     .from('members')
     .select('*')
     .eq('id', session.user.id)
@@ -54,7 +55,6 @@ async function init() {
 
   if (memberError) {
     console.error('Error fetching member:', memberError);
-    // If there's a database error, fall back to login for safety
     showView('login');
     return;
   }
@@ -75,7 +75,7 @@ async function init() {
 
 async function loadPrograms() {
   const select = document.getElementById('program_id');
-  const { data: programs, error } = await supabase
+  const { data: programs, error } = await supabaseClient
     .from('programs')
     .select('id, name, fee')
     .order('name');
@@ -101,9 +101,9 @@ document.getElementById('onboarding-form').addEventListener('submit', async (e) 
   btn.textContent = 'Saving...';
 
   const formData = new FormData(e.target);
-  const { data: { session } } = await supabase.auth.getSession();
+  const { data: { session } } = await supabaseClient.auth.getSession();
 
-  const { error } = await supabase.from('members').insert({
+  const { error } = await supabaseClient.from('members').insert({
     id: session.user.id,
     email: session.user.email,
     full_name: formData.get('full_name'),
@@ -136,7 +136,7 @@ async function renderDashboard(member, user) {
 
   // Fetch program details
   if (member.program_id) {
-    const { data: program } = await supabase
+    const { data: program } = await supabaseClient
       .from('programs')
       .select('name')
       .eq('id', member.program_id)
@@ -161,8 +161,8 @@ async function renderDashboard(member, user) {
   }
 }
 
-// Listen for auth state changes (handles the redirect from Google)
-supabase.auth.onAuthStateChange((event, session) => {
+// Listen for auth state changes
+supabaseClient.auth.onAuthStateChange((event, session) => {
   if (event === 'SIGNED_IN') {
     init();
   } else if (event === 'SIGNED_OUT') {

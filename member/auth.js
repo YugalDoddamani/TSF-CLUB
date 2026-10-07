@@ -13,28 +13,54 @@ function showView(viewName) {
   views[viewName].classList.add('active');
 }
 
-// 1. Handle Google Sign In
+// --- Phone Number Auto-Formatting ---
+function formatPhoneNumber(value) {
+  let digits = value.replace(/\D/g, '');
+  if (digits.startsWith('91') && digits.length > 10) {
+    digits = digits.substring(2);
+  }
+  digits = digits.substring(0, 10);
+  if (digits.length > 5) {
+    return `+91 ${digits.substring(0, 5)} ${digits.substring(5)}`;
+  } else if (digits.length > 0) {
+    return `+91 ${digits}`;
+  }
+  return '';
+}
+
+// Attach formatting to phone inputs
+['whatsapp_number', 'emergency_phone'].forEach(id => {
+  const input = document.getElementById(id);
+  if (input) {
+    input.addEventListener('input', (e) => {
+      e.target.value = formatPhoneNumber(e.target.value);
+    });
+    input.addEventListener('paste', (e) => {
+      setTimeout(() => {
+        e.target.value = formatPhoneNumber(e.target.value);
+      }, 0);
+    });
+  }
+});
+
+// --- Authentication Flow ---
 document.getElementById('google-signin').addEventListener('click', async () => {
   await supabaseClient.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      // This is the crucial fix. Redirect to app.html, not the origin.
       redirectTo: 'https://members.tsfclub.com/app.html'
     }
   });
 });
 
-// 2. Main initialization logic
 async function init() {
   const { data: { session } } = await supabaseClient.auth.getSession();
 
-  // Not logged in -> Show login
   if (!session) {
     showView('login');
     return;
   }
 
-  // Logged in. Check if they have a member row.
   const { data: member, error } = await supabaseClient
     .from('members')
     .select('onboarding_complete')
@@ -47,23 +73,21 @@ async function init() {
     return;
   }
 
-  // If onboarding is complete, send them straight to the app
   if (member && member.onboarding_complete) {
     window.location.href = 'app.html';
     return;
   }
 
-  // Otherwise, show onboarding
   await loadPrograms();
   showView('onboarding');
 }
 
-// 3. Onboarding Logic
 async function loadPrograms() {
   const select = document.getElementById('program_id');
   const { data: programs, error } = await supabaseClient
     .from('programs')
-    .select('id, name, fee')
+    .select('id, name, fee, category')
+    .order('category')
     .order('name');
 
   if (error || !programs) {
@@ -72,12 +96,28 @@ async function loadPrograms() {
   }
 
   select.innerHTML = '<option value="">Select a program</option>';
-  programs.forEach(prog => {
-    const option = document.createElement('option');
-    option.value = prog.id;
-    option.textContent = `${prog.name} (Rs. ${prog.fee})`;
-    select.appendChild(option);
-  });
+  
+  // Group by category
+  const adults = programs.filter(p => p.category === 'adults');
+  const kids = programs.filter(p => p.category === 'kids');
+
+  const addOptions = (list, label) => {
+    if (list.length === 0) return;
+    const optgroup = document.createElement('optgroup');
+    optgroup.label = label;
+    list.forEach(prog => {
+      const option = document.createElement('option');
+      option.value = prog.id;
+      // Display 'On Request' if fee is 0
+      const feeText = prog.fee > 0 ? `Rs. ${prog.fee}` : 'On Request';
+      option.textContent = `${prog.name} (${feeText})`;
+      optgroup.appendChild(option);
+    });
+    select.appendChild(optgroup);
+  };
+
+  addOptions(adults, 'Adults');
+  addOptions(kids, 'Kids');
 }
 
 document.getElementById('onboarding-form').addEventListener('submit', async (e) => {
@@ -89,15 +129,20 @@ document.getElementById('onboarding-form').addEventListener('submit', async (e) 
   const formData = new FormData(e.target);
   const { data: { session } } = await supabaseClient.auth.getSession();
 
+  const heightVal = formData.get('height') ? parseFloat(formData.get('height')) : null;
+  const weightVal = formData.get('weight') ? parseFloat(formData.get('weight')) : null;
+
   const { error } = await supabaseClient.from('members').insert({
     id: session.user.id,
     email: session.user.email,
     full_name: formData.get('full_name'),
     whatsapp_number: formData.get('whatsapp_number'),
     program_id: formData.get('program_id'),
+    joining_date: formData.get('joining_date'),
+    height: heightVal,
+    weight: weightVal,
     emergency_name: formData.get('emergency_name'),
     emergency_phone: formData.get('emergency_phone'),
-    joining_date: new Date().toISOString().split('T')[0],
     onboarding_complete: true
   });
 
@@ -109,9 +154,7 @@ document.getElementById('onboarding-form').addEventListener('submit', async (e) 
     return;
   }
 
-  // Success! Send them to the app.
   window.location.href = 'app.html';
 });
 
-// Start the app
 init();

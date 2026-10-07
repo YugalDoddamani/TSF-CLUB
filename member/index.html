@@ -12,61 +12,71 @@
 </head>
 <body>
 
-   <!-- View 1: Login -->
-  <div id="login-view" class="view">
+  <!-- View 1: Member login (default) -->
+  <div id="login-view" class="view active">
     <div class="card auth-card">
       <img src="https://tsfclub.com/assets/TSF%C2%AE.png" alt="TSF" class="logo">
       <h1>Member portal</h1>
-      <p class="subtitle">Sign in to access your program, payments, and events.</p>
+      <p class="subtitle">Sign in with your Google account to continue.</p>
 
       <button id="google-signin" class="btn btn-primary btn-block">
         Continue with Google
       </button>
 
-      <div class="auth-divider"><span>or</span></div>
+      <p class="admin-link-wrap">
+        <button type="button" id="show-admin-login" class="link-subtle">
+          Login as admin
+        </button>
+      </p>
+    </div>
+  </div>
 
-      <form id="email-form" novalidate>
+  <!-- View 2: Admin login -->
+  <div id="admin-login-view" class="view">
+    <div class="card auth-card">
+      <img src="https://tsfclub.com/assets/TSF%C2%AE.png" alt="TSF" class="logo">
+      <h1>Admin access</h1>
+      <p class="subtitle">Sign in with your admin credentials.</p>
+
+      <form id="admin-form" novalidate>
         <div class="form-group">
-          <label for="login-email">Email</label>
+          <label for="admin-email">Email</label>
           <input
             type="email"
-            id="login-email"
+            id="admin-email"
             name="email"
-            placeholder="you@example.com"
+            placeholder="admin@tsfclub.com"
             autocomplete="email"
             required
           >
         </div>
 
         <div class="form-group">
-          <label for="login-password">Password</label>
+          <label for="admin-password">Password</label>
           <input
             type="password"
-            id="login-password"
+            id="admin-password"
             name="password"
-            placeholder="At least 6 characters"
+            placeholder="Enter your password"
             autocomplete="current-password"
-            minlength="6"
             required
           >
         </div>
 
-        <button type="submit" class="btn btn-primary btn-block" id="email-submit">
+        <button type="submit" class="btn btn-primary btn-block" id="admin-submit">
           Sign in
         </button>
       </form>
 
+      <p class="auth-message" id="admin-message" role="status" aria-live="polite"></p>
+
       <p class="auth-switch">
-        <span id="auth-switch-text">New here?</span>
-        <button type="button" id="auth-switch-btn" class="link-inline">
-          Create an account
+        <button type="button" id="show-member-login" class="link-inline">
+          Back to member sign in
         </button>
       </p>
-
-      <p class="auth-message" id="auth-message" role="status" aria-live="polite"></p>
     </div>
   </div>
-
   <!-- View 2: Onboarding -->
   <div id="onboarding-view" class="view">
     <div class="card">

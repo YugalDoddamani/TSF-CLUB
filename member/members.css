@@ -996,3 +996,94 @@ input:-webkit-autofill:focus {
 [data-theme="light"] .paid-indicator {
   background: rgba(79, 169, 104, 0.06);
 }
+
+
+/* ---------- Auth: email/password additions ---------- */
+
+.auth-divider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: var(--space-5) 0;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.auth-divider::before,
+.auth-divider::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line-default);
+}
+
+#email-form {
+  text-align: left;
+}
+
+#email-form .form-group:last-of-type {
+  margin-bottom: var(--space-4);
+}
+
+input[type="password"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line-default);
+  border-radius: var(--radius-md);
+  font-size: 0.9375rem;
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  transition: border-color var(--dur-fast) var(--ease-out),
+              background-color var(--dur-fast) var(--ease-out);
+  font-family: var(--font-sans);
+}
+
+input[type="password"]:focus {
+  outline: none;
+  border-color: var(--red-core);
+  background: var(--bg-elevated);
+}
+
+input[type="password"]::placeholder {
+  color: var(--text-muted);
+}
+
+.auth-switch {
+  margin-top: var(--space-4);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.link-inline {
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0 4px;
+}
+
+.link-inline:hover {
+  color: var(--red-core);
+}
+
+.auth-message {
+  margin-top: var(--space-3);
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  min-height: 1.2em;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.auth-message.error {
+  color: #E38B8B;
+}
+
+.auth-message.success {
+  color: var(--green-attend);
+}

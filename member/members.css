@@ -369,3 +369,61 @@ h2 {
   background: currentColor;
   margin-top: 2px;
 }
+
+/* Pill selection group */
+.pill-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.pill {
+  padding: 8px 14px;
+  border: 1px solid var(--line-default);
+  border-radius: 999px;
+  background: var(--bg-surface-2);
+  color: var(--text-secondary);
+  font-size: 0.8125rem;
+  font-family: var(--font-sans);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.pill:hover {
+  border-color: var(--line-strong);
+  color: var(--text-primary);
+}
+
+.pill.active {
+  background: var(--red-core);
+  border-color: var(--red-core);
+  color: #FFFFFF;
+}
+
+.field-hint {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 8px;
+  font-family: var(--font-sans);
+}
+
+/* Preferences display on profile */
+.pref-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  justify-content: flex-end;
+}
+
+.pref-pill {
+  padding: 4px 10px;
+  border: 1px solid var(--line-default);
+  border-radius: 999px;
+  font-size: 0.6875rem;
+  color: var(--text-secondary);
+  font-family: var(--font-mono);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}

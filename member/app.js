@@ -370,19 +370,65 @@ function renderProfile(member, user) {
 
   renderPreferences(member.preferences);
 
-  $('pv-program').textContent = currentProgram?.name || 'Not assigned';
+   $('pv-program').textContent = currentProgram?.name || 'Not assigned';
   $('pv-joining').textContent = member.joining_date ? formatDate(member.joining_date) : '-';
   $('pv-expiry').textContent = member.membership_expiry ? formatDate(member.membership_expiry) : 'Not set';
-  $('pv-payment').textContent = capitalize(member.payment_status || 'due');
 
-  const due = Number(member.amount_due) || 0;
-  $('pv-due').textContent = `Rs. ${due.toLocaleString('en-IN')}`;
+  /* Compute payment status from expiry and amount due.
+
+     Rules:
+     - If admin has set amount_due > 0, they are due. Show that amount.
+     - If expiry is in the past and amount_due == 0, they are due
+       for the program fee. Show that amount.
+     - If expiry is in the future and amount_due == 0, they are paid.
+       Hide the due block, show the paid indicator.
+     - More than 5 days past expiry is labeled "Overdue" instead of "Due". */
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const expiryDate = member.membership_expiry ? new Date(member.membership_expiry) : null;
+  const amountDue = Number(member.amount_due) || 0;
+  const programFee = Number(currentProgram?.fee) || 0;
+
+  let computedStatus = 'paid';
+  let displayAmount = 0;
+
+  if (!expiryDate) {
+    computedStatus = 'due';
+    displayAmount = amountDue > 0 ? amountDue : programFee;
+  } else if (expiryDate >= today) {
+    if (amountDue > 0) {
+      computedStatus = 'due';
+      displayAmount = amountDue;
+    } else {
+      computedStatus = 'paid';
+    }
+  } else {
+    const daysPast = Math.floor((today - expiryDate) / (1000 * 60 * 60 * 24));
+    computedStatus = daysPast > 5 ? 'overdue' : 'due';
+    displayAmount = amountDue > 0 ? amountDue : programFee;
+  }
+
+  $('pv-payment').textContent = capitalize(computedStatus);
 
   const dueBlock = $('due-block');
-  const paymentStatus = (member.payment_status || '').toLowerCase();
-  const isDue = due > 0 || paymentStatus === 'due' || paymentStatus === 'overdue';
-  dueBlock.classList.toggle('is-due', isDue);
-}
+  const paidIndicator = $('paid-indicator');
+
+  if (computedStatus === 'paid') {
+    dueBlock.style.display = 'none';
+    paidIndicator.style.display = 'flex';
+  } else {
+    dueBlock.style.display = 'flex';
+    paidIndicator.style.display = 'none';
+    dueBlock.classList.add('is-due');
+
+    const labelEl = $('due-label');
+    if (labelEl) {
+      labelEl.textContent = computedStatus === 'overdue' ? 'Overdue' : 'Amount due';
+    }
+
+    $('pv-due').textContent = `Rs. ${displayAmount.toLocaleString('en-IN')}`;
+  }
 
 function renderPreferences(prefs) {
   const container = $('pv-preferences');

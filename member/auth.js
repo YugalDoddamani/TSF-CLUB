@@ -16,15 +16,15 @@ function showView(viewName) {
 // --- Phone Number Formatting (Smarter, user-friendly approach) ---
 function formatPhoneNumber(value) {
   let digits = value.replace(/\D/g, '');
-  
+
   // If the number starts with 91 and is 12 digits long, strip the 91
   if (digits.startsWith('91') && digits.length === 12) {
     digits = digits.substring(2);
   }
-  
+
   // Limit to 10 digits
   digits = digits.substring(0, 10);
-  
+
   if (digits.length === 0) return '';
   if (digits.length <= 5) return `+91 ${digits}`;
   return `+91 ${digits.substring(0, 5)} ${digits.substring(5)}`;
@@ -55,7 +55,6 @@ function formatPhoneNumber(value) {
     });
   }
 });
-
 
 // --- Preference Pills ---
 const selectedPreferences = new Set();
@@ -132,7 +131,7 @@ async function loadPrograms() {
   }
 
   select.innerHTML = '<option value="">Select a program</option>';
-  
+
   const adults = programs.filter(p => p.category === 'adults');
   const kids = programs.filter(p => p.category === 'kids');
 
@@ -166,21 +165,68 @@ document.getElementById('onboarding-form').addEventListener('submit', async (e) 
   const heightVal = formData.get('height') ? parseFloat(formData.get('height')) : null;
   const weightVal = formData.get('weight') ? parseFloat(formData.get('weight')) : null;
 
-    const { error } = await supabaseClient.from('members').insert({
+  const programId = formData.get('program_id');
+  const joiningDate = formData.get('joining_date');
+
+  // Fetch the chosen program's duration so we can compute expiry
+  const { data: program, error: programError } = await supabaseClient
+    .from('programs')
+    .select('duration_months')
+    .eq('id', programId)
+    .single();
+
+  if (programError || !program) {
+    console.error('Could not load program:', programError);
+    alert('Could not load your program. Please try again.');
+    btn.disabled = false;
+    btn.textContent = 'Complete setup';
+    return;
+  }
+
+  const cycleMonths = program.duration_months || 1;
+
+  /* Compute membership_expiry.
+
+     Two options, pick one:
+
+     OPTION A (default, honest):
+       New member is treated as unpaid. Expiry = joining date.
+       They show as "due" immediately until the receptionist
+       marks them paid in the admin panel.
+
+     OPTION B (optimistic):
+       New member is treated as already paid for their first cycle.
+       Expiry = joining date + cycle months. Use this only if your
+       receptionist always collects payment before onboarding. */
+  const joiningDateObj = new Date(joiningDate);
+
+  // OPTION A (default)
+  const expiry = new Date(joiningDateObj);
+
+  // OPTION B: uncomment the line below and remove the OPTION A line
+  // expiry.setMonth(expiry.getMonth() + cycleMonths);
+
+  const expiryStr = expiry.toISOString().split('T')[0];
+
+  const { error } = await supabaseClient.from('members').insert({
     id: session.user.id,
     email: session.user.email,
     full_name: formData.get('full_name'),
     whatsapp_number: formData.get('whatsapp_number'),
-    program_id: formData.get('program_id'),
-    joining_date: formData.get('joining_date'),
+    program_id: programId,
+    joining_date: joiningDate,
+    membership_expiry: expiryStr,
     height: heightVal,
     weight: weightVal,
     blood_group: formData.get('blood_group'),
     preferences: Array.from(selectedPreferences),
     emergency_name: formData.get('emergency_name'),
     emergency_phone: formData.get('emergency_phone'),
+    amount_due: 0,
+    payment_status: 'due',
     onboarding_complete: true
   });
+
   if (error) {
     console.error('Onboarding error:', error);
     alert('Something went wrong. Please try again.');

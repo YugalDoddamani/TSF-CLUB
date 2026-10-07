@@ -741,6 +741,45 @@
         gap: var(--space-2);
     }
 
+
+
+   /* ============================================================
+   CHILD PAGE — TOC used as a "Related documents" sidebar
+   ============================================================ */
+.docs-toc-footer {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-4);
+    margin-top: var(--space-5);
+    padding-top: var(--space-5);
+    border-top: 1px solid var(--line-subtle);
+}
+
+.docs-toc-note {
+    font-size: 0.75rem;
+    line-height: 1.55;
+    color: var(--text-muted);
+    margin: 0;
+}
+
+.btn-block {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+}
+
+/* Make sure the doc hero on a single-document page breathes more */
+.docs-hero + .docs-layout {
+    padding-top: var(--space-8);
+}
+
+/* When a single doc is inside .docs-main, treat it with the same rhythm */
+.docs-main > .docs-doc {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-6);
+}
+
     .docs-signature-row span:first-child {
         font-family: var(--font-mono);
         font-size: 0.6875rem;

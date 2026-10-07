@@ -13,28 +13,41 @@ function showView(viewName) {
   views[viewName].classList.add('active');
 }
 
-// --- Phone Number Auto-Formatting ---
+// --- Phone Number Formatting (Smarter, user-friendly approach) ---
 function formatPhoneNumber(value) {
   let digits = value.replace(/\D/g, '');
-  if (digits.startsWith('91') && digits.length > 10) {
+  
+  // If the number starts with 91 and is 12 digits long, strip the 91
+  if (digits.startsWith('91') && digits.length === 12) {
     digits = digits.substring(2);
   }
+  
+  // Limit to 10 digits
   digits = digits.substring(0, 10);
-  if (digits.length > 5) {
-    return `+91 ${digits.substring(0, 5)} ${digits.substring(5)}`;
-  } else if (digits.length > 0) {
-    return `+91 ${digits}`;
-  }
-  return '';
+  
+  if (digits.length === 0) return '';
+  if (digits.length <= 5) return `+91 ${digits}`;
+  return `+91 ${digits.substring(0, 5)} ${digits.substring(5)}`;
 }
 
-// Attach formatting to phone inputs
+// Attach formatting to both phone inputs
 ['whatsapp_number', 'emergency_phone'].forEach(id => {
   const input = document.getElementById(id);
   if (input) {
+    // 1. Let the user type freely. Just stop them from typing letters.
     input.addEventListener('input', (e) => {
+      let val = e.target.value.replace(/[^\d+]/g, ''); // Allow only digits and +
+      val = val.replace(/(?!^)\+/g, ''); // Remove any + except at the very start
+      if (val.length > 13) val = val.substring(0, 13); // Max length for +91 XXXXX XXXXX
+      e.target.value = val;
+    });
+
+    // 2. When they click away (blur), format it beautifully
+    input.addEventListener('blur', (e) => {
       e.target.value = formatPhoneNumber(e.target.value);
     });
+
+    // 3. Format immediately if they paste a number
     input.addEventListener('paste', (e) => {
       setTimeout(() => {
         e.target.value = formatPhoneNumber(e.target.value);
@@ -54,6 +67,12 @@ document.getElementById('google-signin').addEventListener('click', async () => {
 });
 
 async function init() {
+  // Prevent users from picking a future joining date
+  const joiningDateInput = document.getElementById('joining_date');
+  if (joiningDateInput) {
+    joiningDateInput.max = new Date().toISOString().split('T')[0];
+  }
+
   const { data: { session } } = await supabaseClient.auth.getSession();
 
   if (!session) {
@@ -97,7 +116,6 @@ async function loadPrograms() {
 
   select.innerHTML = '<option value="">Select a program</option>';
   
-  // Group by category
   const adults = programs.filter(p => p.category === 'adults');
   const kids = programs.filter(p => p.category === 'kids');
 
@@ -108,7 +126,6 @@ async function loadPrograms() {
     list.forEach(prog => {
       const option = document.createElement('option');
       option.value = prog.id;
-      // Display 'On Request' if fee is 0
       const feeText = prog.fee > 0 ? `Rs. ${prog.fee}` : 'On Request';
       option.textContent = `${prog.name} (${feeText})`;
       optgroup.appendChild(option);

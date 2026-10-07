@@ -30,7 +30,7 @@
       <h1>Complete your profile</h1>
       <p class="subtitle">We need a few details before you can access your dashboard.</p>
       
-      <form id="onboarding-form">
+            <form id="onboarding-form">
         <div class="form-group">
           <label for="full_name">Full name</label>
           <input type="text" id="full_name" name="full_name" required>
@@ -38,7 +38,7 @@
 
         <div class="form-group">
           <label for="whatsapp_number">WhatsApp number</label>
-          <input type="tel" id="whatsapp_number" name="whatsapp_number" placeholder="+91" required>
+          <input type="tel" id="whatsapp_number" name="whatsapp_number" placeholder="+91 XXXXX XXXXX" maxlength="14" required>
         </div>
 
         <div class="form-group">
@@ -49,13 +49,28 @@
         </div>
 
         <div class="form-group">
+          <label for="joining_date">Joining date</label>
+          <input type="date" id="joining_date" name="joining_date" required>
+        </div>
+
+        <div class="form-group">
+          <label for="height">Height (cm)</label>
+          <input type="number" id="height" name="height" placeholder="e.g. 175" min="50" max="250">
+        </div>
+
+        <div class="form-group">
+          <label for="weight">Weight (kg)</label>
+          <input type="number" id="weight" name="weight" placeholder="e.g. 70" min="20" max="300">
+        </div>
+
+        <div class="form-group">
           <label for="emergency_name">Emergency contact name</label>
           <input type="text" id="emergency_name" name="emergency_name" required>
         </div>
 
         <div class="form-group">
           <label for="emergency_phone">Emergency contact phone</label>
-          <input type="tel" id="emergency_phone" name="emergency_phone" required>
+          <input type="tel" id="emergency_phone" name="emergency_phone" placeholder="+91 XXXXX XXXXX" maxlength="14" required>
         </div>
 
         <button type="submit" class="btn btn-primary btn-block" id="submit-btn">Complete setup</button>

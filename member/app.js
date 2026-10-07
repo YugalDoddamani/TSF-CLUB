@@ -1,26 +1,19 @@
 /* ============================================================
    TSF Members — app.js
-   Handles auth guard, data loading, and rendering for the
-   dashboard, attendance calendar, and profile tabs.
    ============================================================ */
 
 const SUPABASE_URL = 'https://wmuttbriuhduzoaejxio.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_CVghIdN9OoY-HMDayZTzyw_1_9ORJPf';
 
-/* Monthly attendance benchmark.
-   Change this single value to update every progress label,
-   aria value, and caption in the app. */
 const MONTHLY_SESSION_GOAL = 12;
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-/* ---------- State ---------- */
 let currentMember = null;
 let currentProgram = null;
 let currentDate = new Date();
-let attendanceData = []; // array of 'YYYY-MM-DD' strings
+let attendanceData = [];
 
-/* ---------- DOM helper ---------- */
 const $ = (id) => document.getElementById(id);
 
 /* ============================================================
@@ -28,9 +21,6 @@ const $ = (id) => document.getElementById(id);
    ============================================================ */
 
 function initTheme() {
-  // Apply the stored (or system) theme immediately, regardless of
-  // whether the toggle exists on this page. Prevents a flash of
-  // the wrong theme on every load.
   const savedTheme = localStorage.getItem('tsf-theme');
   const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
   const initialTheme = savedTheme || (systemPrefersLight ? 'light' : 'dark');
@@ -75,7 +65,7 @@ async function checkAuth() {
   if (member.program_id) {
     const { data: program } = await supabaseClient
       .from('programs')
-      .select('name')
+      .select('name, fee')
       .eq('id', member.program_id)
       .single();
     currentProgram = program;
@@ -127,8 +117,6 @@ function renderHome(member, user) {
   renderActionCard();
 }
 
-/* ---------- Monthly progress ---------- */
-
 function renderProgress() {
   const now = new Date();
   const monthKey = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
@@ -157,8 +145,6 @@ function progressCaption(attended, goal) {
   }
   return 'You are getting started. Keep showing up.';
 }
-
-/* ---------- Today's action card ---------- */
 
 function renderActionCard() {
   const card = $('mark-attendance-card');
@@ -216,7 +202,6 @@ function renderCalendar() {
   const daysInMonth = new Date(year, month + 1, 0).getDate();
   const todayStr = getLocalDateStr();
 
-  // Leading empty cells
   for (let i = 0; i < firstDayIndex; i++) {
     const empty = document.createElement('div');
     empty.className = 'cal-day empty';
@@ -224,7 +209,6 @@ function renderCalendar() {
     grid.appendChild(empty);
   }
 
-  // Day cells
   for (let d = 1; d <= daysInMonth; d++) {
     const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
     const isAttended = attendanceData.includes(dateStr);
@@ -331,7 +315,6 @@ async function toggleAttendance(dateStr) {
 }
 
 async function recalculateStreak() {
-  // Streak here = total sessions attended.
   const newStreak = attendanceData.length;
   if (currentMember.streak_count === newStreak) return;
 
@@ -370,19 +353,9 @@ function renderProfile(member, user) {
 
   renderPreferences(member.preferences);
 
-   $('pv-program').textContent = currentProgram?.name || 'Not assigned';
+  $('pv-program').textContent = currentProgram?.name || 'Not assigned';
   $('pv-joining').textContent = member.joining_date ? formatDate(member.joining_date) : '-';
   $('pv-expiry').textContent = member.membership_expiry ? formatDate(member.membership_expiry) : 'Not set';
-
-  /* Compute payment status from expiry and amount due.
-
-     Rules:
-     - If admin has set amount_due > 0, they are due. Show that amount.
-     - If expiry is in the past and amount_due == 0, they are due
-       for the program fee. Show that amount.
-     - If expiry is in the future and amount_due == 0, they are paid.
-       Hide the due block, show the paid indicator.
-     - More than 5 days past expiry is labeled "Overdue" instead of "Due". */
 
   const today = new Date();
   today.setHours(0, 0, 0, 0);
@@ -416,10 +389,10 @@ function renderProfile(member, user) {
 
   if (computedStatus === 'paid') {
     dueBlock.style.display = 'none';
-    paidIndicator.style.display = 'flex';
+    if (paidIndicator) paidIndicator.style.display = 'flex';
   } else {
     dueBlock.style.display = 'flex';
-    paidIndicator.style.display = 'none';
+    if (paidIndicator) paidIndicator.style.display = 'none';
     dueBlock.classList.add('is-due');
 
     const labelEl = $('due-label');
@@ -429,9 +402,12 @@ function renderProfile(member, user) {
 
     $('pv-due').textContent = `Rs. ${displayAmount.toLocaleString('en-IN')}`;
   }
+}
 
 function renderPreferences(prefs) {
   const container = $('pv-preferences');
+  if (!container) return;
+
   if (Array.isArray(prefs) && prefs.length > 0) {
     container.innerHTML = prefs
       .map((p) => `<span class="pref-pill">${escapeHtml(p)}</span>`)
@@ -463,7 +439,6 @@ function initTabNav() {
         p.classList.toggle('active', p.id === `tab-${target}`);
       });
 
-      // Re-render calendar when returning to attendance tab
       if (target === 'streak') {
         renderCalendar();
       }
@@ -543,11 +518,8 @@ function escapeHtml(str) {
 }
 
 /* ============================================================
-   BOOT SEQUENCE
+   BOOT
    ============================================================ */
 
-// Apply theme first so there is no flash of the wrong colors.
 initTheme();
-
-// Then check auth and load the app.
 checkAuth();

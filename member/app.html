@@ -12,34 +12,107 @@
 </head>
 <body>
 
-  <div id="dashboard-view" class="view active">
-    <header class="dashboard-header">
+  <div id="app-view" class="view active">
+    <header class="app-header">
       <img src="https://tsfclub.com/assets/TSF%C2%AE.png" alt="TSF" class="logo-small">
+      <nav class="app-nav">
+        <button class="nav-link active" data-tab="dashboard">Dashboard</button>
+        <button class="nav-link" data-tab="profile">Profile</button>
+      </nav>
       <button id="signout-btn" class="btn btn-ghost btn-sm">Sign out</button>
     </header>
-    
-    <main class="dashboard-content">
-      <h1 id="greeting">Welcome back</h1>
-      
-      <div class="stats-grid">
-        <div class="card stat-card">
-          <span class="stat-label">Program</span>
-          <span class="stat-value" id="dash-program">-</span>
+
+    <main class="app-content">
+
+      <!-- Dashboard tab -->
+      <section id="tab-dashboard" class="tab-panel active">
+        <h1 id="greeting">Welcome back</h1>
+        <p class="subtitle">Here is a quick look at your membership.</p>
+
+        <div class="stats-grid">
+          <div class="card stat-card">
+            <span class="stat-label">Program</span>
+            <span class="stat-value" id="dash-program">-</span>
+          </div>
+          <div class="card stat-card">
+            <span class="stat-label">Payment status</span>
+            <span class="stat-value" id="dash-payment">-</span>
+          </div>
+          <div class="card stat-card">
+            <span class="stat-label">Membership expires</span>
+            <span class="stat-value" id="dash-expiry">-</span>
+          </div>
+          <div class="card stat-card">
+            <span class="stat-label">Current streak</span>
+            <span class="stat-value" id="dash-streak">-</span>
+          </div>
         </div>
-        <div class="card stat-card">
-          <span class="stat-label">Payment status</span>
-          <span class="stat-value" id="dash-payment">-</span>
-        </div>
-        <div class="card stat-card">
-          <span class="stat-label">Membership expires</span>
-          <span class="stat-value" id="dash-expiry">-</span>
-        </div>
-        <div class="card stat-card">
-          <span class="stat-label">Current streak</span>
-          <span class="stat-value" id="dash-streak">-</span>
+      </section>
+
+      <!-- Profile tab -->
+      <section id="tab-profile" class="tab-panel">
+        <div class="profile-header">
+          <div class="profile-avatar" id="profile-avatar">--</div>
+          <div class="profile-identity">
+            <h1 id="profile-name">-</h1>
+            <p class="profile-email" id="profile-email">-</p>
+            <span class="profile-badge" id="profile-role">member</span>
+          </div>
         </div>
 
-                  <!-- New Physical Metrics Section -->
+        <!-- View mode -->
+        <div id="profile-view-mode">
+          <div class="card profile-section">
+            <div class="section-header">
+              <h2>Contact details</h2>
+              <button class="btn btn-ghost btn-sm" id="edit-profile-btn">Edit</button>
+            </div>
+            <dl class="detail-list">
+              <div class="detail-row">
+                <dt>Full name</dt>
+                <dd id="pv-full-name">-</dd>
+              </div>
+              <div class="detail-row">
+                <dt>WhatsApp number</dt>
+                <dd id="pv-whatsapp">-</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Email</dt>
+                <dd id="pv-email">-</dd>
+              </div>
+            </dl>
+          </div>
+
+          <div class="card profile-section">
+            <h2>Membership</h2>
+            <dl class="detail-list">
+              <div class="detail-row">
+                <dt>Program</dt>
+                <dd id="pv-program">-</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Joining date</dt>
+                <dd id="pv-joining">-</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Membership expiry</dt>
+                <dd id="pv-expiry">-</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Payment status</dt>
+                <dd id="pv-payment">-</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Amount due</dt>
+                <dd id="pv-due">-</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Streak count</dt>
+                <dd id="pv-streak">-</dd>
+              </div>
+            </dl>
+          </div>
+
           <div class="card profile-section">
             <h2>Physical metrics</h2>
             <dl class="detail-list">
@@ -53,8 +126,65 @@
               </div>
             </dl>
           </div>
-        
-      </div>
+
+          <div class="card profile-section">
+            <h2>Emergency contact</h2>
+            <dl class="detail-list">
+              <div class="detail-row">
+                <dt>Name</dt>
+                <dd id="pv-emg-name">-</dd>
+              </div>
+              <div class="detail-row">
+                <dt>Phone</dt>
+                <dd id="pv-emg-phone">-</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+
+        <!-- Edit mode -->
+        <div id="profile-edit-mode" style="display:none;">
+          <form id="profile-edit-form">
+            <div class="card profile-section">
+              <h2>Contact details</h2>
+              <div class="form-group">
+                <label for="edit-full-name">Full name</label>
+                <input type="text" id="edit-full-name" name="full_name" required>
+              </div>
+              <div class="form-group">
+                <label for="edit-whatsapp">WhatsApp number</label>
+                <input type="tel" id="edit-whatsapp" name="whatsapp_number" required>
+              </div>
+            </div>
+
+            <div class="card profile-section">
+              <h2>Emergency contact</h2>
+              <div class="form-group">
+                <label for="edit-emg-name">Name</label>
+                <input type="text" id="edit-emg-name" name="emergency_name" required>
+              </div>
+              <div class="form-group">
+                <label for="edit-emg-phone">Phone</label>
+                <input type="tel" id="edit-emg-phone" name="emergency_phone" required>
+              </div>
+            </div>
+
+            <div class="card profile-section">
+              <h2>Medical notes</h2>
+              <div class="form-group">
+                <label for="edit-medical">Anything we should know</label>
+                <textarea id="edit-medical" name="medical_notes" rows="3" placeholder="Optional"></textarea>
+              </div>
+            </div>
+
+            <div class="form-actions">
+              <button type="button" class="btn btn-ghost" id="cancel-edit-btn">Cancel</button>
+              <button type="submit" class="btn btn-primary" id="save-profile-btn">Save changes</button>
+            </div>
+          </form>
+        </div>
+      </section>
+
     </main>
   </div>
 

@@ -232,6 +232,18 @@ function renderProfile(member, user) {
   document.getElementById('pv-height').textContent = member.height ? `${member.height} cm` : '-';
   document.getElementById('pv-weight').textContent = member.weight ? `${member.weight} kg` : '-';
 
+    document.getElementById('pv-blood').textContent = member.blood_group || '-';
+
+  // Render preferences as pills
+  const prefContainer = document.getElementById('pv-preferences');
+  if (member.preferences && member.preferences.length > 0) {
+    prefContainer.innerHTML = member.preferences
+      .map(p => `<span class="pref-pill">${p}</span>`)
+      .join('');
+  } else {
+    prefContainer.innerHTML = '<span style="color: var(--text-muted); font-size: 0.875rem;">None selected</span>';
+  }
+
   document.getElementById('pv-payment').textContent = member.payment_status || 'Due';
   document.getElementById('pv-due').textContent = member.amount_due != null ? `Rs. ${member.amount_due}` : 'Rs. 0';
   document.getElementById('pv-expiry').textContent = member.membership_expiry ? formatDate(member.membership_expiry) : 'Not set';

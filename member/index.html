@@ -1,11 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>TSF Members</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="members.css">
-  <!-- Supabase JS Client v2 -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
@@ -13,10 +15,10 @@
   <!-- View 1: Login -->
   <div id="login-view" class="view">
     <div class="card auth-card">
-      <img src="https://tsfclub.com/assets/tsf-logo.png" alt="TSF Logo" class="logo">
+      <img src="https://tsfclub.com/assets/TSF%C2%AE.png" alt="TSF" class="logo">
       <h1>Member portal</h1>
       <p class="subtitle">Sign in to access your program, payments, and events.</p>
-      <button id="google-signin" class="btn btn-primary">
+      <button id="google-signin" class="btn btn-primary btn-block">
         Continue with Google
       </button>
     </div>
@@ -56,7 +58,7 @@
           <input type="tel" id="emergency_phone" name="emergency_phone" required>
         </div>
 
-        <button type="submit" class="btn btn-primary" id="submit-btn">Complete setup</button>
+        <button type="submit" class="btn btn-primary btn-block" id="submit-btn">Complete setup</button>
       </form>
     </div>
   </div>
@@ -64,8 +66,8 @@
   <!-- View 3: Dashboard -->
   <div id="dashboard-view" class="view">
     <header class="dashboard-header">
-      <img src="https://tsfclub.com/assets/tsf-logo.png" alt="TSF Logo" class="logo-small">
-      <button id="signout-btn" class="btn btn-text">Sign out</button>
+      <img src="https://tsfclub.com/assets/TSF%C2%AE.png" alt="TSF" class="logo-small">
+      <button id="signout-btn" class="btn btn-ghost btn-sm">Sign out</button>
     </header>
     
     <main class="dashboard-content">

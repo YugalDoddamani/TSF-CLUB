@@ -1,163 +1,251 @@
-<!DOCTYPE html>
-<html lang="en" data-theme="dark">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sign in — TSF Members</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="members.css">
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-</head>
-<body>
+const SUPABASE_URL = 'https://wmuttbriuhduzoaejxio.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_CVghIdN9OoY-HMDayZTzyw_1_9ORJPf';
 
-  <!-- View 1: Member login (default) -->
-  <div id="login-view" class="view active">
-    <div class="card auth-card">
-      <img src="https://tsfclub.com/assets/TSF%C2%AE.png" alt="TSF" class="logo">
-      <h1>Member portal</h1>
-      <p class="subtitle">Sign in with your Google account to continue.</p>
+const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-      <button id="google-signin" class="btn btn-primary btn-block">
-        Continue with Google
-      </button>
+/* ---------- Views ---------- */
+const views = {
+  login: document.getElementById('login-view'),
+  onboarding: document.getElementById('onboarding-view')
+};
 
-      <p class="admin-link-wrap">
-        <button type="button" id="show-admin-login" class="link-subtle">
-          Login as admin
-        </button>
-      </p>
-    </div>
-  </div>
+function showView(viewName) {
+  Object.values(views).forEach(v => { if (v) v.classList.remove('active'); });
+  if (views[viewName]) views[viewName].classList.add('active');
+}
 
-  <!-- View 2: Admin login -->
-  <div id="admin-login-view" class="view">
-    <div class="card auth-card">
-      <img src="https://tsfclub.com/assets/TSF%C2%AE.png" alt="TSF" class="logo">
-      <h1>Admin access</h1>
-      <p class="subtitle">Sign in with your admin credentials.</p>
+/* ============================================================
+   GOOGLE SIGN IN
+   ============================================================ */
 
-      <form id="admin-form" novalidate>
-        <div class="form-group">
-          <label for="admin-email">Email</label>
-          <input
-            type="email"
-            id="admin-email"
-            name="email"
-            placeholder="admin@tsfclub.com"
-            autocomplete="email"
-            required
-          >
-        </div>
+document.getElementById('google-signin').addEventListener('click', async () => {
+  await supabaseClient.auth.signInWithOAuth({
+    provider: 'google',
+    options: {
+      redirectTo: 'https://members.tsfclub.com/app.html'
+    }
+  });
+});
 
-        <div class="form-group">
-          <label for="admin-password">Password</label>
-          <input
-            type="password"
-            id="admin-password"
-            name="password"
-            placeholder="Enter your password"
-            autocomplete="current-password"
-            required
-          >
-        </div>
+/* ============================================================
+   PHONE NUMBER FORMATTING
+   ============================================================ */
 
-        <button type="submit" class="btn btn-primary btn-block" id="admin-submit">
-          Sign in
-        </button>
-      </form>
+function formatPhoneNumber(value) {
+  let digits = value.replace(/\D/g, '');
 
-      <p class="auth-message" id="admin-message" role="status" aria-live="polite"></p>
+  if (digits.startsWith('91') && digits.length === 12) {
+    digits = digits.substring(2);
+  }
 
-      <p class="auth-switch">
-        <button type="button" id="show-member-login" class="link-inline">
-          Back to member sign in
-        </button>
-      </p>
-    </div>
-  </div>
-  <!-- View 2: Onboarding -->
-  <div id="onboarding-view" class="view">
-    <div class="card">
-      <h1>Complete your profile</h1>
-      <p class="subtitle">We need a few details before you can access your dashboard.</p>
-      
-            <form id="onboarding-form">
-        <div class="form-group">
-          <label for="full_name">Full name</label>
-          <input type="text" id="full_name" name="full_name" required>
-        </div>
+  digits = digits.substring(0, 10);
 
-        <div class="form-group">
-          <label for="whatsapp_number">WhatsApp number</label>
-          <input type="tel" id="whatsapp_number" name="whatsapp_number" placeholder="+91 XXXXX XXXXX" maxlength="14" required>
-        </div>
+  if (digits.length === 0) return '';
+  if (digits.length <= 5) return `+91 ${digits}`;
+  return `+91 ${digits.substring(0, 5)} ${digits.substring(5)}`;
+}
 
-        <div class="form-group">
-          <label for="program_id">Select your program</label>
-          <select id="program_id" name="program_id" required>
-            <option value="">Loading programs...</option>
-          </select>
-        </div>
+['whatsapp_number', 'emergency_phone'].forEach(id => {
+  const input = document.getElementById(id);
+  if (input) {
+    input.addEventListener('input', (e) => {
+      let val = e.target.value.replace(/[^\d+]/g, '');
+      val = val.replace(/(?!^)\+/g, '');
+      if (val.length > 13) val = val.substring(0, 13);
+      e.target.value = val;
+    });
 
-        <div class="form-group">
-          <label for="joining_date">Joining date</label>
-          <input type="date" id="joining_date" name="joining_date" required>
-        </div>
+    input.addEventListener('blur', (e) => {
+      e.target.value = formatPhoneNumber(e.target.value);
+    });
 
-        <div class="form-group">
-          <label for="height">Height (cm)</label>
-          <input type="number" id="height" name="height" placeholder="e.g. 175" min="50" max="250">
-        </div>
+    input.addEventListener('paste', (e) => {
+      setTimeout(() => {
+        e.target.value = formatPhoneNumber(e.target.value);
+      }, 0);
+    });
+  }
+});
 
-        <div class="form-group">
-          <label for="weight">Weight (kg)</label>
-          <input type="number" id="weight" name="weight" placeholder="e.g. 70" min="20" max="300">
-        </div>
+/* ============================================================
+   PREFERENCE PILLS
+   ============================================================ */
 
-                      <div class="form-group">
-          <label for="blood_group">Blood group</label>
-          <select id="blood_group" name="blood_group" required>
-            <option value="">Select blood group</option>
-            <option value="A+">A+</option>
-            <option value="A-">A-</option>
-            <option value="B+">B+</option>
-            <option value="B-">B-</option>
-            <option value="AB+">AB+</option>
-            <option value="AB-">AB-</option>
-            <option value="O+">O+</option>
-            <option value="O-">O-</option>
-          </select>
-        </div>
+const selectedPreferences = new Set();
 
-        <div class="form-group">
-          <label>What describes you best?</label>
-          <div class="pill-group" id="preference-pills">
-            <button type="button" class="pill" data-value="Fighter">Fighter</button>
-            <button type="button" class="pill" data-value="Fitness enthusiast">Fitness enthusiast</button>
-            <button type="button" class="pill" data-value="Self-defence">Self-defence</button>
-            <button type="button" class="pill" data-value="Athletic performance">Athletic performance</button>
-            <button type="button" class="pill" data-value="Beginner">Beginner</button>
-          </div>
-          <p class="field-hint">Optional. Tap any that apply.</p>
-        </div>
+document.querySelectorAll('#preference-pills .pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    const value = pill.dataset.value;
+    if (selectedPreferences.has(value)) {
+      selectedPreferences.delete(value);
+      pill.classList.remove('active');
+    } else {
+      selectedPreferences.add(value);
+      pill.classList.add('active');
+    }
+  });
+});
 
-        <div class="form-group">
-          <label for="emergency_name">Emergency contact name</label>
-          <input type="text" id="emergency_name" name="emergency_name" required>
-        </div>
+/* ============================================================
+   BOOT
+   ============================================================ */
 
-        <div class="form-group">
-          <label for="emergency_phone">Emergency contact phone</label>
-          <input type="tel" id="emergency_phone" name="emergency_phone" placeholder="+91 XXXXX XXXXX" maxlength="14" required>
-        </div>
+async function init() {
+  const joiningDateInput = document.getElementById('joining_date');
+  if (joiningDateInput) {
+    joiningDateInput.max = new Date().toISOString().split('T')[0];
+  }
 
-        <button type="submit" class="btn btn-primary btn-block" id="submit-btn">Complete setup</button>
-      </form>
-    </div>
-  </div>
+  const { data: { session } } = await supabaseClient.auth.getSession();
 
-  <script src="auth.js"></script>
-</body>
-</html>
+  if (!session) {
+    showView('login');
+    return;
+  }
+
+  const { data: member, error } = await supabaseClient
+    .from('members')
+    .select('onboarding_complete, role')
+    .eq('id', session.user.id)
+    .maybeSingle();
+
+  if (error) {
+    console.error('Error fetching member:', error);
+    showView('login');
+    return;
+  }
+
+  // If an admin account somehow lands here, send them to the admin panel
+  if (member && member.role === 'admin') {
+    window.location.href = 'https://admin.tsfclub.com';
+    return;
+  }
+
+  if (member && member.onboarding_complete) {
+    window.location.href = 'app.html';
+    return;
+  }
+
+  await loadPrograms();
+  showView('onboarding');
+}
+
+async function loadPrograms() {
+  const select = document.getElementById('program_id');
+  if (!select) return;
+
+  const { data: programs, error } = await supabaseClient
+    .from('programs')
+    .select('id, name, fee, category')
+    .order('category')
+    .order('name');
+
+  if (error || !programs) {
+    select.innerHTML = '<option value="">Error loading programs</option>';
+    return;
+  }
+
+  select.innerHTML = '<option value="">Select a program</option>';
+
+  const adults = programs.filter(p => p.category === 'adults');
+  const kids = programs.filter(p => p.category === 'kids');
+
+  const addOptions = (list, label) => {
+    if (list.length === 0) return;
+    const optgroup = document.createElement('optgroup');
+    optgroup.label = label;
+    list.forEach(prog => {
+      const option = document.createElement('option');
+      option.value = prog.id;
+      const feeText = prog.fee > 0 ? `Rs. ${prog.fee}` : 'On Request';
+      option.textContent = `${prog.name} (${feeText})`;
+      optgroup.appendChild(option);
+    });
+    select.appendChild(optgroup);
+  };
+
+  addOptions(adults, 'Adults');
+  addOptions(kids, 'Kids');
+}
+
+/* ============================================================
+   ONBOARDING SUBMIT
+   ============================================================ */
+
+const onboardingForm = document.getElementById('onboarding-form');
+if (onboardingForm) {
+  onboardingForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const btn = document.getElementById('submit-btn');
+    btn.disabled = true;
+    btn.textContent = 'Saving...';
+
+    const formData = new FormData(e.target);
+    const { data: { session } } = await supabaseClient.auth.getSession();
+
+    const heightVal = formData.get('height') ? parseFloat(formData.get('height')) : null;
+    const weightVal = formData.get('weight') ? parseFloat(formData.get('weight')) : null;
+
+    const programId = formData.get('program_id');
+    const joiningDate = formData.get('joining_date');
+
+    const { data: program, error: programError } = await supabaseClient
+      .from('programs')
+      .select('duration_months')
+      .eq('id', programId)
+      .single();
+
+    if (programError || !program) {
+      console.error('Could not load program:', programError);
+      alert('Could not load your program. Please try again.');
+      btn.disabled = false;
+      btn.textContent = 'Complete setup';
+      return;
+    }
+
+    /* Compute membership_expiry.
+
+       OPTION A (default, honest):
+         Expiry = joining date. Member shows as "due" immediately
+         until the receptionist marks them paid.
+
+       OPTION B (optimistic):
+         Expiry = joining date + cycle months. Uncomment below. */
+    const joiningDateObj = new Date(joiningDate);
+    const expiry = new Date(joiningDateObj);
+    // expiry.setMonth(expiry.getMonth() + (program.duration_months || 1));
+
+    const expiryStr = expiry.toISOString().split('T')[0];
+
+    const { error } = await supabaseClient.from('members').insert({
+      id: session.user.id,
+      email: session.user.email,
+      full_name: formData.get('full_name'),
+      whatsapp_number: formData.get('whatsapp_number'),
+      program_id: programId,
+      joining_date: joiningDate,
+      membership_expiry: expiryStr,
+      height: heightVal,
+      weight: weightVal,
+      blood_group: formData.get('blood_group'),
+      preferences: Array.from(selectedPreferences),
+      emergency_name: formData.get('emergency_name'),
+      emergency_phone: formData.get('emergency_phone'),
+      amount_due: 0,
+      payment_status: 'due',
+      onboarding_complete: true
+    });
+
+    if (error) {
+      console.error('Onboarding error:', error);
+      alert('Something went wrong. Please try again.');
+      btn.disabled = false;
+      btn.textContent = 'Complete setup';
+      return;
+    }
+
+    window.location.href = 'app.html';
+  });
+}
+
+init();

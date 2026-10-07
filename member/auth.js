@@ -1,78 +1,64 @@
-// Replace these with your actual Supabase project credentials
 const SUPABASE_URL = 'https://wmuttbriuhduzoaejxio.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_CVghIdN9OoY-HMDayZTzyw_1_9ORJPf';
 
-// Renamed to supabaseClient to avoid conflict with the global 'supabase' from the CDN
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// DOM Elements
 const views = {
   login: document.getElementById('login-view'),
-  onboarding: document.getElementById('onboarding-view'),
-  dashboard: document.getElementById('dashboard-view')
+  onboarding: document.getElementById('onboarding-view')
 };
 
-// --- View Management ---
 function showView(viewName) {
   Object.values(views).forEach(v => v.classList.remove('active'));
   views[viewName].classList.add('active');
 }
-
-// --- Authentication Flow ---
 
 // 1. Handle Google Sign In
 document.getElementById('google-signin').addEventListener('click', async () => {
   await supabaseClient.auth.signInWithOAuth({
     provider: 'google',
     options: {
-      redirectTo: window.location.origin
+      // This is the crucial fix. Redirect to app.html, not the origin.
+      redirectTo: 'https://members.tsfclub.com/app.html'
     }
   });
 });
 
-// 2. Handle Sign Out
-document.getElementById('signout-btn').addEventListener('click', async () => {
-  await supabaseClient.auth.signOut();
-  showView('login');
-});
-
-// 3. Main initialization logic
+// 2. Main initialization logic
 async function init() {
-  const { data: { session }, error } = await supabaseClient.auth.getSession();
+  const { data: { session } } = await supabaseClient.auth.getSession();
 
-  // Not logged in
+  // Not logged in -> Show login
   if (!session) {
     showView('login');
     return;
   }
 
   // Logged in. Check if they have a member row.
-  const { data: member, error: memberError } = await supabaseClient
+  const { data: member, error } = await supabaseClient
     .from('members')
-    .select('*')
+    .select('onboarding_complete')
     .eq('id', session.user.id)
     .maybeSingle();
 
-  if (memberError) {
-    console.error('Error fetching member:', memberError);
+  if (error) {
+    console.error('Error fetching member:', error);
     showView('login');
     return;
   }
 
-  // No member row, or onboarding not complete
-  if (!member || !member.onboarding_complete) {
-    await loadPrograms();
-    showView('onboarding');
+  // If onboarding is complete, send them straight to the app
+  if (member && member.onboarding_complete) {
+    window.location.href = 'app.html';
     return;
   }
 
-  // Fully onboarded
-  showView('dashboard');
-  renderDashboard(member, session.user);
+  // Otherwise, show onboarding
+  await loadPrograms();
+  showView('onboarding');
 }
 
-// --- Onboarding Logic ---
-
+// 3. Onboarding Logic
 async function loadPrograms() {
   const select = document.getElementById('program_id');
   const { data: programs, error } = await supabaseClient
@@ -123,51 +109,8 @@ document.getElementById('onboarding-form').addEventListener('submit', async (e) 
     return;
   }
 
-  // Success, reload into dashboard
-  init();
-});
-
-// --- Dashboard Logic ---
-
-async function renderDashboard(member, user) {
-  // Set greeting
-  const name = member.full_name || user.email.split('@')[0];
-  document.getElementById('greeting').textContent = `Welcome back, ${name}`;
-
-  // Fetch program details
-  if (member.program_id) {
-    const { data: program } = await supabaseClient
-      .from('programs')
-      .select('name')
-      .eq('id', member.program_id)
-      .single();
-      
-    document.getElementById('dash-program').textContent = program ? program.name : 'Not assigned';
-  } else {
-    document.getElementById('dash-program').textContent = 'Not assigned';
-  }
-
-  // Set other stats
-  document.getElementById('dash-payment').textContent = member.payment_status || 'Due';
-  document.getElementById('dash-streak').textContent = member.streak_count || 0;
-  
-  if (member.membership_expiry) {
-    const date = new Date(member.membership_expiry);
-    document.getElementById('dash-expiry').textContent = date.toLocaleDateString('en-IN', {
-      day: 'numeric', month: 'short', year: 'numeric'
-    });
-  } else {
-    document.getElementById('dash-expiry').textContent = 'Not set';
-  }
-}
-
-// Listen for auth state changes
-supabaseClient.auth.onAuthStateChange((event, session) => {
-  if (event === 'SIGNED_IN') {
-    init();
-  } else if (event === 'SIGNED_OUT') {
-    showView('login');
-  }
+  // Success! Send them to the app.
+  window.location.href = 'app.html';
 });
 
 // Start the app

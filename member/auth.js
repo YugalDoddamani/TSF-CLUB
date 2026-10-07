@@ -3,6 +3,119 @@ const SUPABASE_ANON_KEY = 'sb_publishable_CVghIdN9OoY-HMDayZTzyw_1_9ORJPf';
 
 const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
+
+
+// --- Email / Password Auth ---
+let authMode = 'signin'; // 'signin' or 'signup'
+
+const emailForm = document.getElementById('email-form');
+const emailSubmit = document.getElementById('email-submit');
+const authMessage = document.getElementById('auth-message');
+const authSwitchBtn = document.getElementById('auth-switch-btn');
+const authSwitchText = document.getElementById('auth-switch-text');
+const passwordInput = document.getElementById('login-password');
+
+function setAuthMode(mode) {
+  authMode = mode;
+  if (mode === 'signin') {
+    emailSubmit.textContent = 'Sign in';
+    authSwitchText.textContent = 'New here?';
+    authSwitchBtn.textContent = 'Create an account';
+    passwordInput.setAttribute('autocomplete', 'current-password');
+  } else {
+    emailSubmit.textContent = 'Create account';
+    authSwitchText.textContent = 'Already have an account?';
+    authSwitchBtn.textContent = 'Sign in';
+    passwordInput.setAttribute('autocomplete', 'new-password');
+  }
+  clearMessage();
+}
+
+function showMessage(text, type = '') {
+  authMessage.textContent = text;
+  authMessage.className = 'auth-message' + (type ? ' ' + type : '');
+}
+
+function clearMessage() {
+  authMessage.textContent = '';
+  authMessage.className = 'auth-message';
+}
+
+if (authSwitchBtn) {
+  authSwitchBtn.addEventListener('click', () => {
+    setAuthMode(authMode === 'signin' ? 'signup' : 'signin');
+  });
+}
+
+if (emailForm) {
+  emailForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    clearMessage();
+
+    const email = document.getElementById('login-email').value.trim();
+    const password = passwordInput.value;
+
+    if (!email || !password) {
+      showMessage('Enter your email and password.', 'error');
+      return;
+    }
+    if (password.length < 6) {
+      showMessage('Password must be at least 6 characters.', 'error');
+      return;
+    }
+
+    emailSubmit.disabled = true;
+    const originalLabel = emailSubmit.textContent;
+    emailSubmit.textContent = authMode === 'signin' ? 'Signing in...' : 'Creating account...';
+
+    if (authMode === 'signin') {
+      const { data, error } = await supabaseClient.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) {
+        emailSubmit.disabled = false;
+        emailSubmit.textContent = originalLabel;
+        showMessage(error.message, 'error');
+        return;
+      }
+
+      // Success. init() will handle the redirect to onboarding or app.
+      window.location.href = 'app.html';
+    } else {
+      const { data, error } = await supabaseClient.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: 'https://members.tsfclub.com/'
+        }
+      });
+
+      if (error) {
+        emailSubmit.disabled = false;
+        emailSubmit.textContent = originalLabel;
+        showMessage(error.message, 'error');
+        return;
+      }
+
+      // If Supabase email confirmation is on, user must click the link first
+      if (data.user && !data.session) {
+        showMessage('Check your inbox to confirm your email, then sign in.', 'success');
+        emailSubmit.disabled = false;
+        emailSubmit.textContent = originalLabel;
+        setAuthMode('signin');
+        return;
+      }
+
+      // Confirmation disabled. Straight in.
+      window.location.href = 'app.html';
+    }
+  });
+}
+
+setAuthMode('signin');
+
 const views = {
   login: document.getElementById('login-view'),
   onboarding: document.getElementById('onboarding-view')

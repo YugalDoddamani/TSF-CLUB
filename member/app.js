@@ -20,8 +20,32 @@ let currentProgram = null;
 let currentDate = new Date();
 let attendanceData = []; // array of 'YYYY-MM-DD' strings
 
-/* ---------- DOM helpers ---------- */
+/* ---------- DOM helper ---------- */
 const $ = (id) => document.getElementById(id);
+
+/* ============================================================
+   THEME
+   ============================================================ */
+
+function initTheme() {
+  // Apply the stored (or system) theme immediately, regardless of
+  // whether the toggle exists on this page. Prevents a flash of
+  // the wrong theme on every load.
+  const savedTheme = localStorage.getItem('tsf-theme');
+  const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+  const initialTheme = savedTheme || (systemPrefersLight ? 'light' : 'dark');
+  document.documentElement.setAttribute('data-theme', initialTheme);
+
+  const toggle = $('theme-toggle');
+  if (!toggle) return;
+
+  toggle.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'light' ? 'dark' : 'light';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('tsf-theme', next);
+  });
+}
 
 /* ============================================================
    BOOT
@@ -31,7 +55,7 @@ async function checkAuth() {
   const { data: { session } } = await supabaseClient.auth.getSession();
 
   if (!session) {
-    window.location.href = 'authentication.html';
+    window.location.href = '/';
     return;
   }
 
@@ -42,7 +66,7 @@ async function checkAuth() {
     .maybeSingle();
 
   if (memberError || !member || !member.onboarding_complete) {
-    window.location.href = 'authentication.html';
+    window.location.href = '/';
     return;
   }
 
@@ -221,8 +245,7 @@ function renderCalendar() {
     if (isToday) labelParts.push('today');
     if (isFuture) labelParts.push('future');
     btn.setAttribute('aria-label', labelParts.join(', '));
-    if (isAttended) btn.setAttribute('aria-pressed', 'true');
-    else btn.setAttribute('aria-pressed', 'false');
+    btn.setAttribute('aria-pressed', isAttended ? 'true' : 'false');
 
     if (!isFuture) {
       btn.addEventListener('click', () => toggleAttendance(dateStr));
@@ -264,7 +287,6 @@ async function markToday() {
   await recalculateStreak();
 
   renderHome(currentMember, { email: currentMember.email });
-  renderProgress();
   renderCalendar();
 }
 
@@ -305,7 +327,6 @@ async function toggleAttendance(dateStr) {
   await recalculateStreak();
 
   renderHome(currentMember, { email: currentMember.email });
-  renderProgress();
   renderCalendar();
 }
 
@@ -419,7 +440,7 @@ function initMonthNav() {
 function initSignOut() {
   $('signout-btn').addEventListener('click', async () => {
     await supabaseClient.auth.signOut();
-    window.location.href = 'authentication.html';
+    window.location.href = '/';
   });
 }
 
@@ -475,41 +496,12 @@ function escapeHtml(str) {
     .replace(/'/g, '&#39;');
 }
 
-/* ---------- Boot ---------- */
-checkAuth();
+/* ============================================================
+   BOOT SEQUENCE
+   ============================================================ */
 
-
-
-
-// --- Theme Toggle ---
-function initTheme() {
-  const toggle = document.getElementById('theme-toggle');
-  if (!toggle) return;
-
-  // Check for saved theme in localStorage
-  const savedTheme = localStorage.getItem('tsf-theme');
-  const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
-  
-  // Determine initial theme
-  let currentTheme = 'dark'; // default
-  if (savedTheme) {
-    currentTheme = savedTheme;
-  } else if (systemPrefersLight) {
-    currentTheme = 'light';
-  }
-
-  // Apply theme
-  document.documentElement.setAttribute('data-theme', currentTheme);
-
-  // Toggle on click
-  toggle.addEventListener('click', () => {
-    const current = document.documentElement.getAttribute('data-theme');
-    const next = current === 'dark' ? 'light' : 'dark';
-    document.documentElement.setAttribute('data-theme', next);
-    localStorage.setItem('tsf-theme', next);
-  });
-}
-
-// Call this inside your checkAuth function, after the member is confirmed
-// e.g., right before renderHome(...)
+// Apply theme first so there is no flash of the wrong colors.
 initTheme();
+
+// Then check auth and load the app.
+checkAuth();

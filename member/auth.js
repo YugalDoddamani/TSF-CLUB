@@ -56,6 +56,23 @@ function formatPhoneNumber(value) {
   }
 });
 
+
+// --- Preference Pills ---
+const selectedPreferences = new Set();
+
+document.querySelectorAll('#preference-pills .pill').forEach(pill => {
+  pill.addEventListener('click', () => {
+    const value = pill.dataset.value;
+    if (selectedPreferences.has(value)) {
+      selectedPreferences.delete(value);
+      pill.classList.remove('active');
+    } else {
+      selectedPreferences.add(value);
+      pill.classList.add('active');
+    }
+  });
+});
+
 // --- Authentication Flow ---
 document.getElementById('google-signin').addEventListener('click', async () => {
   await supabaseClient.auth.signInWithOAuth({
@@ -149,7 +166,7 @@ document.getElementById('onboarding-form').addEventListener('submit', async (e) 
   const heightVal = formData.get('height') ? parseFloat(formData.get('height')) : null;
   const weightVal = formData.get('weight') ? parseFloat(formData.get('weight')) : null;
 
-  const { error } = await supabaseClient.from('members').insert({
+    const { error } = await supabaseClient.from('members').insert({
     id: session.user.id,
     email: session.user.email,
     full_name: formData.get('full_name'),
@@ -158,11 +175,12 @@ document.getElementById('onboarding-form').addEventListener('submit', async (e) 
     joining_date: formData.get('joining_date'),
     height: heightVal,
     weight: weightVal,
+    blood_group: formData.get('blood_group'),
+    preferences: Array.from(selectedPreferences),
     emergency_name: formData.get('emergency_name'),
     emergency_phone: formData.get('emergency_phone'),
     onboarding_complete: true
   });
-
   if (error) {
     console.error('Onboarding error:', error);
     alert('Something went wrong. Please try again.');

@@ -6,7 +6,6 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_
 /* ---------- Views ---------- */
 const views = {
   login: document.getElementById('login-view'),
-  adminLogin: document.getElementById('admin-login-view'),
   onboarding: document.getElementById('onboarding-view')
 };
 
@@ -16,7 +15,7 @@ function showView(viewName) {
 }
 
 /* ============================================================
-   MEMBER SIGN IN (Google only)
+   GOOGLE SIGN IN
    ============================================================ */
 
 document.getElementById('google-signin').addEventListener('click', async () => {
@@ -27,91 +26,6 @@ document.getElementById('google-signin').addEventListener('click', async () => {
     }
   });
 });
-
-/* ============================================================
-   ADMIN SIGN IN
-   ============================================================ */
-
-const showAdminBtn = document.getElementById('show-admin-login');
-const showMemberBtn = document.getElementById('show-member-login');
-const adminMessage = document.getElementById('admin-message');
-const adminForm = document.getElementById('admin-form');
-
-function showAdminMessage(text, type = '') {
-  if (!adminMessage) return;
-  adminMessage.textContent = text;
-  adminMessage.className = 'auth-message' + (type ? ' ' + type : '');
-}
-
-function clearAdminMessage() {
-  if (!adminMessage) return;
-  adminMessage.textContent = '';
-  adminMessage.className = 'auth-message';
-}
-
-if (showAdminBtn) {
-  showAdminBtn.addEventListener('click', () => {
-    clearAdminMessage();
-    showView('adminLogin');
-  });
-}
-
-if (showMemberBtn) {
-  showMemberBtn.addEventListener('click', () => {
-    clearAdminMessage();
-    showView('login');
-  });
-}
-
-if (adminForm) {
-  adminForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    clearAdminMessage();
-
-    const email = document.getElementById('admin-email').value.trim();
-    const password = document.getElementById('admin-password').value;
-    const submitBtn = document.getElementById('admin-submit');
-
-    if (!email || !password) {
-      showAdminMessage('Enter your email and password.', 'error');
-      return;
-    }
-
-    submitBtn.disabled = true;
-    submitBtn.textContent = 'Signing in...';
-
-    const { data, error } = await supabaseClient.auth.signInWithPassword({
-      email,
-      password
-    });
-
-    if (error) {
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Sign in';
-      showAdminMessage(error.message, 'error');
-      return;
-    }
-
-    // Verify this user actually has admin role
-    const { data: member } = await supabaseClient
-      .from('members')
-      .select('role')
-      .eq('id', data.user.id)
-      .maybeSingle();
-
-    if (!member || member.role !== 'admin') {
-      await supabaseClient.auth.signOut();
-      submitBtn.disabled = false;
-      submitBtn.textContent = 'Sign in';
-      showAdminMessage('This account does not have admin access.', 'error');
-      return;
-    }
-
-    // Admin confirmed. For now, redirect to app.html.
-    // When the admin panel is built, change this to /admin.html
-    window.location.href = 'app.html';
-  });
-}
 
 /* ============================================================
    PHONE NUMBER FORMATTING
@@ -201,10 +115,9 @@ async function init() {
     return;
   }
 
-  // Admins go straight to the app for now
-  // (later this becomes /admin.html)
+  // If an admin account somehow lands here, send them to the admin panel
   if (member && member.role === 'admin') {
-    window.location.href = 'app.html';
+    window.location.href = 'https://admin.tsfclub.com';
     return;
   }
 

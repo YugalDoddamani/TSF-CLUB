@@ -27,9 +27,11 @@
       <section id="tab-home" class="tab-panel active" role="tabpanel" aria-label="Home">
 
         <div class="welcome-section">
-          <p class="welcome-sub">Welcome back,</p>
-          <h1 id="greeting">Member</h1>
-        </div>
+  <div class="welcome-text">
+    <p class="welcome-sub">Welcome back,</p>
+    <h1 id="greeting" class="welcome-name">Member</h1>
+  </div>
+</div>
 
         <!-- Monthly progress -->
         <div class="card progress-card">
@@ -251,12 +253,41 @@
           </div>
         </div>
 
-        <!-- Sign out at bottom -->
-        <div class="profile-footer">
-          <button type="button" id="signout-btn" class="btn btn-ghost btn-block">
-            Sign out
-          </button>
-        </div>
+        <!-- Theme toggle and links -->
+<div class="card profile-section settings-card">
+  <h2>Settings</h2>
+  <div class="theme-toggle-row">
+    <span>Appearance</span>
+    <button type="button" id="theme-toggle" class="theme-toggle" aria-label="Toggle theme">
+      <span class="theme-icon-light">☀️</span>
+      <span class="theme-icon-dark">🌙</span>
+    </button>
+  </div>
+  
+  <div class="links-list">
+    <a href="https://tsfclub.com" target="_blank" rel="noopener" class="link-row">
+      <span>Main website</span>
+      <svg ...arrow icon...></svg>
+    </a>
+    <a href="https://tsfclub.com/All-Documents" target="_blank" rel="noopener" class="link-row">
+      <span>All documents</span>
+      <svg ...arrow icon...></svg>
+    </a>
+    <a href="https://tsfclub.com/privacy.html" target="_blank" rel="noopener" class="link-row">
+      <span>Privacy policy</span>
+      <svg ...arrow icon...></svg>
+    </a>
+    <a href="https://tsfclub.com/terms.html" target="_blank" rel="noopener" class="link-row">
+      <span>Terms of service</span>
+      <svg ...arrow icon...></svg>
+    </a>
+  </div>
+</div>
+
+<!-- Sign out at bottom -->
+<div class="profile-footer">
+  <button type="button" id="signout-btn" class="btn btn-ghost btn-block">Sign out</button>
+</div>
 
       </section>
 

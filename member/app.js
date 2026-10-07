@@ -60,6 +60,12 @@ async function checkAuth() {
     return;
   }
 
+     // Redirect admins to their own panel
+  if (member.role === 'admin') {
+    window.location.href = 'https://admin.tsfclub.com';
+    return;
+  }
+
   currentMember = member;
 
   if (member.program_id) {

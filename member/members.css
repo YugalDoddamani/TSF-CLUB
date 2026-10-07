@@ -1,23 +1,7 @@
 /* ============================================================
    TSF MEMBERS — Shared stylesheet
-   Used by authentication.html and app.html
+   Used by index.html and app.html
    ============================================================ */
-/* Light theme */
-[data-theme="light"] {
-  --bg-page: #F5F4F1;
-  --bg-surface: #FFFFFF;
-  --bg-surface-2: #EFEEEB;
-  --bg-elevated: #FFFFFF;
-  --text-primary: #1A1A1A;
-  --text-secondary: #5C5B58;
-  --text-muted: #8E8D89;
-  --line-subtle: rgba(26, 26, 26, 0.06);
-  --line-default: rgba(26, 26, 26, 0.12);
-  --line-strong: rgba(26, 26, 26, 0.24);
-  --red-tint: rgba(200, 30, 30, 0.08);
-  color-scheme: light;
-}
-
 
 :root {
   --bg-page: #0E0E10;
@@ -34,6 +18,8 @@
   --red-hover: #A31515;
   --red-tint: rgba(200, 30, 30, 0.10);
   --green-attend: #4FA968;
+  --header-glass: rgba(14, 14, 16, 0.72);
+  --nav-glass: rgba(23, 23, 26, 0.75);
   --font-display: 'Instrument Serif', Georgia, serif;
   --font-sans: 'Inter Tight', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-mono: 'JetBrains Mono', 'SF Mono', Menlo, monospace;
@@ -54,6 +40,24 @@
   color-scheme: dark;
 }
 
+/* Light theme — must come AFTER :root to override it */
+[data-theme="light"] {
+  --bg-page: #F5F4F1;
+  --bg-surface: #FFFFFF;
+  --bg-surface-2: #EFEEEB;
+  --bg-elevated: #FFFFFF;
+  --text-primary: #1A1A1A;
+  --text-secondary: #5C5B58;
+  --text-muted: #8E8D89;
+  --line-subtle: rgba(26, 26, 26, 0.06);
+  --line-default: rgba(26, 26, 26, 0.12);
+  --line-strong: rgba(26, 26, 26, 0.24);
+  --red-tint: rgba(200, 30, 30, 0.08);
+  --header-glass: rgba(245, 244, 241, 0.78);
+  --nav-glass: rgba(245, 244, 241, 0.80);
+  color-scheme: light;
+}
+
 /* ---------- Reset ---------- */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -66,9 +70,9 @@ html, body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  overflow-x: hidden;
+  /* clip does NOT create a scroll container, so position: sticky still works */
+  overflow-x: clip;
 }
-
 img { display: block; max-width: 100%; height: auto; }
 button { font: inherit; color: inherit; background: none; border: none; cursor: pointer; }
 a { color: inherit; text-decoration: none; }

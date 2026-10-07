@@ -1087,3 +1087,89 @@ input[type="password"]::placeholder {
 .auth-message.success {
   color: var(--green-attend);
 }
+
+
+
+/* ---------- Auth: member/admin split ---------- */
+
+.admin-link-wrap {
+  margin-top: var(--space-5);
+  text-align: center;
+}
+
+.link-subtle {
+  font-family: var(--font-mono);
+  font-size: 0.6875rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding: 6px 12px;
+  border-radius: var(--radius-md);
+  transition: color var(--dur-fast) var(--ease-out);
+}
+
+.link-subtle:hover {
+  color: var(--text-secondary);
+}
+
+.link-inline {
+  color: var(--text-primary);
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  padding: 0 4px;
+}
+
+.link-inline:hover {
+  color: var(--red-core);
+}
+
+.auth-switch {
+  margin-top: var(--space-4);
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+.auth-message {
+  margin-top: var(--space-3);
+  font-size: 0.8125rem;
+  color: var(--text-secondary);
+  min-height: 1.2em;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.auth-message.error {
+  color: #E38B8B;
+}
+
+.auth-message.success {
+  color: var(--green-attend);
+}
+
+input[type="password"] {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--line-default);
+  border-radius: var(--radius-md);
+  font-size: 0.9375rem;
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  transition: border-color var(--dur-fast) var(--ease-out),
+              background-color var(--dur-fast) var(--ease-out);
+  font-family: var(--font-sans);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+input[type="password"]:focus {
+  outline: none;
+  border-color: var(--red-core);
+  background: var(--bg-elevated);
+}
+
+input[type="password"]::placeholder {
+  color: var(--text-muted);
+}

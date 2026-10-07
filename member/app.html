@@ -225,7 +225,7 @@
           </div>
         </div>
 
-        <!-- Membership (with due emphasized at bottom) -->
+               <!-- Membership -->
         <div class="card profile-section membership-card">
           <h2>Membership</h2>
           <dl class="detail-list">
@@ -247,8 +247,15 @@
             </div>
           </dl>
 
-          <div class="due-block" id="due-block">
-            <span class="stat-label">Amount due</span>
+          <!-- Shown only when paid -->
+          <div class="paid-indicator" id="paid-indicator" style="display: none;">
+            <span class="paid-dot" aria-hidden="true"></span>
+            <span class="paid-text">All payments up to date</span>
+          </div>
+
+          <!-- Shown only when due or overdue -->
+          <div class="due-block" id="due-block" style="display: none;">
+            <span class="stat-label" id="due-label">Amount due</span>
             <span class="due-value" id="pv-due">Rs. 0</span>
           </div>
         </div>

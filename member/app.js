@@ -477,3 +477,39 @@ function escapeHtml(str) {
 
 /* ---------- Boot ---------- */
 checkAuth();
+
+
+
+
+// --- Theme Toggle ---
+function initTheme() {
+  const toggle = document.getElementById('theme-toggle');
+  if (!toggle) return;
+
+  // Check for saved theme in localStorage
+  const savedTheme = localStorage.getItem('tsf-theme');
+  const systemPrefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+  
+  // Determine initial theme
+  let currentTheme = 'dark'; // default
+  if (savedTheme) {
+    currentTheme = savedTheme;
+  } else if (systemPrefersLight) {
+    currentTheme = 'light';
+  }
+
+  // Apply theme
+  document.documentElement.setAttribute('data-theme', currentTheme);
+
+  // Toggle on click
+  toggle.addEventListener('click', () => {
+    const current = document.documentElement.getAttribute('data-theme');
+    const next = current === 'dark' ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    localStorage.setItem('tsf-theme', next);
+  });
+}
+
+// Call this inside your checkAuth function, after the member is confirmed
+// e.g., right before renderHome(...)
+initTheme();

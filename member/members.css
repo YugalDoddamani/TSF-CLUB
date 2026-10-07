@@ -963,3 +963,36 @@ input:-webkit-autofill:focus {
 .link-row:last-child { border-bottom: none; }
 .link-row:hover { color: var(--text-primary); }
 .link-row svg { width: 16px; height: 16px; opacity: 0.5; }
+
+
+
+/* Paid state indicator */
+.paid-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: var(--space-5);
+  padding: var(--space-3) var(--space-4);
+  background: rgba(79, 169, 104, 0.08);
+  border: 1px solid rgba(79, 169, 104, 0.25);
+  border-radius: var(--radius-md);
+}
+
+.paid-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green-attend);
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(79, 169, 104, 0.15);
+}
+
+.paid-text {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+}
+
+[data-theme="light"] .paid-indicator {
+  background: rgba(79, 169, 104, 0.06);
+}

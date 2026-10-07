@@ -5,6 +5,8 @@ const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_
 
 let currentMember = null;
 let currentProgram = null;
+let currentDate = new Date();
+let attendanceData = [];
 
 // ---------- Auth Guard ----------
 async function checkAuth() {
@@ -28,132 +30,221 @@ async function checkAuth() {
 
   currentMember = member;
 
-  // Fetch program details once
   if (member.program_id) {
     const { data } = await supabaseClient
       .from('programs')
-      .select('name, fee')
+      .select('name')
       .eq('id', member.program_id)
       .single();
     currentProgram = data;
   }
 
-  renderDashboard(member, session.user);
+  await fetchAttendance();
+  renderHome(member, session.user);
   renderProfile(member, session.user);
+  renderCalendar();
 }
 
-// ---------- Dashboard ----------
-function renderDashboard(member, user) {
+// ---------- Data Fetching ----------
+async function fetchAttendance() {
+  const { data, error } = await supabaseClient
+    .from('attendance')
+    .select('class_date')
+    .eq('member_id', currentMember.id);
+
+  if (error) {
+    console.error('Error fetching attendance:', error);
+    return;
+  }
+  attendanceData = data.map(a => a.class_date);
+}
+
+// ---------- Home Tab Rendering ----------
+function renderHome(member, user) {
   const name = member.full_name || user.email.split('@')[0];
-  document.getElementById('greeting').textContent = `Welcome back, ${name}`;
+  document.getElementById('greeting').textContent = name;
+  document.getElementById('home-program').textContent = currentProgram?.name || 'Not assigned';
+  document.getElementById('home-streak').textContent = member.streak_count || 0;
 
-  document.getElementById('dash-program').textContent = currentProgram?.name || 'Not assigned';
-  document.getElementById('dash-payment').textContent = member.payment_status || 'Due';
-  document.getElementById('dash-streak').textContent = member.streak_count || 0;
+  // Check if today is already marked
+  const todayStr = new Date().toISOString().split('T')[0];
+  const isMarkedToday = attendanceData.includes(todayStr);
+  
+  const markCard = document.getElementById('mark-attendance-card');
+  const markBtn = document.getElementById('mark-today-btn');
 
-  document.getElementById('dash-expiry').textContent = member.membership_expiry
-    ? formatDate(member.membership_expiry)
-    : 'Not set';
+  if (isMarkedToday) {
+    markCard.innerHTML = `
+      <h2>Session completed</h2>
+      <p class="subtitle" style="margin-bottom:0;">You have already marked your attendance for today. Great work.</p>
+    `;
+  } else {
+    markBtn.addEventListener('click', handleMarkAttendance);
+  }
 }
 
-// ---------- Profile ----------
+// ---------- Mark Attendance Logic ----------
+async function handleMarkAttendance() {
+  const btn = document.getElementById('mark-today-btn');
+  btn.disabled = true;
+  btn.textContent = 'Marking...';
+
+  const todayStr = new Date().toISOString().split('T')[0];
+
+  const { error } = await supabaseClient
+    .from('attendance')
+    .insert({
+      member_id: currentMember.id,
+      class_date: todayStr,
+      attended: true
+    });
+
+  if (error) {
+    console.error('Error marking attendance:', error);
+    alert('Could not mark attendance. Please try again.');
+    btn.disabled = false;
+    btn.textContent = "Mark today's session";
+    return;
+  }
+
+  // Update streak count in members table
+  const newStreak = (currentMember.streak_count || 0) + 1;
+  await supabaseClient
+    .from('members')
+    .update({ streak_count: newStreak })
+    .eq('id', currentMember.id);
+
+  // Update local state
+  currentMember.streak_count = newStreak;
+  attendanceData.push(todayStr);
+
+  // Re-render
+  renderHome(currentMember, { email: currentMember.email });
+  renderCalendar();
+}
+
+// ---------- Calendar Tab Rendering ----------
+function renderCalendar() {
+  const grid = document.getElementById('calendar-grid');
+  grid.innerHTML = '';
+
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+
+  const monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  document.getElementById('current-month-year').textContent = `${monthNames[month]} ${year}`;
+
+  const firstDay = new Date(year, month, 1).getDay();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = new Date();
+  const todayStr = today.toISOString().split('T')[0];
+
+  // Add empty cells for days before the 1st
+  for (let i = 0; i < firstDay; i++) {
+    const empty = document.createElement('div');
+    empty.className = 'cal-day empty';
+    grid.appendChild(empty);
+  }
+
+  // Add days of the month
+  for (let d = 1; d <= daysInMonth; d++) {
+    const dateStr = `${year}-${String(month + 1).padStart(2, '0')}-${String(d).padStart(2, '0')}`;
+    const dayEl = document.createElement('div');
+    dayEl.className = 'cal-day';
+    dayEl.textContent = d;
+
+    if (dateStr === todayStr) {
+      dayEl.classList.add('today');
+    }
+
+    if (attendanceData.includes(dateStr)) {
+      dayEl.classList.add('attended');
+    }
+
+    if (new Date(dateStr) > today) {
+      dayEl.classList.add('future');
+    } else {
+      dayEl.addEventListener('click', () => toggleAttendance(dateStr));
+    }
+
+    grid.appendChild(dayEl);
+  }
+}
+
+async function toggleAttendance(dateStr) {
+  const todayStr = new Date().toISOString().split('T')[0];
+  if (dateStr > todayStr) return; // Prevent future marking
+
+  const isAttended = attendanceData.includes(dateStr);
+
+  if (isAttended) {
+    // Remove attendance
+    const { error } = await supabaseClient
+      .from('attendance')
+      .delete()
+      .eq('member_id', currentMember.id)
+      .eq('class_date', dateStr);
+
+    if (!error) {
+      attendanceData = attendanceData.filter(d => d !== dateStr);
+      currentMember.streak_count = Math.max(0, (currentMember.streak_count || 1) - 1);
+      await supabaseClient.from('members').update({ streak_count: currentMember.streak_count }).eq('id', currentMember.id);
+    }
+  } else {
+    // Add attendance
+    const { error } = await supabaseClient
+      .from('attendance')
+      .insert({ member_id: currentMember.id, class_date: dateStr, attended: true });
+
+    if (!error) {
+      attendanceData.push(dateStr);
+      currentMember.streak_count = (currentMember.streak_count || 0) + 1;
+      await supabaseClient.from('members').update({ streak_count: currentMember.streak_count }).eq('id', currentMember.id);
+    }
+  }
+
+  renderHome(currentMember, { email: currentMember.email });
+  renderCalendar();
+}
+
+// Month navigation
+document.getElementById('prev-month').addEventListener('click', () => {
+  currentDate.setMonth(currentDate.getMonth() - 1);
+  renderCalendar();
+});
+
+document.getElementById('next-month').addEventListener('click', () => {
+  currentDate.setMonth(currentDate.getMonth() + 1);
+  renderCalendar();
+});
+
+// ---------- Profile Tab Rendering ----------
 function renderProfile(member, user) {
   const name = member.full_name || user.email.split('@')[0];
-
-  // Header
   document.getElementById('profile-avatar').textContent = getInitials(name);
   document.getElementById('profile-name').textContent = name;
   document.getElementById('profile-email').textContent = member.email || user.email;
-  document.getElementById('profile-role').textContent = member.role || 'member';
 
-  // Contact details
-  document.getElementById('pv-full-name').textContent = member.full_name || '-';
   document.getElementById('pv-whatsapp').textContent = member.whatsapp_number || '-';
-  document.getElementById('pv-email').textContent = member.email || user.email;
+  document.getElementById('pv-emg-name').textContent = member.emergency_name || '-';
+  document.getElementById('pv-emg-phone').textContent = member.emergency_phone || '-';
 
-  // Membership
-  document.getElementById('pv-program').textContent = currentProgram?.name || 'Not assigned';
-  document.getElementById('pv-joining').textContent = member.joining_date ? formatDate(member.joining_date) : '-';
-  document.getElementById('pv-expiry').textContent = member.membership_expiry ? formatDate(member.membership_expiry) : '-';
-  document.getElementById('pv-payment').textContent = member.payment_status || 'Due';
-  document.getElementById('pv-due').textContent = member.amount_due != null ? `Rs. ${member.amount_due}` : 'Rs. 0';
-  document.getElementById('pv-streak').textContent = member.streak_count ?? 0;
-
-  // Physical metrics
   document.getElementById('pv-height').textContent = member.height ? `${member.height} cm` : '-';
   document.getElementById('pv-weight').textContent = member.weight ? `${member.weight} kg` : '-';
 
-  // Emergency contact
-  document.getElementById('pv-emg-name').textContent = member.emergency_name || '-';
-  document.getElementById('pv-emg-phone').textContent = member.emergency_phone || '-';
+  document.getElementById('pv-payment').textContent = member.payment_status || 'Due';
+  document.getElementById('pv-due').textContent = member.amount_due != null ? `Rs. ${member.amount_due}` : 'Rs. 0';
+  document.getElementById('pv-expiry').textContent = member.membership_expiry ? formatDate(member.membership_expiry) : 'Not set';
 }
 
 // ---------- Tab Navigation ----------
-document.querySelectorAll('.nav-link').forEach(btn => {
+document.querySelectorAll('.nav-item').forEach(btn => {
   btn.addEventListener('click', () => {
-    document.querySelectorAll('.nav-link').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
     document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
     btn.classList.add('active');
     document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active');
   });
-});
-
-// ---------- Profile Editing ----------
-document.getElementById('edit-profile-btn').addEventListener('click', () => {
-  if (!currentMember) return;
-  document.getElementById('edit-full-name').value = currentMember.full_name || '';
-  document.getElementById('edit-whatsapp').value = currentMember.whatsapp_number || '';
-  document.getElementById('edit-emg-name').value = currentMember.emergency_name || '';
-  document.getElementById('edit-emg-phone').value = currentMember.emergency_phone || '';
-  document.getElementById('edit-medical').value = currentMember.medical_notes || '';
-
-  document.getElementById('profile-view-mode').style.display = 'none';
-  document.getElementById('profile-edit-mode').style.display = 'block';
-});
-
-document.getElementById('cancel-edit-btn').addEventListener('click', () => {
-  document.getElementById('profile-edit-mode').style.display = 'none';
-  document.getElementById('profile-view-mode').style.display = 'block';
-});
-
-document.getElementById('profile-edit-form').addEventListener('submit', async (e) => {
-  e.preventDefault();
-  const btn = document.getElementById('save-profile-btn');
-  btn.disabled = true;
-  btn.textContent = 'Saving...';
-
-  const fd = new FormData(e.target);
-  const updates = {
-    full_name: fd.get('full_name'),
-    whatsapp_number: fd.get('whatsapp_number'),
-    emergency_name: fd.get('emergency_name'),
-    emergency_phone: fd.get('emergency_phone'),
-    medical_notes: fd.get('medical_notes') || null,
-    updated_at: new Date().toISOString()
-  };
-
-  const { data: updated, error } = await supabaseClient
-    .from('members')
-    .update(updates)
-    .eq('id', currentMember.id)
-    .select()
-    .single();
-
-  btn.disabled = false;
-  btn.textContent = 'Save changes';
-
-  if (error) {
-    console.error(error);
-    alert('Could not save. Please try again.');
-    return;
-  }
-
-  currentMember = updated;
-  const { data: { user } } = await supabaseClient.auth.getUser();
-  renderProfile(currentMember, user);
-
-  document.getElementById('profile-edit-mode').style.display = 'none';
-  document.getElementById('profile-view-mode').style.display = 'block';
 });
 
 // ---------- Sign Out ----------
